@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1583 Café - Menú</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(rgba(74, 44, 20, 0.85), rgba(74, 44, 20, 0.85)), url('images/1583.png');
+            background-size: cover;
+            background-attachment: fixed;
+            color: #FFFFFF;
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Navbar superior */
+        .top-nav {
+            background-color: #3A220F;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #D4A017;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .top-nav h1 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+        .language-selector select {
+            background-color: #D4A017;
+            color: #FFFFFF;
+            padding: 6px 12px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .language-selector select:hover {
+            background-color: #B58900;
+            transform: scale(1.05);
+        }
+        .language-selector select:active {
+            transform: scale(0.95);
+        }
+        /* Navbar secundario para las pestañas */
+        .menu-nav {
+            background-color: transparent;
+            padding: 30px 0;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: 20px;
+        }
+        .menu-nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .menu-nav li {
+            display: inline-block;
+        }
+        .menu-nav a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 10px 15px;
+            transition: color 0.3s ease, transform 0.2s ease;
+            position: relative;
+        }
+        .menu-nav a:hover {
+            color: #FFD700;
+            transform: scale(1.05);
+        }
+        .menu-nav a:active {
+            transform: scale(0.95);
+        }
+        .menu-nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #D4A017;
+        }
+        .menu-section {
+            display: none;
+            margin: 40px 0;
+        }
+        .menu-section.active {
+            display: block;
+        }
+        .menu-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 12px 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .menu-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            transform: scale(1.02);
+        }
+        .menu-item-description {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 4px;
+        }
+        main {
+            flex: 1;
+        }
+        footer {
+            background-color: #3A220F;
+            text-align: center;
+            padding: 20px 0;
+            border-top: 2px solid #D4A017;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        footer .social-links a {
+            color: #FFFFFF;
+            margin: 0 15px;
+            font-size: 1.5rem;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+        footer .social-links a:hover {
+            color: #D4A017;
+            transform: scale(1.1);
+        }
+        .developer-signature {
+            font-size: 0.7rem;
+            font-family: 'Montserrat', sans-serif;
+            color: #D4A017;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+            padding-left: 20px;
+            text-shadow: 0 0 5px rgba(212, 160, 23, 0.5);
+        }
+        .developer-signature a {
+            color: #D4A017;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .developer-signature a:hover {
+            color: #FFD700;
+        }
+        .copyright {
+            font-size: 0.7rem;
+            font-family: 'Montserrat', sans-serif;
+            color: #FFFFFF;
+            opacity: 0.8;
+            padding-right: 20px;
+        }
+        /* WhatsApp Floating Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            animation: pulse 2s infinite;
+        }
+        .whatsapp-float a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #25D366;
+            color: #FFFFFF;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+        .whatsapp-float a:hover {
+            background-color: #20b358;
+            transform: scale(1.1);
+        }
+        .whatsapp-float a:active {
+            transform: scale(0.95);
+        }
+        .whatsapp-float i {
+            font-size: 1.8rem;
+        }
+        .whatsapp-float .notification {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            background-color: #25D366;
+            color: #FFFFFF;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            white-space: nowrap;
+            transform: translateX(-100%);
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+            }
+        }
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-content {
+            background-color: #3A220F;
+            border: 2px solid #D4A017;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            padding: 20px;
+            position: relative;
+            transform: scale(0.8);
+            transition: transform 0.3s ease;
+        }
+        .modal.active .modal-content {
+            transform: scale(1);
+        }
+        .modal-content img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .modal-content h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #FFFFFF;
+        }
+        .modal-content p {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 10px;
+        }
+        .modal-content .ingredients {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 10px;
+        }
+        .modal-content .price {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #D4A017;
+        }
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: #FFFFFF;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .modal-close:hover {
+            color: #D4A017;
+        }
+        /* Media queries para pantallas pequeñas */
+        @media (max-width: 768px) {
+            .menu-nav {
+                padding: 20px 0;
+                margin-top: 15px;
+            }
+            .menu-nav ul {
+                gap: 15px;
+            }
+            .menu-nav a {
+                font-size: 0.9rem;
+                padding: 8px 12px;
+            }
+            .menu-section {
+                margin: 30px 0;
+            }
+            .menu-item-description {
+                font-size: 0.75rem;
+            }
+            footer {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .developer-signature,
+            .copyright {
+                padding: 0;
+                text-align: center;
+            }
+            .whatsapp-float a {
+                width: 40px;
+                height: 40px;
+            }
+            .whatsapp-float i {
+                font-size: 1.5rem;
+            }
+            .whatsapp-float .notification {
+                font-size: 0.6rem;
+                padding: 4px 8px;
+            }
+            .modal-content {
+                width: 95%;
+                padding: 15px;
+            }
+            .modal-content img {
+                height: 120px;
+            }
+            .modal-content h3 {
+                font-size: 1.5rem;
+            }
+            .modal-content p,
+            .modal-content .ingredients,
+            .modal-content .price {
+                font-size: 0.8rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .menu-nav {
+                padding: 15px 0;
+                margin-top: 10px;
+            }
+            .menu-nav ul {
+                gap: 10px;
+            }
+            .menu-nav a {
+                font-size: 0.8rem;
+                padding: 6px 10px;
+            }
+            .menu-section {
+                margin: 20px 0;
+            }
+            .menu-item-description {
+                font-size: 0.7rem;
+            }
+            footer .social-links a {
+                font-size: 1.2rem;
+                margin: 0 10px;
+            }
+            .developer-signature,
+            .copyright {
+                font-size: 0.65rem;
+            }
+            .whatsapp-float a {
+                width: 35px;
+                height: 35px;
+            }
+            .whatsapp-float i {
+                font-size: 1.3rem;
+            }
+            .whatsapp-float .notification {
+                font-size: 0.55rem;
+                padding: 3px 6px;
+            }
+            .modal-content img {
+                height: 100px;
+            }
+            .modal-content h3 {
+                font-size: 1.3rem;
+            }
+            .modal-content p,
+            .modal-content .ingredients,
+            .modal-content .price {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body class="text-white">
+    <header class="top-nav">
+        <h1>1583</h1>
+        <div class="language-selector">
+            <select onchange="changeLanguage(this.value)">
+                <option value="es">Español</option>
+                <option value="en">English</option>
+                <option value="pt">Português</option>
+            </select>
+        </div>
+    </header>
+
+    <nav class="menu-nav">
+        <h2 class="text-3xl font-semibold mb-6" data-i18n="menu-title">Nuestro Menú</h2>
+        <ul>
+            <li><a href="#" class="active" onclick="showSection('cafe'); return false;" data-i18n="cafe">Café</a></li>
+            <li><a href="#" onclick="showSection('bebidas-frias'); return false;" data-i18n="bebidas-frias">Bebidas Frías</a></li>
+            <li><a href="#" onclick="showSection('te-caliente'); return false;" data-i18n="te-caliente">Té y Otras Bebidas Calientes</a></li>
+            <li><a href="#" onclick="showSection('postres'); return false;" data-i18n="postres">Postres y Repostería</a></li>
+            <li><a href="#" onclick="showSection('comidas'); return false;" data-i18n="comidas">Comidas</a></li>
+            <li><a href="#" onclick="showSection('productos'); return false;" data-i18n="productos">Productos y Otros</a></li>
+        </ul>
+    </nav>
+
+    <main class="container mx-auto px-6 max-w-3xl">
+        <section id="cafe" class="menu-section active">
+            <h2 class="text-3xl font-semibold mb-6 text-center" data-i18n="cafe">Café</h2>
+            <ul class="space-y-2">
+                <li class="menu-item flex flex-col" onclick="openModal('espresso', 'Un shot intenso y aromático de café puro, preparado con granos de origen colombiano.', 'Granos de café 100% colombianos, agua filtrada.', '6.000 COP', 'https://via.placeholder.com)"/>
+                    <div class="flex justify-between">
+                        <span data-i18n="espresso">Espresso</span>
+                        <span>6.000 COP</span>
+                    </div>
+                    <p class="menu-item-description">Un shot intenso y aromático de café puro, preparado con granos de origen colombiano.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('americano', 'Café espresso diluido con agua caliente, perfecto para un sabor suave y prolongado.', 'Espresso, agua caliente.', '6.500 COP', 'https://via.placeholder.com/500x150?text=Americano')">
+                    <div class="flex justify-between">
+                        <span data-i18n="americano">Americano</span>
+                        <span>6.500 COP</span>
+                    </div>
+                    <p class="menu-item-description">Café espresso diluido con agua caliente, perfecto para un sabor suave y prolongado.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('cappuccino', 'Espresso equilibrado con leche vaporizada y una capa de espuma cremosa.', 'Espresso, leche, espuma de leche.', '8.000 COP', 'https://via.placeholder.com/500x150?text=Cappuccino')">
+                    <div class="flex justify-between">
+                        <span data-i18n="cappuccino">Cappuccino</span>
+                        <span>8.000 COP</span>
+                    </div>
+                    <p class="menu-item-description">Espresso equilibrado con leche vaporizada y una capa de espuma cremosa.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('latte', 'Espresso suave combinado con leche caliente y una ligera capa de espuma.', 'Espresso, leche vaporizada, espuma de leche.', '8.500 COP', 'https://via.placeholder.com/500x150?text=Latte')">
+                    <div class="flex justify-between">
+                        <span data-i18n="latte">Latte</span>
+                        <span>8.500 COP</span>
+                    </div>
+                    <p class="menu-item-description">Espresso suave combinado con leche caliente y una ligera capa de espuma.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('flat-white', 'Espresso doble con leche vaporizada para un sabor intenso y cremoso.', 'Espresso doble, leche vaporizada.', '8.000 COP', 'https://via.placeholder.com/500x150?text=Flat+White')">
+                    <div class="flex justify-between">
+                        <span data-i18n="flat-white">Flat White</span>
+                        <span>8.000 COP</span>
+                    </div>
+                    <p class="menu-item-description">Espresso doble con leche vaporizada para un sabor intenso y cremoso.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('macchiato', 'Espresso con un toque de espuma de leche, ideal para los amantes del café puro.', 'Espresso, espuma de leche.', '7.000 COP', 'https://via.placeholder.com/500x150?text=Macchiato')">
+                    <div class="flex justify-between">
+                        <span data-i18n="macchiato">Macchiato</span>
+                        <span>7.000 COP</span>
+                    </div>
+                    <p class="menu-item-description">Espresso con un toque de espuma de leche, ideal para los amantes del café puro.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('mocha', 'Espresso con chocolate oscuro, leche vaporizada y crema batida.', 'Espresso, chocolate, leche, crema batida.', '9.000 COP', 'https://via.placeholder.com/500x150?text=Mocha')">
+                    <div class="flex justify-between">
+                        <span data-i18n="mocha">Mocha</span>
+                        <span>9.000 COP</span>
+                    </div>
+                    <p class="menu-item-description">Espresso con chocolate oscuro, leche vaporizada y crema batida.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('cold-brew', 'Café infusionado en frío durante 24 horas para un sabor suave y refrescante.', 'Café molido, agua fría.', '9.500 COP', 'https://via.placeholder.com/500x150?text=Cold+Brew')">
+                    <div class="flex justify-between">
+                        <span data-i18n="cold-brew">Cold Brew</span>
+                        <span>9.500 COP</span>
+                    </div>
+                    <p class="menu-item-description">Café infusionado en frío durante 24 horas para un sabor suave y refrescante.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('nitro-cold-brew', 'Cold brew infusionado con nitrógeno para una textura cremosa y burbujeante.', 'Cold brew, nitrógeno.', '10.000 COP', 'https://via.placeholder.com/500x150?text=Nitro+Cold+Brew')">
+                    <div class="flex justify-between">
+                        <span data-i18n="nitro-cold-brew">Nitro Cold Brew</span>
+                        <span>10.000 COP</span>
+                    </div>
+                    <p class="menu-item-description">Cold brew infusionado con nitrógeno para una textura cremosa y burbujeante.</p>
+                </li>
+            </ul>
+        </section>
+
+        <section id="bebidas-frias" class="menu-section">
+            <h2 class="text-3xl font-semibold mb-6 text-center" data-i18n="bebidas-frias">Bebidas Frías</h2>
+            <ul class="space-y-2">
+                <li class="menu-item flex flex-col" onclick="openModal('frappuccino', 'Bebida helada batida con café, crema o sabores, perfecta para un día caluroso.', 'Café o crema, hielo, leche, saborizantes.', '12.000 COP', 'https://via.placeholder.com/500x150?text=Frappuccino')">
+                    <div class="flex justify-between">
+                        <span data-i18n="frappuccino">Frappuccino (de café, de crema, con sabores)</span>
+                        <span>12.000 COP</span>
+                    </div>
+                    <p class="menu-item-description">Bebida helada batida con café, crema o sabores, perfecta para un día caluroso.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('iced-tea', 'Té refrescante servido con hielo, disponible en variedades como negro o verde.', 'Té, hielo, endulzante opcional.', '7.000 COP', 'https://via.placeholder.com/500x150?text=Iced+Tea')">
+                    <div class="flex justify-between">
+                        <span data-i18n="iced-tea">Té helado (black tea, green tea, etc.)</span>
+                        <span>7.000 COP</span>
+                    </div>
+                    <p class="menu-item-description">Té refrescante servido con hielo, disponible en variedades como negro o verde.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('refresher', 'Bebida frutal vibrante con sabores como mango dragonfruit o fresa açaí.', 'Fruta, agua, hielo, endulzante.', '8.500 COP', 'https://via.placeholder.com/500x150?text=Refresher')">
+                    <div class="flex justify-between">
+                        <span data-i18n="refresher">Refresher (Mango Dragonfruit, Strawberry Açaí)</span>
+                        <span>8.500 COP</span>
+                    </div>
+                    <p class="menu-item-description">Bebida frutal vibrante con sabores como mango dragonfruit o fresa açaí.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('juices', 'Selección de jugos naturales y bebidas refrescantes embotelladas.', 'Frutas frescas, agua, endulzante opcional.', '5.000 COP', 'https://via.placeholder.com/500x150?text=Juices')">
+                    <div class="flex justify-between">
+                        <span data-i18n="juices">Jugos y bebidas embotelladas</span>
+                        <span>5.000 COP</span>
+                    </div>
+                    <p class="menu-item-description">Selección de jugos naturales y bebidas refrescantes embotelladas.</p>
+                </li>
+            </ul>
+        </section>
+
+        <section id="te-caliente" class="menu-section">
+            <h2 class="text-3xl font-semibold mb-6 text-center" data-i18n="te-caliente">Té y Otras Bebidas Calientes</h2>
+            <ul class="space-y-2">
+                <li class="menu-item flex flex-col" onclick="openModal('hot-tea', 'Selección de tés aromáticos servidos calientes, perfectos para relajarse.', 'Hojas de té, agua caliente.', '6.000 COP', 'https://via.placeholder.com/500x150?text=Hot+Tea')">
+                    <div class="flex justify-between">
+                        <span data-i18n="hot-tea">Tés calientes (verde, negro, chai, etc.)</span>
+                        <span>6.000 COP</span>
+                    </div>
+                    <p class="menu-item-description">Selección de tés aromáticos servidos calientes, perfectos para relajarse.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('tea-latte', 'Té combinado con leche vaporizada, disponible en chai o matcha.', 'Té, leche vaporizada, endulzante.', '8.500 COP', 'https://via.placeholder.com/500x150?text=Tea+Latte')">
+                    <div class="flex justify-between">
+                        <span data-i18n="tea-latte">Té latte (Chai Tea Latte, Matcha Latte)</span>
+                        <span>8.500 COP</span>
+                    </div>
+                    <p class="menu-item-description">Té combinado con leche vaporizada, disponible en chai o matcha.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('hot-chocolate', 'Chocolate cremoso y cálido, ideal para los amantes del cacao.', 'Chocolate, leche, crema batida opcional.', '7.500 COP', 'https://via.placeholder.com/500x150?text=Hot+Chocolate')">
+                    <div class="flex justify-between">
+                        <span data-i18n="hot-chocolate">Chocolate caliente</span>
+                        <span>7.500 COP</span>
+                    </div>
+                    <p class="menu-item-description">Chocolate cremoso y cálido, ideal para los amantes del cacao.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('seasonal-drinks', 'Bebidas especiales como el Pumpkin Spice Latte, perfectas para la temporada.', 'Ingredientes de temporada, leche, especias.', '9.500 COP', 'https://via.placeholder.com/500x150?text=Seasonal+Drinks')">
+                    <div class="flex justify-between">
+                        <span data-i18n="seasonal-drinks">Bebidas de temporada (Pumpkin Spice Latte, etc.)</span>
+                        <span>9.500 COP</span>
+                    </div>
+                    <p class="menu-item-description">Bebidas especiales como el Pumpkin Spice Latte, perfectas para la temporada.</p>
+                </li>
+            </ul>
+        </section>
+
+        <section id="postres" class="menu-section">
+            <h2 class="text-3xl font-semibold mb-6 text-center" data-i18n="postres">Postres y Repostería</h2>
+            <ul class="space-y-2">
+                <li class="menu-item flex flex-col" onclick="openModal('muffins', 'Muffins esponjosos disponibles en sabores como arándanos o chocolate.', 'Harina, azúcar, huevos, fruta o chocolate.', '5.000 COP', 'https://via.placeholder.com/500x150?text=Muffins')">
+                    <div class="flex justify-between">
+                        <span data-i18n="muffins">Muffins</span>
+                        <span>5.000 COP</span>
+                    </div>
+                    <p class="menu-item-description">Muffins esponjosos disponibles en sabores como arándanos o chocolate.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('brownies', 'Brownies ricos y chocolatados con una textura suave y densa.', 'Chocolate, mantequilla, azúcar, harina.', '5.500 COP', 'https://via.placeholder.com/500x150?text=Brownies')">
+                    <div class="flex justify-between">
+                        <span data-i18n="brownies">Brownies</span>
+                        <span>5.500 COP</span>
+                    </div>
+                    <p class="menu-item-description">Brownies ricos y chocolatados con una textura suave y densa.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('cheesecakes', 'Tarta de queso cremosa con una base crujiente de galleta.', 'Queso crema, azúcar, galleta, fruta opcional.', '8.000 COP', 'https://via.placeholder.com/500x150?text=Cheesecakes')">
+                    <div class="flex justify-between">
+                        <span data-i18n="cheesecakes">Cheesecakes</span>
+                        <span>8.000 COP</span>
+                    </div>
+                    <p class="menu-item-description">Tarta de queso cremosa con una base crujiente de galleta.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('carrot-cake', 'Pastel húmedo de zanahoria con un glaseado de queso crema.', 'Zanahoria, harina, azúcar, queso crema.', '7.000 COP', 'https://via.placeholder.com/500x150?text=Carrot+Cake')">
+                    <div class="flex justify-between">
+                        <span data-i18n="carrot-cake">Tarta de zanahoria</span>
+                        <span>7.000 COP</span>
+                    </div>
+                    <p class="menu-item-description">Pastel húmedo de zanahoria con un glaseado de queso crema.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('donuts', 'Donas glaseadas o rellenas, perfectas para un antojo dulce.', 'Harina, azúcar, levadura, glaseado o relleno.', '4.500 COP', 'https://via.placeholder.com/500x150?text=Donuts')">
+                    <div class="flex justify-between">
+                        <span data-i18n="donuts">Donas</span>
+                        <span>4.500 COP</span>
+                    </div>
+                    <p class="menu-item-description">Donas glaseadas o rellenas, perfectas para un antojo dulce.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('cookies', 'Galletas crujientes disponibles en sabores como chispas de chocolate.', 'Harina, mantequilla, azúcar, chocolate.', '3.500 COP', 'https://via.placeholder.com/500x150?text=Cookies')">
+                    <div class="flex justify-between">
+                        <span data-i18n="cookies">Galletas (cookies)</span>
+                        <span>3.500 COP</span>
+                    </div>
+                    <p class="menu-item-description">Galletas crujientes disponibles en sabores como chispas de chocolate.</p>
+                </li>
+            </ul>
+        </section>
+
+        <section id="comidas" class="menu-section">
+            <h2 class="text-3xl font-semibold mb-6 text-center" data-i18n="comidas">Comidas</h2>
+            <ul class="space-y-2">
+                <li class="menu-item flex flex-col" onclick="openModal('hot-sandwiches', 'Sándwiches tostados con ingredientes frescos y sabores intensos.', 'Pan, carne, queso, vegetales.', '10.000 COP', 'https://via.placeholder.com/500x150?text=Hot+Sandwiches')">
+                    <div class="flex justify-between">
+                        <span data-i18n="hot-sandwiches">Sándwiches calientes</span>
+                        <span>10.000 COP</span>
+                    </div>
+                    <p class="menu-item-description">Sándwiches tostados con ingredientes frescos y sabores intensos.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('wraps', 'Tortillas rellenas con ingredientes frescos y salsas deliciosas.', 'Tortilla, carne, vegetales, salsa.', '9.000 COP', 'https://via.placeholder.com/500x150?text=Wraps')">
+                    <div class="flex justify-between">
+                        <span data-i18n="wraps">Wraps</span>
+                        <span>9.000 COP</span>
+                    </div>
+                    <p class="menu-item-description">Tortillas rellenas con ingredientes frescos y salsas deliciosas.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('salads', 'Ensaladas frescas con ingredientes de temporada y aderezos caseros.', 'Vegetales, proteína opcional, aderezo.', '8.500 COP', 'https://via.placeholder.com/500x150?text=Salads')">
+                    <div class="flex justify-between">
+                        <span data-i18n="salads">Ensaladas</span>
+                        <span>8.500 COP</span>
+                    </div>
+                    <p class="menu-item-description">Ensaladas frescas con ingredientes de temporada y aderezos caseros.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('yogurt-granola', 'Yogur cremoso servido con granola crujiente y fruta fresca.', 'Yogur, granola, fruta.', '7.000 COP', 'https://via.placeholder.com/500x150?text=Yogurt+Granola')">
+                    <div class="flex justify-between">
+                        <span data-i18n="yogurt-granola">Yogur con granola</span>
+                        <span>7.000 COP</span>
+                    </div>
+                    <p class="menu-item-description">Yogur cremoso servido con granola crujiente y fruta fresca.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('paninis', 'Paninis crujientes con ingredientes frescos y queso derretido.', 'Pan, queso, carne, vegetales.', '10.500 COP', 'https://via.placeholder.com/500x150?text=Paninis')">
+                    <div class="flex justify-between">
+                        <span data-i18n="paninis">Paninis</span>
+                        <span>10.500 COP</span>
+                    </div>
+                    <p class="menu-item-description">Paninis crujientes con ingredientes frescos y queso derretido.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('stuffed-croissants', 'Croissants hojaldrados con rellenos salados o dulces.', 'Croissant, queso, jamón o dulce.', '6.500 COP', 'https://via.placeholder.com/500x150?text=Stuffed+Croissants')">
+                    <div class="flex justify-between">
+                        <span data-i18n="stuffed-croissants">Croissants rellenos</span>
+                        <span>6.500 COP</span>
+                    </div>
+                    <p class="menu-item-description">Croissants hojaldrados con rellenos salados o dulces.</p>
+                </li>
+            </ul>
+        </section>
+
+        <section id="productos" class="menu-section">
+            <h2 class="text-3xl font-semibold mb-6 text-center" data-i18n="productos">Productos y Otros</h2>
+            <ul class="space-y-2">
+                <li class="menu-item flex flex-col" onclick="openModal('coffee-beans', 'Granos de café de origen colombiano, perfectos para preparar en casa.', 'Granos de café 100% colombianos.', '25.000 COP', 'https://via.placeholder.com/500x150?text=Coffee+Beans')">
+                    <div class="flex justify-between">
+                        <span data-i18n="coffee-beans">Granos de café</span>
+                        <span>25.000 COP</span>
+                    </div>
+                    <p class="menu-item-description">Granos de café de origen colombiano, perfectos para preparar en casa.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('loose-leaf-tea', 'Selección de tés en hoja para una experiencia auténtica.', 'Hojas de té premium.', '20.000 COP', 'https://via.placeholder.com/500x150?text=Loose+Leaf+Tea')">
+                    <div class="flex justify-between">
+                        <span data-i18n="loose-leaf-tea">Tés en hoja</span>
+                        <span>20.000 COP</span>
+                    </div>
+                    <p class="menu-item-description">Selección de tés en hoja para una experiencia auténtica.</p>
+                </li>
+                <li class="menu-item flex flex-col" onclick="openModal('merchandise', 'Productos exclusivos de 1583 Café, como tazas y termos elegantes.', 'Materiales de alta calidad.', '30.000 COP', 'https://via.placeholder.com/500x150?text=Merchandise')">
+                    <div class="flex justify-between">
+                        <span data-i18n="merchandise">Tazas, termos y merchandising</span>
+                        <span>30.000 COP</span>
+                    </div>
+                    <p class="menu-item-description">Productos exclusivos de 1583 Café, como tazas y termos elegantes.</p>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="py-8">
+        <div class="developer-signature">
+            Developed by <a href="https://instagram.com/sergiangel.00" target="_blank">@sergiangel.00</a>
+        </div>
+        <div class="social-links">
+            <a href="https://instagram.com/1583cafe" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://tiktok.com/@1583cafe" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://1583cafe.com" target="_blank"><i class="fas fa-globe"></i></a>
+        </div>
+        <div class="copyright">
+            © 2025 1583 Café. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <div class="whatsapp-float">
+        <a href="https://wa.me/+573125678901?text=Quiero%20solicitar%20un%20domicilio" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+            <span class="notification">Solicitar Domicilio</span>
+        </a>
+    </div>
+
+    <!-- Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <img id="modal-image" src="" alt="Producto">
+            <h3 id="modal-title"></h3>
+            <p id="modal-description"></p>
+            <p class="ingredients" id="modal-ingredients"></p>
+            <p class="price" id="modal-price"></p>
+        </div>
+    </div>
+
+    <script>
+        let currentLang = 'es';
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.menu-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelectorAll('.menu-nav a').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            document.querySelector(`[onclick="showSection('${sectionId}'); return false;"]`).classList.add('active');
+        }
+
+        function openModal(id, description, ingredients, price, image) {
+            const modal = document.getElementById('product-modal');
+            const titleElement = document.getElementById('modal-title');
+            const descriptionElement = document.getElementById('modal-description');
+            const ingredientsElement = document.getElementById('modal-ingredients');
+            const priceElement = document.getElementById('modal-price');
+            const imageElement = document.getElementById('modal-image');
+
+            titleElement.textContent = translations[currentLang][id] || id;
+            descriptionElement.textContent = description;
+            ingredientsElement.textContent = `Ingredientes: ${ingredients}`;
+            priceElement.textContent = `Precio: ${price}`;
+            imageElement.src = image;
+            imageElement.alt = translations[currentLang][id] || id;
+
+            modal.classList.add('active');
+
+            // Cerrar modal con tecla Esc
+            document.addEventListener('keydown', closeModalOnEsc);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('product-modal');
+            modal.classList.remove('active');
+            document.removeEventListener('keydown', closeModalOnEsc);
+        }
+
+        function closeModalOnEsc(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        }
+
+        // Cerrar modal al hacer clic fuera
+        document.getElementById('product-modal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeModal();
+            }
+        });
+
+        const translations = {
+            es: {
+                "menu-title": "Nuestro Menú",
+                "cafe": "Café",
+                "bebidas-frias": "Bebidas Frías",
+                "te-caliente": "Té y Otras Bebidas Calientes",
+                "postres": "Postres y Repostería",
+                "comidas": "Comidas",
+                "productos": "Productos y Otros",
+                espresso: "Espresso",
+                americano: "Americano",
+                cappuccino: "Cappuccino",
+                latte: "Latte",
+                "flat-white": "Flat White",
+                macchiato: "Macchiato",
+                mocha: "Mocha",
+                "cold-brew": "Cold Brew",
+                "nitro-cold-brew": "Nitro Cold Brew",
+                frappuccino: "Frappuccino (de café, de crema, con sabores)",
+                "iced-tea": "Té helado (black tea, green tea, etc.)",
+                refresher: "Refresher (Mango Dragonfruit, Strawberry Açaí)",
+                juices: "Jugos y bebidas embotelladas",
+                "hot-tea": "Tés calientes (verde, negro, chai, etc.)",
+                "tea-latte": "Té latte (Chai Tea Latte, Matcha Latte)",
+                "hot-chocolate": "Chocolate caliente",
+                "seasonal-drinks": "Bebidas de temporada (Pumpkin Spice Latte, etc.)",
+                muffins: "Muffins",
+                brownies: "Brownies",
+                cheesecakes: "Cheesecakes",
+                "carrot-cake": "Tarta de zanahoria",
+                donuts: "Donas",
+                cookies: "Galletas (cookies)",
+                "hot-sandwiches": "Sándwiches calientes",
+                wraps: "Wraps",
+                salads: "Ensaladas",
+                "yogurt-granola": "Yogur con granola",
+                paninis: "Paninis",
+                "stuffed-croissants": "Croissants rellenos",
+                "coffee-beans": "Granos de café",
+                "loose-leaf-tea": "Tés en hoja",
+                merchandise: "Tazas, termos y merchandising"
+            },
+            en: {
+                "menu-title": "Our Menu",
+                "cafe": "Coffee",
+                "bebidas-frias": "Cold Drinks",
+                "te-caliente": "Tea and Other Hot Drinks",
+                "postres": "Desserts and Pastries",
+                "comidas": "Food",
+                "productos": "Products and Others",
+                espresso: "Espresso",
+                americano: "Americano",
+                cappuccino: "Cappuccino",
+                latte: "Latte",
+                "flat-white": "Flat White",
+                macchiato: "Macchiato",
+                mocha: "Mocha",
+                "cold-brew": "Cold Brew",
+                "nitro-cold-brew": "Nitro Cold Brew",
+                frappuccino: "Frappuccino (coffee, cream, with flavors)",
+                "iced-tea": "Iced Tea (black tea, green tea, etc.)",
+                refresher: "Refresher (Mango Dragonfruit, Strawberry Açaí)",
+                juices: "Juices and bottled drinks",
+                "hot-tea": "Hot Teas (green, black, chai, etc.)",
+                "tea-latte": "Tea Latte (Chai Tea Latte, Matcha Latte)",
+                "hot-chocolate": "Hot Chocolate",
+                "seasonal-drinks": "Seasonal Drinks (Pumpkin Spice Latte, etc.)",
+                muffins: "Muffins",
+                brownies: "Brownies",
+                cheesecakes: "Cheesecakes",
+                "carrot-cake": "Carrot Cake",
+                donuts: "Donuts",
+                cookies: "Cookies",
+                "hot-sandwiches": "Hot Sandwiches",
+                wraps: "Wraps",
+                salads: "Salads",
+                "yogurt-granola": "Yogurt with Granola",
+                paninis: "Paninis",
+                "stuffed-croissants": "Stuffed Croissants",
+                "coffee-beans": "Coffee Beans",
+                "loose-leaf-tea": "Loose Leaf Tea",
+                merchandise: "Mugs, thermoses, and merchandise"
+            },
+            pt: {
+                "menu-title": "Nosso Menu",
+                "cafe": "Café",
+                "bebidas-frias": "Bebidas Frias",
+                "te-caliente": "Chá e Outras Bebidas Quentes",
+                "postres": "Sobremesas e Confeitaria",
+                "comidas": "Comidas",
+                "productos": "Produtos e Outros",
+                espresso: "Expresso",
+                americano: "Americano",
+                cappuccino: "Cappuccino",
+                latte: "Latte",
+                "flat-white": "Flat White",
+                macchiato: "Macchiato",
+                mocha: "Mocha",
+                "cold-brew": "Cold Brew",
+                "nitro-cold-brew": "Nitro Cold Brew",
+                frappuccino: "Frappuccino (de café, de creme, com sabores)",
+                "iced-tea": "Chá gelado (chá preto, chá verde, etc.)",
+                refresher: "Refresher (Mango Dragonfruit, Strawberry Açaí)",
+                juices: "Sucos e bebidas engarrafadas",
+                "hot-tea": "Chás quentes (verde, preto, chai, etc.)",
+                "tea-latte": "Chá latte (Chai Tea Latte, Matcha Latte)",
+                "hot-chocolate": "Chocolate quente",
+                "seasonal-drinks": "Bebidas sazonais (Pumpkin Spice Latte, etc.)",
+                muffins: "Muffins",
+                brownies: "Brownies",
+                cheesecakes: "Cheesecakes",
+                "carrot-cake": "Bolo de cenoura",
+                donuts: "Donuts",
+                cookies: "Biscoitos",
+                "hot-sandwiches": "Sanduíches quentes",
+                wraps: "Wraps",
+                salads: "Saladas",
+                "yogurt-granola": "Iogurte com granola",
+                paninis: "Paninis",
+                "stuffed-croissants": "Croissants recheados",
+                "coffee-beans": "Grãos de café",
+                "loose-leaf-tea": "Chá em folha",
+                merchandise: "Canecas, garrafas térmicas e produtos"
+            }
+        };
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                element.textContent = translations[lang][key];
+            });
+        }
+
+        // Inicializar en español
+        changeLanguage('es');
+    </script>
+</body>
+</html>

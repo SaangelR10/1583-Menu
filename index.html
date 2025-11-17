@@ -20,6 +20,12 @@
             flex-direction: column;
             position: relative;
             background-color: #1A0E05;
+            overflow-y: scroll;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+        }
+        body::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
         }
         body::before {
             content: '';
@@ -56,6 +62,66 @@
         .top-nav h1 {
             font-size: 2.5rem;
             margin: 0;
+        }
+        .history-button {
+            position: fixed;
+            top: calc(var(--top-nav-height) + 15px);
+            left: 30px;
+            background: rgba(58, 34, 15, 0.95);
+            border: 1px solid #D4A017;
+            color: #D4A017;
+            padding: 6px 14px;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+            z-index: 999;
+            opacity: 0;
+            transform: translateY(-20px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        .history-button.visible {
+            opacity: 1;
+            transform: translateY(0);
+            animation: slideDown 0.6s ease-out;
+        }
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .history-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 160, 23, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        .history-button:hover::before {
+            left: 100%;
+        }
+        .history-button:hover {
+            background-color: rgba(212, 160, 23, 0.15);
+            border-color: #FFD700;
+            color: #FFD700;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 160, 23, 0.5);
+        }
+        .history-button:active {
+            transform: translateY(0);
         }
         .language-selector select {
             background-color: #D4A017;
@@ -340,6 +406,190 @@
         .modal-close:hover {
             color: #D4A017;
         }
+        /* History Modal Styles */
+        .history-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        .history-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        .history-modal-content {
+            background: linear-gradient(135deg, #3A220F 0%, #2A1809 100%);
+            border: 2px solid #D4A017;
+            border-radius: 15px;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            padding: 40px;
+            position: relative;
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.4s ease;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+        }
+        .history-modal-content::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        .history-modal.active .history-modal-content {
+            transform: scale(1) translateY(0);
+        }
+        .history-modal-content h2 {
+            font-size: 2.5rem;
+            color: #D4A017;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 2px solid rgba(212, 160, 23, 0.3);
+            padding-bottom: 15px;
+        }
+        .history-modal-content h3 {
+            font-size: 1.8rem;
+            color: #D4A017;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        .history-modal-content p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        .history-modal-content .intro {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.95);
+            border-left: 3px solid #D4A017;
+            padding-left: 20px;
+            margin-bottom: 30px;
+        }
+        .timeline {
+            position: relative;
+            margin: 40px 0;
+            padding-left: 30px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, #D4A017, rgba(212, 160, 23, 0.3));
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-left: 40px;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: slideInLeft 0.6s ease forwards;
+        }
+        .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -25px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #D4A017;
+            border: 3px solid #3A220F;
+            box-shadow: 0 0 10px rgba(212, 160, 23, 0.5);
+        }
+        .timeline-item .year {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #D4A017;
+            margin-bottom: 8px;
+            font-family: 'Playfair Display', serif;
+        }
+        .timeline-item .description {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.6;
+        }
+        .meaning-list {
+            list-style: none;
+            padding: 0;
+            margin: 30px 0;
+        }
+        .meaning-list li {
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            background: rgba(212, 160, 23, 0.1);
+            border-left: 4px solid #D4A017;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateX(-10px);
+            animation: slideInLeft 0.5s ease forwards;
+        }
+        .meaning-list li:nth-child(1) { animation-delay: 0.2s; }
+        .meaning-list li:nth-child(2) { animation-delay: 0.3s; }
+        .meaning-list li:nth-child(3) { animation-delay: 0.4s; }
+        .meaning-list li:hover {
+            background: rgba(212, 160, 23, 0.2);
+            transform: translateX(5px);
+        }
+        .meaning-list li strong {
+            color: #D4A017;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .history-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            color: #FFFFFF;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        .history-close:hover {
+            color: #D4A017;
+            background: rgba(212, 160, 23, 0.1);
+            transform: rotate(90deg);
+        }
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        .highlight-year {
+            color: #D4A017;
+            font-weight: 700;
+            font-size: 1.1em;
+        }
         /* Media queries para pantallas pequeñas */
         @media (max-width: 768px) {
             .menu-nav {
@@ -443,6 +693,31 @@
             .modal-content .price {
                 font-size: 0.75rem;
             }
+            .history-modal-content {
+                padding: 25px 20px;
+                max-height: 95vh;
+            }
+            .history-modal-content h2 {
+                font-size: 1.8rem;
+            }
+            .history-modal-content h3 {
+                font-size: 1.4rem;
+            }
+            .history-modal-content p {
+                font-size: 0.9rem;
+            }
+            .timeline {
+                padding-left: 25px;
+            }
+            .timeline-item {
+                padding-left: 35px;
+            }
+            .history-button {
+                font-size: 0.65rem;
+                padding: 5px 12px;
+                left: 15px;
+                top: calc(var(--top-nav-height) + 10px);
+            }
         }
     </style>
 </head>
@@ -456,6 +731,11 @@
             </select>
         </div>
     </header>
+
+    <!-- Floating History Button -->
+    <button class="history-button" id="history-button" onclick="openHistoryModal()">
+        ¿Sabes por qué somos 1583?
+    </button>
 
     <nav class="menu-nav">
         <h2 class="text-3xl font-semibold mb-6" data-i18n="menu-title">Nuestro Menú</h2>
@@ -762,6 +1042,60 @@
             <p id="modal-description"></p>
             <p class="ingredients" id="modal-ingredients"></p>
             <p class="price" id="modal-price"></p>
+        </div>
+    </div>
+
+    <!-- History Modal -->
+    <div id="history-modal" class="history-modal">
+        <div class="history-modal-content">
+            <button class="history-close" onclick="closeHistoryModal()">×</button>
+            <h2>Por qué se llama Café 1583?</h2>
+            
+            <p class="intro">Cuando escogimos el nombre Café 1583 no fue un número al azar. Quisimos anclar el café que servimos hoy en Cali a un momento preciso de la historia del café en el mundo: el año en que Europa dejó constancia escrita, por primera vez, de esta bebida que ya era famosa en el mundo árabe.</p>
+
+            <p>En <span class="highlight-year">1583</span> el médico y botánico alemán Leonhard Rauwolf publicó su relato de viaje por el Levante ("Aigentliche Beschreibung der Raiss inn die Morgenländer"), y allí describe una bebida oscura y caliente que los habitantes de Alepo tomaban y llamaban <em>chaube</em> —es decir, café. Ese texto es considerado uno de los primeros testimonios europeos impresos sobre el café.</p>
+
+            <p>¿Por qué eso es importante? Porque para entonces el café ya llevaba más de un siglo circulando entre Yemen, La Meca, El Cairo y Estambul, impulsado por las rutas comerciales del Imperio Otomano, pero todavía no tenía "acta de nacimiento" en Europa. El libro de <span class="highlight-year">1583</span> hace visible para Occidente una costumbre que en el mundo islámico ya estaba muy arraigada.</p>
+
+            <h3>Si miramos la línea de tiempo, se entiende mejor:</h3>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="year">Siglo XV</div>
+                    <div class="description">El café se consume en Yemen, sobre todo entre sufíes, para mantenerse despiertos.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">Inicios del XVI</div>
+                    <div class="description">El café llega a ciudades como El Cairo, Damasco y Estambul, y aparecen las primeras cafeterías públicas.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">Segunda mitad del XVI</div>
+                    <div class="description">Comerciantes y viajeros europeos empiezan a verlo y a contarlo.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">1583</div>
+                    <div class="description">Rauwolf lo describe por escrito y ese relato circula en Europa. Ahí está nuestro número.</div>
+                </div>
+            </div>
+
+            <h3>Entonces, Café 1583 significa esto:</h3>
+
+            <ul class="meaning-list">
+                <li>
+                    <strong>1. Homenaje a la primera descripción europea conocida del café.</strong>
+                    Es la forma de decir: "estamos conectados con la raíz histórica de esta bebida".
+                </li>
+                <li>
+                    <strong>2. Reconocimiento al viaje del café.</strong>
+                    Antes de llegar a nuestras tazas en América, el café pasó por Etiopía, Yemen, los puertos de Moca, las ciudades del Mediterráneo y, finalmente, Europa. 1583 es una especie de faro en ese recorrido.
+                </li>
+                <li>
+                    <strong>3. Una promesa de marca.</strong>
+                    Así como en 1583 alguien se tomó el trabajo de documentar el café con rigor, nosotros queremos servirlo con el mismo respeto por su origen.
+                </li>
+            </ul>
+
+            <p>Podríamos haber escogido el año de la primera cafetería en Venecia o el año en que llegó a América, pero <span class="highlight-year">1583</span> nos permite contar una historia menos obvia y totalmente verificable: es el año en que el café quedó registrado en un libro europeo y empezó, de verdad, a cruzar fronteras culturales. Eso es exactamente lo que queremos que pase en nuestra tienda: que una taza vuelva a unir mundos.</p>
         </div>
     </div>
 
@@ -1226,6 +1560,33 @@
             }
         });
 
+        // History Modal Functions
+        function openHistoryModal() {
+            const modal = document.getElementById('history-modal');
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            document.addEventListener('keydown', closeHistoryModalOnEsc);
+        }
+
+        function closeHistoryModal() {
+            const modal = document.getElementById('history-modal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            document.removeEventListener('keydown', closeHistoryModalOnEsc);
+        }
+
+        function closeHistoryModalOnEsc(event) {
+            if (event.key === 'Escape') {
+                closeHistoryModal();
+            }
+        }
+
+        document.getElementById('history-modal').addEventListener('click', function(event) {
+            if (event.target === this) {
+                closeHistoryModal();
+            }
+        });
+
         const translations = {
             es: {
                 'menu-title': 'Nuestro Menú',
@@ -1339,6 +1700,16 @@
         }
 
         changeLanguage(defaultLang);
+
+        // Show history button after 2 seconds
+        window.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const historyButton = document.getElementById('history-button');
+                if (historyButton) {
+                    historyButton.classList.add('visible');
+                }
+            }, 2000);
+        });
     </script>
 </body>
 </html>

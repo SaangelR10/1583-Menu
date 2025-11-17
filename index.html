@@ -8,16 +8,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
+        :root {
+            --top-nav-height: 90px;
+        }
         body {
-            background: linear-gradient(rgba(74, 44, 20, 0.85), rgba(74, 44, 20, 0.85)), url('images/1583.png');
-            background-size: cover;
-            background-attachment: fixed;
             color: #FFFFFF;
             font-family: 'Montserrat', sans-serif;
             margin: 0;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            position: relative;
+            background-color: #1A0E05;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: var(--top-nav-height);
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(rgba(74, 44, 20, 0.85), rgba(74, 44, 20, 0.85)), url('images/1583.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .top-nav {
+            min-height: var(--top-nav-height);
         }
         h1, h2, h3 {
             font-family: 'Playfair Display', serif;
@@ -107,6 +126,19 @@
         }
         .menu-section.active {
             display: block;
+        }
+        .menu-section.fade-in {
+            animation: sectionFade 0.45s ease both;
+        }
+        @keyframes sectionFade {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         .menu-item {
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -421,7 +453,6 @@
             <select onchange="changeLanguage(this.value)">
                 <option value="es">Español</option>
                 <option value="en">English</option>
-                <option value="pt">Português</option>
             </select>
         </div>
     </header>
@@ -442,68 +473,68 @@
         <section id="cafe" class="menu-section active">
             <h2 class="text-3xl font-semibold mb-6 text-center" data-i18n="cafe">Café</h2>
             <ul class="space-y-2">
-                <li class="menu-item flex flex-col" onclick="openModal('espresso', 'Un shot intenso y aromático de café puro, preparado con granos de origen colombiano.', 'Granos de café 100% colombianos, agua filtrada.', '6.000 COP', 'https://via.placeholder.com)"/>
+                <li class="menu-item flex flex-col" data-item-id="espresso" onclick="openModal('espresso')">
                     <div class="flex justify-between">
                         <span data-i18n="espresso">Espresso</span>
-                        <span>6.000 COP</span>
+                        <span data-price-for="espresso">6.000 COP</span>
                     </div>
-                    <p class="menu-item-description">Un shot intenso y aromático de café puro, preparado con granos de origen colombiano.</p>
+                    <p class="menu-item-description" data-description-for="espresso">Un shot intenso y aromático de café puro, preparado con granos de origen colombiano.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('americano', 'Café espresso diluido con agua caliente, perfecto para un sabor suave y prolongado.', 'Espresso, agua caliente.', '6.500 COP', 'https://via.placeholder.com/500x150?text=Americano')">
+                <li class="menu-item flex flex-col" data-item-id="americano" onclick="openModal('americano')">
                     <div class="flex justify-between">
                         <span data-i18n="americano">Americano</span>
-                        <span>6.500 COP</span>
+                        <span data-price-for="americano">6.500 COP</span>
                     </div>
-                    <p class="menu-item-description">Café espresso diluido con agua caliente, perfecto para un sabor suave y prolongado.</p>
+                    <p class="menu-item-description" data-description-for="americano">Café espresso diluido con agua caliente, perfecto para un sabor suave y prolongado.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('cappuccino', 'Espresso equilibrado con leche vaporizada y una capa de espuma cremosa.', 'Espresso, leche, espuma de leche.', '8.000 COP', 'https://via.placeholder.com/500x150?text=Cappuccino')">
+                <li class="menu-item flex flex-col" data-item-id="cappuccino" onclick="openModal('cappuccino')">
                     <div class="flex justify-between">
                         <span data-i18n="cappuccino">Cappuccino</span>
-                        <span>8.000 COP</span>
+                        <span data-price-for="cappuccino">8.000 COP</span>
                     </div>
-                    <p class="menu-item-description">Espresso equilibrado con leche vaporizada y una capa de espuma cremosa.</p>
+                    <p class="menu-item-description" data-description-for="cappuccino">Espresso equilibrado con leche vaporizada y una capa de espuma cremosa.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('latte', 'Espresso suave combinado con leche caliente y una ligera capa de espuma.', 'Espresso, leche vaporizada, espuma de leche.', '8.500 COP', 'https://via.placeholder.com/500x150?text=Latte')">
+                <li class="menu-item flex flex-col" data-item-id="latte" onclick="openModal('latte')">
                     <div class="flex justify-between">
                         <span data-i18n="latte">Latte</span>
-                        <span>8.500 COP</span>
+                        <span data-price-for="latte">8.500 COP</span>
                     </div>
-                    <p class="menu-item-description">Espresso suave combinado con leche caliente y una ligera capa de espuma.</p>
+                    <p class="menu-item-description" data-description-for="latte">Espresso suave combinado con leche caliente y una ligera capa de espuma.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('flat-white', 'Espresso doble con leche vaporizada para un sabor intenso y cremoso.', 'Espresso doble, leche vaporizada.', '8.000 COP', 'https://via.placeholder.com/500x150?text=Flat+White')">
+                <li class="menu-item flex flex-col" data-item-id="flat-white" onclick="openModal('flat-white')">
                     <div class="flex justify-between">
                         <span data-i18n="flat-white">Flat White</span>
-                        <span>8.000 COP</span>
+                        <span data-price-for="flat-white">8.000 COP</span>
                     </div>
-                    <p class="menu-item-description">Espresso doble con leche vaporizada para un sabor intenso y cremoso.</p>
+                    <p class="menu-item-description" data-description-for="flat-white">Espresso doble con leche vaporizada para un sabor intenso y cremoso.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('macchiato', 'Espresso con un toque de espuma de leche, ideal para los amantes del café puro.', 'Espresso, espuma de leche.', '7.000 COP', 'https://via.placeholder.com/500x150?text=Macchiato')">
+                <li class="menu-item flex flex-col" data-item-id="macchiato" onclick="openModal('macchiato')">
                     <div class="flex justify-between">
                         <span data-i18n="macchiato">Macchiato</span>
-                        <span>7.000 COP</span>
+                        <span data-price-for="macchiato">7.000 COP</span>
                     </div>
-                    <p class="menu-item-description">Espresso con un toque de espuma de leche, ideal para los amantes del café puro.</p>
+                    <p class="menu-item-description" data-description-for="macchiato">Espresso con un toque de espuma de leche, ideal para los amantes del café puro.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('mocha', 'Espresso con chocolate oscuro, leche vaporizada y crema batida.', 'Espresso, chocolate, leche, crema batida.', '9.000 COP', 'https://via.placeholder.com/500x150?text=Mocha')">
+                <li class="menu-item flex flex-col" data-item-id="mocha" onclick="openModal('mocha')">
                     <div class="flex justify-between">
                         <span data-i18n="mocha">Mocha</span>
-                        <span>9.000 COP</span>
+                        <span data-price-for="mocha">9.000 COP</span>
                     </div>
-                    <p class="menu-item-description">Espresso con chocolate oscuro, leche vaporizada y crema batida.</p>
+                    <p class="menu-item-description" data-description-for="mocha">Espresso con chocolate oscuro, leche vaporizada y crema batida.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('cold-brew', 'Café infusionado en frío durante 24 horas para un sabor suave y refrescante.', 'Café molido, agua fría.', '9.500 COP', 'https://via.placeholder.com/500x150?text=Cold+Brew')">
+                <li class="menu-item flex flex-col" data-item-id="cold-brew" onclick="openModal('cold-brew')">
                     <div class="flex justify-between">
                         <span data-i18n="cold-brew">Cold Brew</span>
-                        <span>9.500 COP</span>
+                        <span data-price-for="cold-brew">9.500 COP</span>
                     </div>
-                    <p class="menu-item-description">Café infusionado en frío durante 24 horas para un sabor suave y refrescante.</p>
+                    <p class="menu-item-description" data-description-for="cold-brew">Café infusionado en frío durante 24 horas para un sabor suave y refrescante.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('nitro-cold-brew', 'Cold brew infusionado con nitrógeno para una textura cremosa y burbujeante.', 'Cold brew, nitrógeno.', '10.000 COP', 'https://via.placeholder.com/500x150?text=Nitro+Cold+Brew')">
+                <li class="menu-item flex flex-col" data-item-id="nitro-cold-brew" onclick="openModal('nitro-cold-brew')">
                     <div class="flex justify-between">
                         <span data-i18n="nitro-cold-brew">Nitro Cold Brew</span>
-                        <span>10.000 COP</span>
+                        <span data-price-for="nitro-cold-brew">10.000 COP</span>
                     </div>
-                    <p class="menu-item-description">Cold brew infusionado con nitrógeno para una textura cremosa y burbujeante.</p>
+                    <p class="menu-item-description" data-description-for="nitro-cold-brew">Cold brew infusionado con nitrógeno para una textura cremosa y burbujeante.</p>
                 </li>
             </ul>
         </section>
@@ -511,33 +542,33 @@
         <section id="bebidas-frias" class="menu-section">
             <h2 class="text-3xl font-semibold mb-6 text-center" data-i18n="bebidas-frias">Bebidas Frías</h2>
             <ul class="space-y-2">
-                <li class="menu-item flex flex-col" onclick="openModal('frappuccino', 'Bebida helada batida con café, crema o sabores, perfecta para un día caluroso.', 'Café o crema, hielo, leche, saborizantes.', '12.000 COP', 'https://via.placeholder.com/500x150?text=Frappuccino')">
+                <li class="menu-item flex flex-col" data-item-id="frappuccino" onclick="openModal('frappuccino')">
                     <div class="flex justify-between">
                         <span data-i18n="frappuccino">Frappuccino (de café, de crema, con sabores)</span>
-                        <span>12.000 COP</span>
+                        <span data-price-for="frappuccino">12.000 COP</span>
                     </div>
-                    <p class="menu-item-description">Bebida helada batida con café, crema o sabores, perfecta para un día caluroso.</p>
+                    <p class="menu-item-description" data-description-for="frappuccino">Bebida helada batida con café, crema o sabores, perfecta para un día caluroso.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('iced-tea', 'Té refrescante servido con hielo, disponible en variedades como negro o verde.', 'Té, hielo, endulzante opcional.', '7.000 COP', 'https://via.placeholder.com/500x150?text=Iced+Tea')">
+                <li class="menu-item flex flex-col" data-item-id="iced-tea" onclick="openModal('iced-tea')">
                     <div class="flex justify-between">
                         <span data-i18n="iced-tea">Té helado (black tea, green tea, etc.)</span>
-                        <span>7.000 COP</span>
+                        <span data-price-for="iced-tea">7.000 COP</span>
                     </div>
-                    <p class="menu-item-description">Té refrescante servido con hielo, disponible en variedades como negro o verde.</p>
+                    <p class="menu-item-description" data-description-for="iced-tea">Té refrescante servido con hielo, disponible en variedades como negro o verde.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('refresher', 'Bebida frutal vibrante con sabores como mango dragonfruit o fresa açaí.', 'Fruta, agua, hielo, endulzante.', '8.500 COP', 'https://via.placeholder.com/500x150?text=Refresher')">
+                <li class="menu-item flex flex-col" data-item-id="refresher" onclick="openModal('refresher')">
                     <div class="flex justify-between">
                         <span data-i18n="refresher">Refresher (Mango Dragonfruit, Strawberry Açaí)</span>
-                        <span>8.500 COP</span>
+                        <span data-price-for="refresher">8.500 COP</span>
                     </div>
-                    <p class="menu-item-description">Bebida frutal vibrante con sabores como mango dragonfruit o fresa açaí.</p>
+                    <p class="menu-item-description" data-description-for="refresher">Bebida frutal vibrante con sabores como mango dragonfruit o fresa açaí.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('juices', 'Selección de jugos naturales y bebidas refrescantes embotelladas.', 'Frutas frescas, agua, endulzante opcional.', '5.000 COP', 'https://via.placeholder.com/500x150?text=Juices')">
+                <li class="menu-item flex flex-col" data-item-id="juices" onclick="openModal('juices')">
                     <div class="flex justify-between">
                         <span data-i18n="juices">Jugos y bebidas embotelladas</span>
-                        <span>5.000 COP</span>
+                        <span data-price-for="juices">5.000 COP</span>
                     </div>
-                    <p class="menu-item-description">Selección de jugos naturales y bebidas refrescantes embotelladas.</p>
+                    <p class="menu-item-description" data-description-for="juices">Selección de jugos naturales y bebidas refrescantes embotelladas.</p>
                 </li>
             </ul>
         </section>
@@ -545,33 +576,33 @@
         <section id="te-caliente" class="menu-section">
             <h2 class="text-3xl font-semibold mb-6 text-center" data-i18n="te-caliente">Té y Otras Bebidas Calientes</h2>
             <ul class="space-y-2">
-                <li class="menu-item flex flex-col" onclick="openModal('hot-tea', 'Selección de tés aromáticos servidos calientes, perfectos para relajarse.', 'Hojas de té, agua caliente.', '6.000 COP', 'https://via.placeholder.com/500x150?text=Hot+Tea')">
+                <li class="menu-item flex flex-col" data-item-id="hot-tea" onclick="openModal('hot-tea')">
                     <div class="flex justify-between">
                         <span data-i18n="hot-tea">Tés calientes (verde, negro, chai, etc.)</span>
-                        <span>6.000 COP</span>
+                        <span data-price-for="hot-tea">6.000 COP</span>
                     </div>
-                    <p class="menu-item-description">Selección de tés aromáticos servidos calientes, perfectos para relajarse.</p>
+                    <p class="menu-item-description" data-description-for="hot-tea">Selección de tés aromáticos servidos calientes, perfectos para relajarse.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('tea-latte', 'Té combinado con leche vaporizada, disponible en chai o matcha.', 'Té, leche vaporizada, endulzante.', '8.500 COP', 'https://via.placeholder.com/500x150?text=Tea+Latte')">
+                <li class="menu-item flex flex-col" data-item-id="tea-latte" onclick="openModal('tea-latte')">
                     <div class="flex justify-between">
                         <span data-i18n="tea-latte">Té latte (Chai Tea Latte, Matcha Latte)</span>
-                        <span>8.500 COP</span>
+                        <span data-price-for="tea-latte">8.500 COP</span>
                     </div>
-                    <p class="menu-item-description">Té combinado con leche vaporizada, disponible en chai o matcha.</p>
+                    <p class="menu-item-description" data-description-for="tea-latte">Té combinado con leche vaporizada, disponible en chai o matcha.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('hot-chocolate', 'Chocolate cremoso y cálido, ideal para los amantes del cacao.', 'Chocolate, leche, crema batida opcional.', '7.500 COP', 'https://via.placeholder.com/500x150?text=Hot+Chocolate')">
+                <li class="menu-item flex flex-col" data-item-id="hot-chocolate" onclick="openModal('hot-chocolate')">
                     <div class="flex justify-between">
                         <span data-i18n="hot-chocolate">Chocolate caliente</span>
-                        <span>7.500 COP</span>
+                        <span data-price-for="hot-chocolate">7.500 COP</span>
                     </div>
-                    <p class="menu-item-description">Chocolate cremoso y cálido, ideal para los amantes del cacao.</p>
+                    <p class="menu-item-description" data-description-for="hot-chocolate">Chocolate cremoso y cálido, ideal para los amantes del cacao.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('seasonal-drinks', 'Bebidas especiales como el Pumpkin Spice Latte, perfectas para la temporada.', 'Ingredientes de temporada, leche, especias.', '9.500 COP', 'https://via.placeholder.com/500x150?text=Seasonal+Drinks')">
+                <li class="menu-item flex flex-col" data-item-id="seasonal-drinks" onclick="openModal('seasonal-drinks')">
                     <div class="flex justify-between">
                         <span data-i18n="seasonal-drinks">Bebidas de temporada (Pumpkin Spice Latte, etc.)</span>
-                        <span>9.500 COP</span>
+                        <span data-price-for="seasonal-drinks">9.500 COP</span>
                     </div>
-                    <p class="menu-item-description">Bebidas especiales como el Pumpkin Spice Latte, perfectas para la temporada.</p>
+                    <p class="menu-item-description" data-description-for="seasonal-drinks">Bebidas especiales como el Pumpkin Spice Latte, perfectas para la temporada.</p>
                 </li>
             </ul>
         </section>
@@ -579,47 +610,47 @@
         <section id="postres" class="menu-section">
             <h2 class="text-3xl font-semibold mb-6 text-center" data-i18n="postres">Postres y Repostería</h2>
             <ul class="space-y-2">
-                <li class="menu-item flex flex-col" onclick="openModal('muffins', 'Muffins esponjosos disponibles en sabores como arándanos o chocolate.', 'Harina, azúcar, huevos, fruta o chocolate.', '5.000 COP', 'https://via.placeholder.com/500x150?text=Muffins')">
+                <li class="menu-item flex flex-col" data-item-id="muffins" onclick="openModal('muffins')">
                     <div class="flex justify-between">
                         <span data-i18n="muffins">Muffins</span>
-                        <span>5.000 COP</span>
+                        <span data-price-for="muffins">5.000 COP</span>
                     </div>
-                    <p class="menu-item-description">Muffins esponjosos disponibles en sabores como arándanos o chocolate.</p>
+                    <p class="menu-item-description" data-description-for="muffins">Muffins esponjosos disponibles en sabores como arándanos o chocolate.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('brownies', 'Brownies ricos y chocolatados con una textura suave y densa.', 'Chocolate, mantequilla, azúcar, harina.', '5.500 COP', 'https://via.placeholder.com/500x150?text=Brownies')">
+                <li class="menu-item flex flex-col" data-item-id="brownies" onclick="openModal('brownies')">
                     <div class="flex justify-between">
                         <span data-i18n="brownies">Brownies</span>
-                        <span>5.500 COP</span>
+                        <span data-price-for="brownies">5.500 COP</span>
                     </div>
-                    <p class="menu-item-description">Brownies ricos y chocolatados con una textura suave y densa.</p>
+                    <p class="menu-item-description" data-description-for="brownies">Brownies ricos y chocolatados con una textura suave y densa.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('cheesecakes', 'Tarta de queso cremosa con una base crujiente de galleta.', 'Queso crema, azúcar, galleta, fruta opcional.', '8.000 COP', 'https://via.placeholder.com/500x150?text=Cheesecakes')">
+                <li class="menu-item flex flex-col" data-item-id="cheesecakes" onclick="openModal('cheesecakes')">
                     <div class="flex justify-between">
                         <span data-i18n="cheesecakes">Cheesecakes</span>
-                        <span>8.000 COP</span>
+                        <span data-price-for="cheesecakes">8.000 COP</span>
                     </div>
-                    <p class="menu-item-description">Tarta de queso cremosa con una base crujiente de galleta.</p>
+                    <p class="menu-item-description" data-description-for="cheesecakes">Tarta de queso cremosa con una base crujiente de galleta.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('carrot-cake', 'Pastel húmedo de zanahoria con un glaseado de queso crema.', 'Zanahoria, harina, azúcar, queso crema.', '7.000 COP', 'https://via.placeholder.com/500x150?text=Carrot+Cake')">
+                <li class="menu-item flex flex-col" data-item-id="carrot-cake" onclick="openModal('carrot-cake')">
                     <div class="flex justify-between">
                         <span data-i18n="carrot-cake">Tarta de zanahoria</span>
-                        <span>7.000 COP</span>
+                        <span data-price-for="carrot-cake">7.000 COP</span>
                     </div>
-                    <p class="menu-item-description">Pastel húmedo de zanahoria con un glaseado de queso crema.</p>
+                    <p class="menu-item-description" data-description-for="carrot-cake">Pastel húmedo de zanahoria con un glaseado de queso crema.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('donuts', 'Donas glaseadas o rellenas, perfectas para un antojo dulce.', 'Harina, azúcar, levadura, glaseado o relleno.', '4.500 COP', 'https://via.placeholder.com/500x150?text=Donuts')">
+                <li class="menu-item flex flex-col" data-item-id="donuts" onclick="openModal('donuts')">
                     <div class="flex justify-between">
                         <span data-i18n="donuts">Donas</span>
-                        <span>4.500 COP</span>
+                        <span data-price-for="donuts">4.500 COP</span>
                     </div>
-                    <p class="menu-item-description">Donas glaseadas o rellenas, perfectas para un antojo dulce.</p>
+                    <p class="menu-item-description" data-description-for="donuts">Donas glaseadas o rellenas, perfectas para un antojo dulce.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('cookies', 'Galletas crujientes disponibles en sabores como chispas de chocolate.', 'Harina, mantequilla, azúcar, chocolate.', '3.500 COP', 'https://via.placeholder.com/500x150?text=Cookies')">
+                <li class="menu-item flex flex-col" data-item-id="cookies" onclick="openModal('cookies')">
                     <div class="flex justify-between">
                         <span data-i18n="cookies">Galletas (cookies)</span>
-                        <span>3.500 COP</span>
+                        <span data-price-for="cookies">3.500 COP</span>
                     </div>
-                    <p class="menu-item-description">Galletas crujientes disponibles en sabores como chispas de chocolate.</p>
+                    <p class="menu-item-description" data-description-for="cookies">Galletas crujientes disponibles en sabores como chispas de chocolate.</p>
                 </li>
             </ul>
         </section>
@@ -627,47 +658,47 @@
         <section id="comidas" class="menu-section">
             <h2 class="text-3xl font-semibold mb-6 text-center" data-i18n="comidas">Comidas</h2>
             <ul class="space-y-2">
-                <li class="menu-item flex flex-col" onclick="openModal('hot-sandwiches', 'Sándwiches tostados con ingredientes frescos y sabores intensos.', 'Pan, carne, queso, vegetales.', '10.000 COP', 'https://via.placeholder.com/500x150?text=Hot+Sandwiches')">
+                <li class="menu-item flex flex-col" data-item-id="hot-sandwiches" onclick="openModal('hot-sandwiches')">
                     <div class="flex justify-between">
                         <span data-i18n="hot-sandwiches">Sándwiches calientes</span>
-                        <span>10.000 COP</span>
+                        <span data-price-for="hot-sandwiches">10.000 COP</span>
                     </div>
-                    <p class="menu-item-description">Sándwiches tostados con ingredientes frescos y sabores intensos.</p>
+                    <p class="menu-item-description" data-description-for="hot-sandwiches">Sándwiches tostados con ingredientes frescos y sabores intensos.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('wraps', 'Tortillas rellenas con ingredientes frescos y salsas deliciosas.', 'Tortilla, carne, vegetales, salsa.', '9.000 COP', 'https://via.placeholder.com/500x150?text=Wraps')">
+                <li class="menu-item flex flex-col" data-item-id="wraps" onclick="openModal('wraps')">
                     <div class="flex justify-between">
                         <span data-i18n="wraps">Wraps</span>
-                        <span>9.000 COP</span>
+                        <span data-price-for="wraps">9.000 COP</span>
                     </div>
-                    <p class="menu-item-description">Tortillas rellenas con ingredientes frescos y salsas deliciosas.</p>
+                    <p class="menu-item-description" data-description-for="wraps">Tortillas rellenas con ingredientes frescos y salsas deliciosas.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('salads', 'Ensaladas frescas con ingredientes de temporada y aderezos caseros.', 'Vegetales, proteína opcional, aderezo.', '8.500 COP', 'https://via.placeholder.com/500x150?text=Salads')">
+                <li class="menu-item flex flex-col" data-item-id="salads" onclick="openModal('salads')">
                     <div class="flex justify-between">
                         <span data-i18n="salads">Ensaladas</span>
-                        <span>8.500 COP</span>
+                        <span data-price-for="salads">8.500 COP</span>
                     </div>
-                    <p class="menu-item-description">Ensaladas frescas con ingredientes de temporada y aderezos caseros.</p>
+                    <p class="menu-item-description" data-description-for="salads">Ensaladas frescas con ingredientes de temporada y aderezos caseros.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('yogurt-granola', 'Yogur cremoso servido con granola crujiente y fruta fresca.', 'Yogur, granola, fruta.', '7.000 COP', 'https://via.placeholder.com/500x150?text=Yogurt+Granola')">
+                <li class="menu-item flex flex-col" data-item-id="yogurt-granola" onclick="openModal('yogurt-granola')">
                     <div class="flex justify-between">
                         <span data-i18n="yogurt-granola">Yogur con granola</span>
-                        <span>7.000 COP</span>
+                        <span data-price-for="yogurt-granola">7.000 COP</span>
                     </div>
-                    <p class="menu-item-description">Yogur cremoso servido con granola crujiente y fruta fresca.</p>
+                    <p class="menu-item-description" data-description-for="yogurt-granola">Yogur cremoso servido con granola crujiente y fruta fresca.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('paninis', 'Paninis crujientes con ingredientes frescos y queso derretido.', 'Pan, queso, carne, vegetales.', '10.500 COP', 'https://via.placeholder.com/500x150?text=Paninis')">
+                <li class="menu-item flex flex-col" data-item-id="paninis" onclick="openModal('paninis')">
                     <div class="flex justify-between">
                         <span data-i18n="paninis">Paninis</span>
-                        <span>10.500 COP</span>
+                        <span data-price-for="paninis">10.500 COP</span>
                     </div>
-                    <p class="menu-item-description">Paninis crujientes con ingredientes frescos y queso derretido.</p>
+                    <p class="menu-item-description" data-description-for="paninis">Paninis crujientes con ingredientes frescos y queso derretido.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('stuffed-croissants', 'Croissants hojaldrados con rellenos salados o dulces.', 'Croissant, queso, jamón o dulce.', '6.500 COP', 'https://via.placeholder.com/500x150?text=Stuffed+Croissants')">
+                <li class="menu-item flex flex-col" data-item-id="stuffed-croissants" onclick="openModal('stuffed-croissants')">
                     <div class="flex justify-between">
                         <span data-i18n="stuffed-croissants">Croissants rellenos</span>
-                        <span>6.500 COP</span>
+                        <span data-price-for="stuffed-croissants">6.500 COP</span>
                     </div>
-                    <p class="menu-item-description">Croissants hojaldrados con rellenos salados o dulces.</p>
+                    <p class="menu-item-description" data-description-for="stuffed-croissants">Croissants hojaldrados con rellenos salados o dulces.</p>
                 </li>
             </ul>
         </section>
@@ -675,26 +706,26 @@
         <section id="productos" class="menu-section">
             <h2 class="text-3xl font-semibold mb-6 text-center" data-i18n="productos">Productos y Otros</h2>
             <ul class="space-y-2">
-                <li class="menu-item flex flex-col" onclick="openModal('coffee-beans', 'Granos de café de origen colombiano, perfectos para preparar en casa.', 'Granos de café 100% colombianos.', '25.000 COP', 'https://via.placeholder.com/500x150?text=Coffee+Beans')">
+                <li class="menu-item flex flex-col" data-item-id="coffee-beans" onclick="openModal('coffee-beans')">
                     <div class="flex justify-between">
                         <span data-i18n="coffee-beans">Granos de café</span>
-                        <span>25.000 COP</span>
+                        <span data-price-for="coffee-beans">25.000 COP</span>
                     </div>
-                    <p class="menu-item-description">Granos de café de origen colombiano, perfectos para preparar en casa.</p>
+                    <p class="menu-item-description" data-description-for="coffee-beans">Granos de café de origen colombiano, perfectos para preparar en casa.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('loose-leaf-tea', 'Selección de tés en hoja para una experiencia auténtica.', 'Hojas de té premium.', '20.000 COP', 'https://via.placeholder.com/500x150?text=Loose+Leaf+Tea')">
+                <li class="menu-item flex flex-col" data-item-id="loose-leaf-tea" onclick="openModal('loose-leaf-tea')">
                     <div class="flex justify-between">
                         <span data-i18n="loose-leaf-tea">Tés en hoja</span>
-                        <span>20.000 COP</span>
+                        <span data-price-for="loose-leaf-tea">20.000 COP</span>
                     </div>
-                    <p class="menu-item-description">Selección de tés en hoja para una experiencia auténtica.</p>
+                    <p class="menu-item-description" data-description-for="loose-leaf-tea">Selección de tés en hoja para una experiencia auténtica.</p>
                 </li>
-                <li class="menu-item flex flex-col" onclick="openModal('merchandise', 'Productos exclusivos de 1583 Café, como tazas y termos elegantes.', 'Materiales de alta calidad.', '30.000 COP', 'https://via.placeholder.com/500x150?text=Merchandise')">
+                <li class="menu-item flex flex-col" data-item-id="merchandise" onclick="openModal('merchandise')">
                     <div class="flex justify-between">
                         <span data-i18n="merchandise">Tazas, termos y merchandising</span>
-                        <span>30.000 COP</span>
+                        <span data-price-for="merchandise">30.000 COP</span>
                     </div>
-                    <p class="menu-item-description">Productos exclusivos de 1583 Café, como tazas y termos elegantes.</p>
+                    <p class="menu-item-description" data-description-for="merchandise">Productos exclusivos de 1583 Café, como tazas y termos elegantes.</p>
                 </li>
             </ul>
         </section>
@@ -735,20 +766,425 @@
     </div>
 
     <script>
-        let currentLang = 'es';
+        const defaultLang = 'es';
+        let currentLang = defaultLang;
+
+        const menuItems = {
+            espresso: {
+                descriptions: {
+                    es: 'Un shot intenso y aromático de café puro, preparado con granos de origen colombiano.',
+                    en: 'An intense, aromatic shot of pure coffee made with Colombian beans.'
+                },
+                ingredients: {
+                    es: 'Granos de café 100% colombianos, agua filtrada.',
+                    en: '100% Colombian coffee beans, filtered water.'
+                },
+                price: '6.000 COP',
+                image: 'https://via.placeholder.com/500x150?text=Espresso'
+            },
+            americano: {
+                descriptions: {
+                    es: 'Café espresso diluido con agua caliente, perfecto para un sabor suave y prolongado.',
+                    en: 'Espresso diluted with hot water for a smooth, long-lasting flavor.'
+                },
+                ingredients: {
+                    es: 'Espresso, agua caliente.',
+                    en: 'Espresso, hot water.'
+                },
+                price: '6.500 COP',
+                image: 'https://via.placeholder.com/500x150?text=Americano'
+            },
+            cappuccino: {
+                descriptions: {
+                    es: 'Espresso equilibrado con leche vaporizada y una capa de espuma cremosa.',
+                    en: 'Balanced espresso with steamed milk and a creamy foam layer.'
+                },
+                ingredients: {
+                    es: 'Espresso, leche, espuma de leche.',
+                    en: 'Espresso, milk, milk foam.'
+                },
+                price: '8.000 COP',
+                image: 'https://via.placeholder.com/500x150?text=Cappuccino'
+            },
+            latte: {
+                descriptions: {
+                    es: 'Espresso suave combinado con leche caliente y una ligera capa de espuma.',
+                    en: 'Silky espresso combined with hot milk and a light foam cap.'
+                },
+                ingredients: {
+                    es: 'Espresso, leche vaporizada, espuma de leche.',
+                    en: 'Espresso, steamed milk, milk foam.'
+                },
+                price: '8.500 COP',
+                image: 'https://via.placeholder.com/500x150?text=Latte'
+            },
+            'flat-white': {
+                descriptions: {
+                    es: 'Espresso doble con leche vaporizada para un sabor intenso y cremoso.',
+                    en: 'Double espresso with velvety steamed milk for an intense, creamy sip.'
+                },
+                ingredients: {
+                    es: 'Espresso doble, leche vaporizada.',
+                    en: 'Double espresso, steamed milk.'
+                },
+                price: '8.000 COP',
+                image: 'https://via.placeholder.com/500x150?text=Flat+White'
+            },
+            macchiato: {
+                descriptions: {
+                    es: 'Espresso con un toque de espuma de leche, ideal para los amantes del café puro.',
+                    en: 'Espresso marked with a touch of milk foam, perfect for purists.'
+                },
+                ingredients: {
+                    es: 'Espresso, espuma de leche.',
+                    en: 'Espresso, milk foam.'
+                },
+                price: '7.000 COP',
+                image: 'https://via.placeholder.com/500x150?text=Macchiato'
+            },
+            mocha: {
+                descriptions: {
+                    es: 'Espresso con chocolate oscuro, leche vaporizada y crema batida.',
+                    en: 'Espresso blended with dark chocolate, steamed milk, and whipped cream.'
+                },
+                ingredients: {
+                    es: 'Espresso, chocolate, leche, crema batida.',
+                    en: 'Espresso, chocolate, milk, whipped cream.'
+                },
+                price: '9.000 COP',
+                image: 'https://via.placeholder.com/500x150?text=Mocha'
+            },
+            'cold-brew': {
+                descriptions: {
+                    es: 'Café infusionado en frío durante 24 horas para un sabor suave y refrescante.',
+                    en: 'Coffee steeped cold for 24 hours for a naturally smooth, refreshing taste.'
+                },
+                ingredients: {
+                    es: 'Café molido, agua fría.',
+                    en: 'Ground coffee, cold water.'
+                },
+                price: '9.500 COP',
+                image: 'https://via.placeholder.com/500x150?text=Cold+Brew'
+            },
+            'nitro-cold-brew': {
+                descriptions: {
+                    es: 'Cold brew infusionado con nitrógeno para una textura cremosa y burbujeante.',
+                    en: 'Cold brew infused with nitrogen for a creamy, cascading texture.'
+                },
+                ingredients: {
+                    es: 'Cold brew, nitrógeno.',
+                    en: 'Cold brew, nitrogen.'
+                },
+                price: '10.000 COP',
+                image: 'https://via.placeholder.com/500x150?text=Nitro+Cold+Brew'
+            },
+            frappuccino: {
+                descriptions: {
+                    es: 'Bebida helada batida con café, crema o sabores, perfecta para un día caluroso.',
+                    en: 'Icy blended drink with coffee, cream, or flavor add-ons for warm days.'
+                },
+                ingredients: {
+                    es: 'Café o crema, hielo, leche, saborizantes.',
+                    en: 'Coffee or cream base, ice, milk, flavor syrups.'
+                },
+                price: '12.000 COP',
+                image: 'https://via.placeholder.com/500x150?text=Frappuccino'
+            },
+            'iced-tea': {
+                descriptions: {
+                    es: 'Té refrescante servido con hielo, disponible en variedades como negro o verde.',
+                    en: 'Refreshing tea served over ice, available in black or green varieties.'
+                },
+                ingredients: {
+                    es: 'Té, hielo, endulzante opcional.',
+                    en: 'Tea, ice, optional sweetener.'
+                },
+                price: '7.000 COP',
+                image: 'https://via.placeholder.com/500x150?text=Iced+Tea'
+            },
+            refresher: {
+                descriptions: {
+                    es: 'Bebida frutal vibrante con sabores como mango dragonfruit o fresa açaí.',
+                    en: 'Vibrant fruit drink with flavors like mango dragonfruit or strawberry açaí.'
+                },
+                ingredients: {
+                    es: 'Fruta, agua, hielo, endulzante.',
+                    en: 'Fruit juice, water, ice, sweetener.'
+                },
+                price: '8.500 COP',
+                image: 'https://via.placeholder.com/500x150?text=Refresher'
+            },
+            juices: {
+                descriptions: {
+                    es: 'Selección de jugos naturales y bebidas refrescantes embotelladas.',
+                    en: 'Selection of natural juices and refreshing bottled drinks.'
+                },
+                ingredients: {
+                    es: 'Frutas frescas, agua, endulzante opcional.',
+                    en: 'Fresh fruit, water, optional sweetener.'
+                },
+                price: '5.000 COP',
+                image: 'https://via.placeholder.com/500x150?text=Juices'
+            },
+            'hot-tea': {
+                descriptions: {
+                    es: 'Selección de tés aromáticos servidos calientes, perfectos para relajarse.',
+                    en: 'Aromatic hot teas perfect for unwinding and relaxing.'
+                },
+                ingredients: {
+                    es: 'Hojas de té, agua caliente.',
+                    en: 'Tea leaves, hot water.'
+                },
+                price: '6.000 COP',
+                image: 'https://via.placeholder.com/500x150?text=Hot+Tea'
+            },
+            'tea-latte': {
+                descriptions: {
+                    es: 'Té combinado con leche vaporizada, disponible en chai o matcha.',
+                    en: 'Tea combined with steamed milk, available in chai or matcha.'
+                },
+                ingredients: {
+                    es: 'Té, leche vaporizada, endulzante.',
+                    en: 'Tea, steamed milk, sweetener.'
+                },
+                price: '8.500 COP',
+                image: 'https://via.placeholder.com/500x150?text=Tea+Latte'
+            },
+            'hot-chocolate': {
+                descriptions: {
+                    es: 'Chocolate cremoso y cálido, ideal para los amantes del cacao.',
+                    en: 'Creamy, cozy hot chocolate ideal for cocoa lovers.'
+                },
+                ingredients: {
+                    es: 'Chocolate, leche, crema batida opcional.',
+                    en: 'Chocolate, milk, optional whipped cream.'
+                },
+                price: '7.500 COP',
+                image: 'https://via.placeholder.com/500x150?text=Hot+Chocolate'
+            },
+            'seasonal-drinks': {
+                descriptions: {
+                    es: 'Bebidas especiales como el Pumpkin Spice Latte, perfectas para la temporada.',
+                    en: 'Seasonal specialties like Pumpkin Spice Latte, perfect for festive cravings.'
+                },
+                ingredients: {
+                    es: 'Ingredientes de temporada, leche, especias.',
+                    en: 'Seasonal ingredients, milk, spices.'
+                },
+                price: '9.500 COP',
+                image: 'https://via.placeholder.com/500x150?text=Seasonal+Drinks'
+            },
+            muffins: {
+                descriptions: {
+                    es: 'Muffins esponjosos disponibles en sabores como arándanos o chocolate.',
+                    en: 'Fluffy muffins available in flavors like blueberry or chocolate.'
+                },
+                ingredients: {
+                    es: 'Harina, azúcar, huevos, fruta o chocolate.',
+                    en: 'Flour, sugar, eggs, fruit or chocolate.'
+                },
+                price: '5.000 COP',
+                image: 'https://via.placeholder.com/500x150?text=Muffins'
+            },
+            brownies: {
+                descriptions: {
+                    es: 'Brownies ricos y chocolatados con una textura suave y densa.',
+                    en: 'Rich, fudgy brownies with an indulgent chocolate bite.'
+                },
+                ingredients: {
+                    es: 'Chocolate, mantequilla, azúcar, harina.',
+                    en: 'Chocolate, butter, sugar, flour.'
+                },
+                price: '5.500 COP',
+                image: 'https://via.placeholder.com/500x150?text=Brownies'
+            },
+            cheesecakes: {
+                descriptions: {
+                    es: 'Tarta de queso cremosa con una base crujiente de galleta.',
+                    en: 'Creamy cheesecake with a crunchy cookie crust.'
+                },
+                ingredients: {
+                    es: 'Queso crema, azúcar, galleta, fruta opcional.',
+                    en: 'Cream cheese, sugar, cookie crust, optional fruit.'
+                },
+                price: '8.000 COP',
+                image: 'https://via.placeholder.com/500x150?text=Cheesecakes'
+            },
+            'carrot-cake': {
+                descriptions: {
+                    es: 'Pastel húmedo de zanahoria con un glaseado de queso crema.',
+                    en: 'Moist carrot cake finished with silky cream-cheese frosting.'
+                },
+                ingredients: {
+                    es: 'Zanahoria, harina, azúcar, queso crema.',
+                    en: 'Carrot, flour, sugar, cream cheese.'
+                },
+                price: '7.000 COP',
+                image: 'https://via.placeholder.com/500x150?text=Carrot+Cake'
+            },
+            donuts: {
+                descriptions: {
+                    es: 'Donas glaseadas o rellenas, perfectas para un antojo dulce.',
+                    en: 'Glazed or filled donuts perfect for a sweet craving.'
+                },
+                ingredients: {
+                    es: 'Harina, azúcar, levadura, glaseado o relleno.',
+                    en: 'Flour, sugar, yeast, glaze or filling.'
+                },
+                price: '4.500 COP',
+                image: 'https://via.placeholder.com/500x150?text=Donuts'
+            },
+            cookies: {
+                descriptions: {
+                    es: 'Galletas crujientes disponibles en sabores como chispas de chocolate.',
+                    en: 'Crunchy cookies available in flavors like chocolate chip.'
+                },
+                ingredients: {
+                    es: 'Harina, mantequilla, azúcar, chocolate.',
+                    en: 'Flour, butter, sugar, chocolate.'
+                },
+                price: '3.500 COP',
+                image: 'https://via.placeholder.com/500x150?text=Cookies'
+            },
+            'hot-sandwiches': {
+                descriptions: {
+                    es: 'Sándwiches tostados con ingredientes frescos y sabores intensos.',
+                    en: 'Toasted sandwiches packed with fresh ingredients and bold flavors.'
+                },
+                ingredients: {
+                    es: 'Pan, carne, queso, vegetales.',
+                    en: 'Bread, meat, cheese, vegetables.'
+                },
+                price: '10.000 COP',
+                image: 'https://via.placeholder.com/500x150?text=Hot+Sandwiches'
+            },
+            wraps: {
+                descriptions: {
+                    es: 'Tortillas rellenas con ingredientes frescos y salsas deliciosas.',
+                    en: 'Soft tortillas filled with fresh ingredients and tasty sauces.'
+                },
+                ingredients: {
+                    es: 'Tortilla, carne, vegetales, salsa.',
+                    en: 'Tortilla, protein, vegetables, sauce.'
+                },
+                price: '9.000 COP',
+                image: 'https://via.placeholder.com/500x150?text=Wraps'
+            },
+            salads: {
+                descriptions: {
+                    es: 'Ensaladas frescas con ingredientes de temporada y aderezos caseros.',
+                    en: 'Fresh salads with seasonal produce and house-made dressings.'
+                },
+                ingredients: {
+                    es: 'Vegetales, proteína opcional, aderezo.',
+                    en: 'Vegetables, optional protein, dressing.'
+                },
+                price: '8.500 COP',
+                image: 'https://via.placeholder.com/500x150?text=Salads'
+            },
+            'yogurt-granola': {
+                descriptions: {
+                    es: 'Yogur cremoso servido con granola crujiente y fruta fresca.',
+                    en: 'Creamy yogurt served with crunchy granola and fresh fruit.'
+                },
+                ingredients: {
+                    es: 'Yogur, granola, fruta.',
+                    en: 'Yogurt, granola, fruit.'
+                },
+                price: '7.000 COP',
+                image: 'https://via.placeholder.com/500x150?text=Yogurt+Granola'
+            },
+            paninis: {
+                descriptions: {
+                    es: 'Paninis crujientes con ingredientes frescos y queso derretido.',
+                    en: 'Crispy paninis with fresh fillings and melted cheese.'
+                },
+                ingredients: {
+                    es: 'Pan, queso, carne, vegetales.',
+                    en: 'Bread, cheese, meat, vegetables.'
+                },
+                price: '10.500 COP',
+                image: 'https://via.placeholder.com/500x150?text=Paninis'
+            },
+            'stuffed-croissants': {
+                descriptions: {
+                    es: 'Croissants hojaldrados con rellenos salados o dulces.',
+                    en: 'Flaky croissants stuffed with savory or sweet fillings.'
+                },
+                ingredients: {
+                    es: 'Croissant, queso, jamón o dulce.',
+                    en: 'Croissant, cheese, ham or sweet filling.'
+                },
+                price: '6.500 COP',
+                image: 'https://via.placeholder.com/500x150?text=Stuffed+Croissants'
+            },
+            'coffee-beans': {
+                descriptions: {
+                    es: 'Granos de café de origen colombiano, perfectos para preparar en casa.',
+                    en: 'Colombian coffee beans, perfect for brewing at home.'
+                },
+                ingredients: {
+                    es: 'Granos de café 100% colombianos.',
+                    en: '100% Colombian coffee beans.'
+                },
+                price: '25.000 COP',
+                image: 'https://via.placeholder.com/500x150?text=Coffee+Beans'
+            },
+            'loose-leaf-tea': {
+                descriptions: {
+                    es: 'Selección de tés en hoja para una experiencia auténtica.',
+                    en: 'Selection of loose-leaf teas for an authentic ritual.'
+                },
+                ingredients: {
+                    es: 'Hojas de té premium.',
+                    en: 'Premium tea leaves.'
+                },
+                price: '20.000 COP',
+                image: 'https://via.placeholder.com/500x150?text=Loose+Leaf+Tea'
+            },
+            merchandise: {
+                descriptions: {
+                    es: 'Productos exclusivos de 1583 Café, como tazas y termos elegantes.',
+                    en: 'Exclusive 1583 Café merchandise like mugs and sleek tumblers.'
+                },
+                ingredients: {
+                    es: 'Materiales de alta calidad.',
+                    en: 'High-quality materials.'
+                },
+                price: '30.000 COP',
+                image: 'https://via.placeholder.com/500x150?text=Merchandise'
+            }
+        };
 
         function showSection(sectionId) {
-            document.querySelectorAll('.menu-section').forEach(section => {
-                section.classList.remove('active');
-            });
+            const currentSection = document.querySelector('.menu-section.active');
+            const targetSection = document.getElementById(sectionId);
+            if (!targetSection || targetSection === currentSection) {
+                return;
+            }
+
+            if (currentSection) {
+                currentSection.classList.remove('active');
+            }
+
+            targetSection.classList.add('active', 'fade-in');
+            targetSection.addEventListener('animationend', () => {
+                targetSection.classList.remove('fade-in');
+            }, { once: true });
+
             document.querySelectorAll('.menu-nav a').forEach(link => {
                 link.classList.remove('active');
             });
-            document.getElementById(sectionId).classList.add('active');
-            document.querySelector(`[onclick="showSection('${sectionId}'); return false;"]`).classList.add('active');
+            const activeLink = document.querySelector(`[onclick="showSection('${sectionId}'); return false;"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
         }
 
-        function openModal(id, description, ingredients, price, image) {
+        function openModal(id) {
+            const item = menuItems[id];
+            if (!item) return;
+
             const modal = document.getElementById('product-modal');
             const titleElement = document.getElementById('modal-title');
             const descriptionElement = document.getElementById('modal-description');
@@ -756,16 +1192,19 @@
             const priceElement = document.getElementById('modal-price');
             const imageElement = document.getElementById('modal-image');
 
-            titleElement.textContent = translations[currentLang][id] || id;
+            const title = translations[currentLang][id] || translations[defaultLang][id] || id;
+            const description = item.descriptions[currentLang] || item.descriptions[defaultLang];
+            const ingredientsLabel = translations[currentLang]['ingredients-label'] || 'Ingredientes';
+            const priceLabel = translations[currentLang]['price-label'] || 'Precio';
+
+            titleElement.textContent = title;
             descriptionElement.textContent = description;
-            ingredientsElement.textContent = `Ingredientes: ${ingredients}`;
-            priceElement.textContent = `Precio: ${price}`;
-            imageElement.src = image;
-            imageElement.alt = translations[currentLang][id] || id;
+            ingredientsElement.textContent = `${ingredientsLabel}: ${item.ingredients[currentLang] || item.ingredients[defaultLang]}`;
+            priceElement.textContent = `${priceLabel}: ${item.price}`;
+            imageElement.src = item.image;
+            imageElement.alt = title;
 
             modal.classList.add('active');
-
-            // Cerrar modal con tecla Esc
             document.addEventListener('keydown', closeModalOnEsc);
         }
 
@@ -781,7 +1220,6 @@
             }
         }
 
-        // Cerrar modal al hacer clic fuera
         document.getElementById('product-modal').addEventListener('click', function(event) {
             if (event.target === this) {
                 closeModal();
@@ -790,127 +1228,90 @@
 
         const translations = {
             es: {
-                "menu-title": "Nuestro Menú",
-                "cafe": "Café",
-                "bebidas-frias": "Bebidas Frías",
-                "te-caliente": "Té y Otras Bebidas Calientes",
-                "postres": "Postres y Repostería",
-                "comidas": "Comidas",
-                "productos": "Productos y Otros",
-                espresso: "Espresso",
-                americano: "Americano",
-                cappuccino: "Cappuccino",
-                latte: "Latte",
-                "flat-white": "Flat White",
-                macchiato: "Macchiato",
-                mocha: "Mocha",
-                "cold-brew": "Cold Brew",
-                "nitro-cold-brew": "Nitro Cold Brew",
-                frappuccino: "Frappuccino (de café, de crema, con sabores)",
-                "iced-tea": "Té helado (black tea, green tea, etc.)",
-                refresher: "Refresher (Mango Dragonfruit, Strawberry Açaí)",
-                juices: "Jugos y bebidas embotelladas",
-                "hot-tea": "Tés calientes (verde, negro, chai, etc.)",
-                "tea-latte": "Té latte (Chai Tea Latte, Matcha Latte)",
-                "hot-chocolate": "Chocolate caliente",
-                "seasonal-drinks": "Bebidas de temporada (Pumpkin Spice Latte, etc.)",
-                muffins: "Muffins",
-                brownies: "Brownies",
-                cheesecakes: "Cheesecakes",
-                "carrot-cake": "Tarta de zanahoria",
-                donuts: "Donas",
-                cookies: "Galletas (cookies)",
-                "hot-sandwiches": "Sándwiches calientes",
-                wraps: "Wraps",
-                salads: "Ensaladas",
-                "yogurt-granola": "Yogur con granola",
-                paninis: "Paninis",
-                "stuffed-croissants": "Croissants rellenos",
-                "coffee-beans": "Granos de café",
-                "loose-leaf-tea": "Tés en hoja",
-                merchandise: "Tazas, termos y merchandising"
+                'menu-title': 'Nuestro Menú',
+                cafe: 'Café',
+                'bebidas-frias': 'Bebidas Frías',
+                'te-caliente': 'Té y Otras Bebidas Calientes',
+                postres: 'Postres y Repostería',
+                comidas: 'Comidas',
+                productos: 'Productos y Otros',
+                'ingredients-label': 'Ingredientes',
+                'price-label': 'Precio',
+                espresso: 'Espresso',
+                americano: 'Americano',
+                cappuccino: 'Cappuccino',
+                latte: 'Latte',
+                'flat-white': 'Flat White',
+                macchiato: 'Macchiato',
+                mocha: 'Mocha',
+                'cold-brew': 'Cold Brew',
+                'nitro-cold-brew': 'Nitro Cold Brew',
+                frappuccino: 'Frappuccino (de café, de crema, con sabores)',
+                'iced-tea': 'Té helado (black tea, green tea, etc.)',
+                refresher: 'Refresher (Mango Dragonfruit, Strawberry Açaí)',
+                juices: 'Jugos y bebidas embotelladas',
+                'hot-tea': 'Tés calientes (verde, negro, chai, etc.)',
+                'tea-latte': 'Té latte (Chai Tea Latte, Matcha Latte)',
+                'hot-chocolate': 'Chocolate caliente',
+                'seasonal-drinks': 'Bebidas de temporada (Pumpkin Spice Latte, etc.)',
+                muffins: 'Muffins',
+                brownies: 'Brownies',
+                cheesecakes: 'Cheesecakes',
+                'carrot-cake': 'Tarta de zanahoria',
+                donuts: 'Donas',
+                cookies: 'Galletas (cookies)',
+                'hot-sandwiches': 'Sándwiches calientes',
+                wraps: 'Wraps',
+                salads: 'Ensaladas',
+                'yogurt-granola': 'Yogur con granola',
+                paninis: 'Paninis',
+                'stuffed-croissants': 'Croissants rellenos',
+                'coffee-beans': 'Granos de café',
+                'loose-leaf-tea': 'Tés en hoja',
+                merchandise: 'Tazas, termos y merchandising'
             },
             en: {
-                "menu-title": "Our Menu",
-                "cafe": "Coffee",
-                "bebidas-frias": "Cold Drinks",
-                "te-caliente": "Tea and Other Hot Drinks",
-                "postres": "Desserts and Pastries",
-                "comidas": "Food",
-                "productos": "Products and Others",
-                espresso: "Espresso",
-                americano: "Americano",
-                cappuccino: "Cappuccino",
-                latte: "Latte",
-                "flat-white": "Flat White",
-                macchiato: "Macchiato",
-                mocha: "Mocha",
-                "cold-brew": "Cold Brew",
-                "nitro-cold-brew": "Nitro Cold Brew",
-                frappuccino: "Frappuccino (coffee, cream, with flavors)",
-                "iced-tea": "Iced Tea (black tea, green tea, etc.)",
-                refresher: "Refresher (Mango Dragonfruit, Strawberry Açaí)",
-                juices: "Juices and bottled drinks",
-                "hot-tea": "Hot Teas (green, black, chai, etc.)",
-                "tea-latte": "Tea Latte (Chai Tea Latte, Matcha Latte)",
-                "hot-chocolate": "Hot Chocolate",
-                "seasonal-drinks": "Seasonal Drinks (Pumpkin Spice Latte, etc.)",
-                muffins: "Muffins",
-                brownies: "Brownies",
-                cheesecakes: "Cheesecakes",
-                "carrot-cake": "Carrot Cake",
-                donuts: "Donuts",
-                cookies: "Cookies",
-                "hot-sandwiches": "Hot Sandwiches",
-                wraps: "Wraps",
-                salads: "Salads",
-                "yogurt-granola": "Yogurt with Granola",
-                paninis: "Paninis",
-                "stuffed-croissants": "Stuffed Croissants",
-                "coffee-beans": "Coffee Beans",
-                "loose-leaf-tea": "Loose Leaf Tea",
-                merchandise: "Mugs, thermoses, and merchandise"
-            },
-            pt: {
-                "menu-title": "Nosso Menu",
-                "cafe": "Café",
-                "bebidas-frias": "Bebidas Frias",
-                "te-caliente": "Chá e Outras Bebidas Quentes",
-                "postres": "Sobremesas e Confeitaria",
-                "comidas": "Comidas",
-                "productos": "Produtos e Outros",
-                espresso: "Expresso",
-                americano: "Americano",
-                cappuccino: "Cappuccino",
-                latte: "Latte",
-                "flat-white": "Flat White",
-                macchiato: "Macchiato",
-                mocha: "Mocha",
-                "cold-brew": "Cold Brew",
-                "nitro-cold-brew": "Nitro Cold Brew",
-                frappuccino: "Frappuccino (de café, de creme, com sabores)",
-                "iced-tea": "Chá gelado (chá preto, chá verde, etc.)",
-                refresher: "Refresher (Mango Dragonfruit, Strawberry Açaí)",
-                juices: "Sucos e bebidas engarrafadas",
-                "hot-tea": "Chás quentes (verde, preto, chai, etc.)",
-                "tea-latte": "Chá latte (Chai Tea Latte, Matcha Latte)",
-                "hot-chocolate": "Chocolate quente",
-                "seasonal-drinks": "Bebidas sazonais (Pumpkin Spice Latte, etc.)",
-                muffins: "Muffins",
-                brownies: "Brownies",
-                cheesecakes: "Cheesecakes",
-                "carrot-cake": "Bolo de cenoura",
-                donuts: "Donuts",
-                cookies: "Biscoitos",
-                "hot-sandwiches": "Sanduíches quentes",
-                wraps: "Wraps",
-                salads: "Saladas",
-                "yogurt-granola": "Iogurte com granola",
-                paninis: "Paninis",
-                "stuffed-croissants": "Croissants recheados",
-                "coffee-beans": "Grãos de café",
-                "loose-leaf-tea": "Chá em folha",
-                merchandise: "Canecas, garrafas térmicas e produtos"
+                'menu-title': 'Our Menu',
+                cafe: 'Coffee',
+                'bebidas-frias': 'Cold Drinks',
+                'te-caliente': 'Tea and Other Hot Drinks',
+                postres: 'Desserts and Pastries',
+                comidas: 'Food',
+                productos: 'Products and Others',
+                'ingredients-label': 'Ingredients',
+                'price-label': 'Price',
+                espresso: 'Espresso',
+                americano: 'Americano',
+                cappuccino: 'Cappuccino',
+                latte: 'Latte',
+                'flat-white': 'Flat White',
+                macchiato: 'Macchiato',
+                mocha: 'Mocha',
+                'cold-brew': 'Cold Brew',
+                'nitro-cold-brew': 'Nitro Cold Brew',
+                frappuccino: 'Frappuccino (coffee, cream, with flavors)',
+                'iced-tea': 'Iced Tea (black tea, green tea, etc.)',
+                refresher: 'Refresher (Mango Dragonfruit, Strawberry Açaí)',
+                juices: 'Juices and bottled drinks',
+                'hot-tea': 'Hot Teas (green, black, chai, etc.)',
+                'tea-latte': 'Tea Latte (Chai Tea Latte, Matcha Latte)',
+                'hot-chocolate': 'Hot Chocolate',
+                'seasonal-drinks': 'Seasonal Drinks (Pumpkin Spice Latte, etc.)',
+                muffins: 'Muffins',
+                brownies: 'Brownies',
+                cheesecakes: 'Cheesecakes',
+                'carrot-cake': 'Carrot Cake',
+                donuts: 'Donuts',
+                cookies: 'Cookies',
+                'hot-sandwiches': 'Hot Sandwiches',
+                wraps: 'Wraps',
+                salads: 'Salads',
+                'yogurt-granola': 'Yogurt with Granola',
+                paninis: 'Paninis',
+                'stuffed-croissants': 'Stuffed Croissants',
+                'coffee-beans': 'Coffee Beans',
+                'loose-leaf-tea': 'Loose Leaf Tea',
+                merchandise: 'Mugs, thermoses, and merchandise'
             }
         };
 
@@ -918,12 +1319,26 @@
             currentLang = lang;
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
-                element.textContent = translations[lang][key];
+                const translation = translations[lang][key] || translations[defaultLang][key] || key;
+                element.textContent = translation;
+            });
+            document.querySelectorAll('[data-description-for]').forEach(element => {
+                const itemId = element.getAttribute('data-description-for');
+                const item = menuItems[itemId];
+                if (item) {
+                    element.textContent = item.descriptions[lang] || item.descriptions[defaultLang];
+                }
+            });
+            document.querySelectorAll('[data-price-for]').forEach(element => {
+                const itemId = element.getAttribute('data-price-for');
+                const item = menuItems[itemId];
+                if (item) {
+                    element.textContent = item.price;
+                }
             });
         }
 
-        // Inicializar en español
-        changeLanguage('es');
+        changeLanguage(defaultLang);
     </script>
 </body>
 </html>

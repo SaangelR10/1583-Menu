@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>1583 Café - Menú</title>
+    <link rel="icon" type="image/png" href="images/1583logo/logo.png">
+    <link rel="shortcut icon" type="image/png" href="images/1583logo/logo.png">
+    <link rel="apple-touch-icon" href="images/1583logo/logo.png">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -62,6 +65,12 @@
         .top-nav h1 {
             font-size: 2.5rem;
             margin: 0;
+        }
+        .top-nav .logo {
+            height: 60px;
+            width: auto;
+            max-width: 200px;
+            object-fit: contain;
         }
         .history-button {
             position: fixed;
@@ -355,42 +364,55 @@
             background-color: #3A220F;
             border: 2px solid #D4A017;
             border-radius: 10px;
-            max-width: 500px;
+            max-width: 700px;
             width: 90%;
-            padding: 20px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
             position: relative;
             transform: scale(0.8);
             transition: transform 0.3s ease;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
         }
         .modal.active .modal-content {
             transform: scale(1);
         }
         .modal-content img {
             width: 100%;
-            height: 150px;
-            object-fit: cover;
+            height: auto;
+            min-height: 350px;
+            max-height: 500px;
+            object-fit: contain;
+            object-position: center;
             border-radius: 8px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            background-color: rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
         .modal-content h3 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
+            font-size: 2rem;
+            margin-bottom: 15px;
             color: #FFFFFF;
+            line-height: 1.3;
+            font-weight: 600;
         }
         .modal-content p {
-            font-size: 0.9rem;
+            font-size: 1rem;
             color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            line-height: 1.6;
         }
         .modal-content .ingredients {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 10px;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 15px;
+            line-height: 1.5;
         }
         .modal-content .price {
-            font-size: 1rem;
-            font-weight: 500;
+            font-size: 1.4rem;
+            font-weight: 600;
             color: #D4A017;
+            margin-top: 10px;
         }
         .modal-close {
             position: absolute;
@@ -592,6 +614,13 @@
         }
         /* Media queries para pantallas pequeñas */
         @media (max-width: 768px) {
+            .top-nav {
+                padding: 10px 20px;
+            }
+            .top-nav .logo {
+                height: 45px;
+                max-width: 150px;
+            }
             .menu-nav {
                 padding: 20px 0;
                 margin-top: 15px;
@@ -646,6 +675,13 @@
             }
         }
         @media (max-width: 480px) {
+            .top-nav {
+                padding: 8px 15px;
+            }
+            .top-nav .logo {
+                height: 35px;
+                max-width: 120px;
+            }
             .menu-nav {
                 padding: 15px 0;
                 margin-top: 10px;
@@ -682,16 +718,25 @@
                 font-size: 0.55rem;
                 padding: 3px 6px;
             }
+            .modal-content {
+                max-width: 95%;
+                padding: 20px;
+            }
             .modal-content img {
-                height: 100px;
+                min-height: 250px;
+                max-height: 350px;
             }
             .modal-content h3 {
-                font-size: 1.3rem;
+                font-size: 1.5rem;
             }
-            .modal-content p,
-            .modal-content .ingredients,
+            .modal-content p {
+                font-size: 0.9rem;
+            }
+            .modal-content .ingredients {
+                font-size: 0.85rem;
+            }
             .modal-content .price {
-                font-size: 0.75rem;
+                font-size: 1.2rem;
             }
             .history-modal-content {
                 padding: 25px 20px;
@@ -723,7 +768,7 @@
 </head>
 <body class="text-white">
     <header class="top-nav">
-        <h1>1583</h1>
+        <img src="images/1583logo/logo.png" alt="1583 Café" class="logo">
         <div class="language-selector">
             <select onchange="changeLanguage(this.value)">
                 <option value="es">Español</option>
@@ -744,10 +789,10 @@
         </ul>
     </nav>
 
-        <main class="container mx-auto px-6 max-w-3xl">
+    <main class="container mx-auto px-6 max-w-3xl">
         <div id="menu-loading" class="text-center py-10 text-yellow-300 text-xs uppercase tracking-widest">
             Cargando menú...
-        </div>
+                    </div>
         <div id="menu-error" class="hidden text-center py-10 text-red-400 text-sm"></div>
         <div id="menu-sections"></div>
     </main>
@@ -768,9 +813,9 @@
 
     <!-- WhatsApp Floating Button -->
     <div class="whatsapp-float">
-        <a href="https://wa.me/+573219238510?text=Quiero%20solicitar%20un%20domicilio" target="_blank">
+        <a href="https://wa.me/+573181454142?text=Hola%20quisiera%20preguntar%20sobre.." target="_blank">
             <i class="fab fa-whatsapp"></i>
-            <span class="notification">Solicitar Domicilio</span>
+            <span class="notification">Tienes dudas? Contactanos!!</span>
         </a>
     </div>
 
@@ -1050,8 +1095,32 @@
             }
 
             priceElement.textContent = `${priceLabel}: ${item.priceLabel || formatCOP(item.price)}`;
+            
+            // Codificar la ruta correctamente (manejar espacios y caracteres especiales)
+            if (item.image) {
+                // Si es una ruta relativa, codificar solo los espacios y caracteres especiales
+                if (item.image.startsWith('images/')) {
+                    // Reemplazar espacios por %20, pero mantener las barras
+                    imageElement.src = item.image.replace(/ /g, '%20');
+                } else {
             imageElement.src = item.image;
+                }
+            } else {
+                imageElement.src = createPlaceholderImage(item.name);
+            }
             imageElement.alt = item.name;
+            
+            // Manejar error de carga de imagen (formato no soportado, archivo no encontrado, etc.)
+            imageElement.onerror = function() {
+                console.warn(`No se pudo cargar la imagen: ${item.image}`);
+                // Intentar con ruta sin codificar por si acaso
+                if (item.image && item.image.includes(' ')) {
+                    this.src = item.image.replace(/ /g, '%20');
+                } else {
+                    // Si falla, usar placeholder
+                    this.src = createPlaceholderImage(item.name);
+                }
+            };
 
             modal.classList.add('active');
             document.addEventListener('keydown', closeModalOnEsc);

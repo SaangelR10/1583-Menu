@@ -13,3 +13,11 @@ Thumbs.db
 # Archivos temporales de Excel
 ~$*
 
+# Archivos de imagen originales grandes (ya convertidos a JPG)
+*.tiff
+*.tif
+*.ARW
+*.arw
+*.raw
+*.RAW
+

@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build:data": "node scripts/build-menu-data.js",
+    "organize:images": "node scripts/organize-images.js",
+    "check:images": "node scripts/check-image-formats.js",
+    "cleanup:large": "node scripts/cleanup-large-files.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,6 +22,7 @@
   },
   "homepage": "https://github.com/SaangelR10/1583-Menu#readme",
   "dependencies": {
+    "sharp": "^0.34.5",
     "xlsx": "^0.18.5"
   }
 }

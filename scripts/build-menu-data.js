@@ -58,6 +58,7 @@ function buildData() {
         const name = (row['Producto'] || row['Nombre'] || 'Producto sin nombre').toString().trim();
         const description = (row['Descripcion'] || row['Descripción'] || row['Description'] || '').toString().trim();
         const additions = (row['Adiciones'] || row['Extras'] || '').toString().trim();
+        const imageUrl = (row['Imagen'] || row['Imagenes'] || row['Imagen URL'] || row['Imagenes URL'] || '').toString().trim();
         const priceNumber = parsePrice(row['Precio']);
 
         let baseSlug = slugify(`${category}-${name}`) || 'producto';
@@ -78,7 +79,7 @@ function buildData() {
             additions,
             price: priceNumber,
             priceLabel: formatCOP(priceNumber),
-            image: '',
+            image: imageUrl,
         };
 
         if (!acc.has(category)) {

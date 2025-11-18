@@ -1,0 +1,619 @@
+{
+  "generatedAt": "2025-11-18T12:39:35.381Z",
+  "source": "Cargue productos\\Menu Web.xlsx",
+  "categories": [
+    {
+      "name": "Panadería",
+      "items": [
+        {
+          "id": "panaderia-croissant-mantequilla-70-gms",
+          "name": "CROISSANT MANTEQUILLA 70 GMS",
+          "description": ".",
+          "additions": "",
+          "price": 3900,
+          "priceLabel": "$ 3.900",
+          "image": ""
+        },
+        {
+          "id": "panaderia-croissant-queso-66-gms",
+          "name": "CROISSANT  QUESO 66 GMS",
+          "description": ".",
+          "additions": "",
+          "price": 4900,
+          "priceLabel": "$ 4.900",
+          "image": ""
+        },
+        {
+          "id": "panaderia-croissant-jamon-y-queso-85-g",
+          "name": "CROISSANT  JAMON Y QUESO  85 G",
+          "description": ".",
+          "additions": "",
+          "price": 7500,
+          "priceLabel": "$ 7.500",
+          "image": ""
+        },
+        {
+          "id": "panaderia-croissant-almendras-80-gms",
+          "name": "CROISSANT ALMENDRAS 80 GMS",
+          "description": ".",
+          "additions": "",
+          "price": 6500,
+          "priceLabel": "$ 6.500",
+          "image": ""
+        },
+        {
+          "id": "panaderia-croissant-chocolate-80-gms",
+          "name": "CROISSANT CHOCOLATE 80 GMS",
+          "description": ".",
+          "additions": "",
+          "price": 5500,
+          "priceLabel": "$ 5.500",
+          "image": ""
+        },
+        {
+          "id": "panaderia-pastel-triple-chicharron-115-g",
+          "name": "PASTEL TRIPLE CHICHARRON 115 G",
+          "description": ".",
+          "additions": "",
+          "price": 4900,
+          "priceLabel": "$ 4.900",
+          "image": ""
+        },
+        {
+          "id": "panaderia-pastel-de-arequipe-95-gms",
+          "name": "PASTEL DE AREQUIPE 95 GMS",
+          "description": ".",
+          "additions": "",
+          "price": 4900,
+          "priceLabel": "$ 4.900",
+          "image": ""
+        },
+        {
+          "id": "panaderia-mini-croissant-integral-30-gr",
+          "name": "Mini croissant integral 30 gr",
+          "description": ".",
+          "additions": "",
+          "price": 2000,
+          "priceLabel": "$ 2.000",
+          "image": ""
+        },
+        {
+          "id": "panaderia-palito-de-queso-60-gr",
+          "name": "Palito de queso 60 gr",
+          "description": ".",
+          "additions": "",
+          "price": 6000,
+          "priceLabel": "$ 6.000",
+          "image": ""
+        },
+        {
+          "id": "panaderia-pastel-de-pollo-100-gr",
+          "name": "Pastel de pollo 100 gr",
+          "description": ".",
+          "additions": "",
+          "price": 9000,
+          "priceLabel": "$ 9.000",
+          "image": ""
+        },
+        {
+          "id": "panaderia-waflebonos-x-4-unid",
+          "name": "WAFLEBONOS   X  4 UNID.",
+          "description": ".",
+          "additions": "",
+          "price": 11000,
+          "priceLabel": "$ 11.000",
+          "image": ""
+        },
+        {
+          "id": "panaderia-waflebonos-x-16-unid-480-gr",
+          "name": "WAFLEBONOS   X  16 UNID. 480 GR",
+          "description": ".",
+          "additions": "",
+          "price": 22000,
+          "priceLabel": "$ 22.000",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "Tortas",
+      "items": [
+        {
+          "id": "tortas-torta-de-almojabana-1-porcion",
+          "name": "TORTA DE ALMOJABANA  1 PORCION",
+          "description": ".",
+          "additions": "",
+          "price": 12500,
+          "priceLabel": "$ 12.500",
+          "image": ""
+        },
+        {
+          "id": "tortas-torta-de-zanahoria-1-porcion",
+          "name": "TORTA DE ZANAHORIA  1 PORCION",
+          "description": ".",
+          "additions": "",
+          "price": 14500,
+          "priceLabel": "$ 14.500",
+          "image": ""
+        },
+        {
+          "id": "tortas-torta-de-banano-1-porcion",
+          "name": "TORTA DE BANANO 1 PORCION",
+          "description": ".",
+          "additions": "",
+          "price": 14500,
+          "priceLabel": "$ 14.500",
+          "image": ""
+        },
+        {
+          "id": "tortas-torta-de-chocolate-1-porcion",
+          "name": "TORTA DE CHOCOLATE 1 PORCION",
+          "description": ".",
+          "additions": "",
+          "price": 14500,
+          "priceLabel": "$ 14.500",
+          "image": ""
+        },
+        {
+          "id": "tortas-torta-red-velvet-1-porcion",
+          "name": "TORTA RED VELVET 1 PORCION",
+          "description": ".",
+          "additions": "",
+          "price": 14500,
+          "priceLabel": "$ 14.500",
+          "image": ""
+        },
+        {
+          "id": "tortas-torta-de-queso-1-porcion",
+          "name": "TORTA DE QUESO 1 PORCION",
+          "description": ".",
+          "additions": "",
+          "price": 14500,
+          "priceLabel": "$ 14.500",
+          "image": ""
+        },
+        {
+          "id": "tortas-torta-de-pina-1-porcion",
+          "name": "TORTA DE PIÑA 1 PORCION",
+          "description": ".",
+          "additions": "",
+          "price": 14500,
+          "priceLabel": "$ 14.500",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "Snacks",
+      "items": [
+        {
+          "id": "snacks-pastel-americano",
+          "name": "Pastel americano",
+          "description": ".",
+          "additions": "",
+          "price": 10000,
+          "priceLabel": "$ 10.000",
+          "image": ""
+        },
+        {
+          "id": "snacks-pastel-de-carne",
+          "name": "Pastel de carne",
+          "description": ".",
+          "additions": "",
+          "price": 10000,
+          "priceLabel": "$ 10.000",
+          "image": ""
+        },
+        {
+          "id": "snacks-pastel-italiano",
+          "name": "Pastel italiano",
+          "description": ".",
+          "additions": "",
+          "price": 10000,
+          "priceLabel": "$ 10.000",
+          "image": ""
+        },
+        {
+          "id": "snacks-pastel-hawaiano",
+          "name": "Pastel Hawaiano",
+          "description": ".",
+          "additions": "",
+          "price": 10000,
+          "priceLabel": "$ 10.000",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "Bebidas Calientes",
+      "items": [
+        {
+          "id": "bebidas-calientes-cafe-1583-espresso-sencillo",
+          "name": "CAFÉ 1583 ESPRESSO SENCILLO",
+          "description": ".",
+          "additions": "",
+          "price": 5800,
+          "priceLabel": "$ 5.800",
+          "image": ""
+        },
+        {
+          "id": "bebidas-calientes-cafe-1583-espresso-doble",
+          "name": "CAFÉ 1583 ESPRESSO DOBLE",
+          "description": ".",
+          "additions": "",
+          "price": 8100,
+          "priceLabel": "$ 8.100",
+          "image": ""
+        },
+        {
+          "id": "bebidas-calientes-cafe-1583-americano",
+          "name": "Café 1583 Americano",
+          "description": ".",
+          "additions": "",
+          "price": 6200,
+          "priceLabel": "$ 6.200",
+          "image": ""
+        },
+        {
+          "id": "bebidas-calientes-capuccino-1583-7-onzas",
+          "name": "Capuccino 1583 7 Onzas",
+          "description": ".",
+          "additions": "",
+          "price": 8500,
+          "priceLabel": "$ 8.500",
+          "image": ""
+        },
+        {
+          "id": "bebidas-calientes-capuccino-1583-mediano-9-onzas",
+          "name": "Capuccino 1583 mediano 9 Onzas",
+          "description": ".",
+          "additions": "",
+          "price": 8500,
+          "priceLabel": "$ 8.500",
+          "image": ""
+        },
+        {
+          "id": "bebidas-calientes-capuccino-1583-grande-12-onzas",
+          "name": "Capuccino 1583 grande 12 Onzas",
+          "description": ".",
+          "additions": "",
+          "price": 10500,
+          "priceLabel": "$ 10.500",
+          "image": ""
+        },
+        {
+          "id": "bebidas-calientes-cafe-late-1583-mediano",
+          "name": "Café Late 1583 mediano",
+          "description": ".",
+          "additions": "",
+          "price": 8500,
+          "priceLabel": "$ 8.500",
+          "image": ""
+        },
+        {
+          "id": "bebidas-calientes-cafe-late-1583-grande",
+          "name": "Café Late 1583 grande",
+          "description": ".",
+          "additions": "",
+          "price": 10500,
+          "priceLabel": "$ 10.500",
+          "image": ""
+        },
+        {
+          "id": "bebidas-calientes-mocaccino-1583-mediano",
+          "name": "Mocaccino 1583 mediano",
+          "description": ".",
+          "additions": "",
+          "price": 10700,
+          "priceLabel": "$ 10.700",
+          "image": ""
+        },
+        {
+          "id": "bebidas-calientes-mocaccino-1583-grande",
+          "name": "Mocaccino 1583 grande",
+          "description": ".",
+          "additions": "",
+          "price": 12700,
+          "priceLabel": "$ 12.700",
+          "image": ""
+        },
+        {
+          "id": "bebidas-calientes-cafe-irlandes-1583",
+          "name": "Café Irlandés 1583",
+          "description": ".",
+          "additions": "",
+          "price": 14500,
+          "priceLabel": "$ 14.500",
+          "image": ""
+        },
+        {
+          "id": "bebidas-calientes-cafe-campesino-1583",
+          "name": "Café campesino 1583",
+          "description": ".",
+          "additions": "",
+          "price": 8500,
+          "priceLabel": "$ 8.500",
+          "image": ""
+        },
+        {
+          "id": "bebidas-calientes-carajillo-1583-aguardiente",
+          "name": "Carajillo 1583 aguardiente",
+          "description": ".",
+          "additions": "",
+          "price": 14000,
+          "priceLabel": "$ 14.000",
+          "image": ""
+        },
+        {
+          "id": "bebidas-calientes-carajillo-1583-brandy",
+          "name": "Carajillo 1583 brandy",
+          "description": ".",
+          "additions": "",
+          "price": 22000,
+          "priceLabel": "$ 22.000",
+          "image": ""
+        },
+        {
+          "id": "bebidas-calientes-cafe-macchiato-1583",
+          "name": "Café Macchiato 1583",
+          "description": ".",
+          "additions": "",
+          "price": 12000,
+          "priceLabel": "$ 12.000",
+          "image": ""
+        },
+        {
+          "id": "bebidas-calientes-cafe-macchiato-bombon-1583",
+          "name": "Café Macchiato bombón 1583",
+          "description": ".",
+          "additions": "",
+          "price": 9000,
+          "priceLabel": "$ 9.000",
+          "image": ""
+        },
+        {
+          "id": "bebidas-calientes-infusion-1583",
+          "name": "INFUSIÓN 1583",
+          "description": ".",
+          "additions": "",
+          "price": 6000,
+          "priceLabel": "$ 6.000",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "Bebidas Frias",
+      "items": [
+        {
+          "id": "bebidas-frias-cold-brew-orange",
+          "name": "COLD BREW ORANGE",
+          "description": ".",
+          "additions": "",
+          "price": 18000,
+          "priceLabel": "$ 18.000",
+          "image": ""
+        },
+        {
+          "id": "bebidas-frias-cold-brew-soda",
+          "name": "COLD BREW SODA",
+          "description": ".",
+          "additions": "",
+          "price": 13000,
+          "priceLabel": "$ 13.000",
+          "image": ""
+        },
+        {
+          "id": "bebidas-frias-cold-brew-mojito",
+          "name": "COLD BREW MOJITO",
+          "description": ".",
+          "additions": "",
+          "price": 24000,
+          "priceLabel": "$ 24.000",
+          "image": ""
+        },
+        {
+          "id": "bebidas-frias-cold-brew-latte",
+          "name": "COLD BREW LATTE",
+          "description": ".",
+          "additions": "",
+          "price": 15000,
+          "priceLabel": "$ 15.000",
+          "image": ""
+        },
+        {
+          "id": "bebidas-frias-afogatto-vainilla-shot-de-baileys",
+          "name": "AFOGATTO (VAINILLA)- SHOT DE BAILEYS",
+          "description": ".",
+          "additions": "",
+          "price": 18000,
+          "priceLabel": "$ 18.000",
+          "image": ""
+        },
+        {
+          "id": "bebidas-frias-malteada-vainilla-fresa-oreo",
+          "name": "MALTEADA ( VAINILLA,FRESA,OREO)",
+          "description": ".",
+          "additions": "",
+          "price": 16000,
+          "priceLabel": "$ 16.000",
+          "image": ""
+        },
+        {
+          "id": "bebidas-frias-granizado-de-cafe",
+          "name": "GRANIZADO DE CAFÉ",
+          "description": ".",
+          "additions": "",
+          "price": 14000,
+          "priceLabel": "$ 14.000",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "Sodas Italianas",
+      "items": [
+        {
+          "id": "sodas-italianas-soda-italiana-de-frutos-rojos",
+          "name": "SODA ITALIANA DE FRUTOS ROJOS",
+          "description": ".",
+          "additions": "",
+          "price": 15000,
+          "priceLabel": "$ 15.000",
+          "image": ""
+        },
+        {
+          "id": "sodas-italianas-soda-italiana-de-maracuya",
+          "name": "SODA ITALIANA DE MARACUYA",
+          "description": ".",
+          "additions": "",
+          "price": 15000,
+          "priceLabel": "$ 15.000",
+          "image": ""
+        },
+        {
+          "id": "sodas-italianas-soda-italiana-frutos-amarillos",
+          "name": "SODA ITALIANA FRUTOS AMARILLOS",
+          "description": ".",
+          "additions": "",
+          "price": 15000,
+          "priceLabel": "$ 15.000",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "Vinos",
+      "items": [
+        {
+          "id": "vinos-tinto-de-verano-jarra",
+          "name": "TINTO DE VERANO - JARRA",
+          "description": ".",
+          "additions": "",
+          "price": 75000,
+          "priceLabel": "$ 75.000",
+          "image": ""
+        },
+        {
+          "id": "vinos-tinto-de-verano-media-jarra",
+          "name": "TINTO DE VERANO - MEDIA JARRA",
+          "description": ".",
+          "additions": "",
+          "price": 32500,
+          "priceLabel": "$ 32.500",
+          "image": ""
+        },
+        {
+          "id": "vinos-tinto-de-verano-copa",
+          "name": "TINTO DE VERANO - COPA",
+          "description": ".",
+          "additions": "",
+          "price": 18000,
+          "priceLabel": "$ 18.000",
+          "image": ""
+        },
+        {
+          "id": "vinos-sangria-jarra",
+          "name": "SANGRIA - JARRA",
+          "description": ".",
+          "additions": "",
+          "price": 95000,
+          "priceLabel": "$ 95.000",
+          "image": ""
+        },
+        {
+          "id": "vinos-sangria-media-jarra",
+          "name": "SANGRIA MEDIA  JARRA",
+          "description": ".",
+          "additions": "",
+          "price": 47500,
+          "priceLabel": "$ 47.500",
+          "image": ""
+        },
+        {
+          "id": "vinos-copa-vino-tinto",
+          "name": "COPA - VINO TINTO",
+          "description": ".",
+          "additions": "",
+          "price": 22000,
+          "priceLabel": "$ 22.000",
+          "image": ""
+        },
+        {
+          "id": "vinos-copa-vino-blanco",
+          "name": "COPA - VINO BLANCO",
+          "description": ".",
+          "additions": "",
+          "price": 22000,
+          "priceLabel": "$ 22.000",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "Tabla de Quesos",
+      "items": [
+        {
+          "id": "tabla-de-quesos-tabla-de-quesos-1583-individual",
+          "name": "TABLA DE QUESOS 1583 -INDIVIDUAL",
+          "description": ".",
+          "additions": "",
+          "price": 40000,
+          "priceLabel": "$ 40.000",
+          "image": ""
+        },
+        {
+          "id": "tabla-de-quesos-tabla-de-quesos-1583-compartir-2-personas",
+          "name": "TABLA DE QUESOS 1583 -COMPARTIR (2 personas)",
+          "description": ".",
+          "additions": "",
+          "price": 55000,
+          "priceLabel": "$ 55.000",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "Galletas",
+      "items": [
+        {
+          "id": "galletas-galletas-chips-de-chocolate-80-gr",
+          "name": "GALLETAS CHIPS DE CHOCOLATE 80 gr",
+          "description": ".",
+          "additions": "",
+          "price": 10000,
+          "priceLabel": "$ 10.000",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "Mousse",
+      "items": [
+        {
+          "id": "mousse-mousse-maracuya-limon-mora",
+          "name": "MOUSSE (MARACUYA,LIMON,MORA)",
+          "description": ".",
+          "additions": "",
+          "price": 10000,
+          "priceLabel": "$ 10.000",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "By 1583",
+      "items": [
+        {
+          "id": "by-1583-mug",
+          "name": "MUG",
+          "description": ".",
+          "additions": "",
+          "price": 20000,
+          "priceLabel": "$ 20.000",
+          "image": ""
+        }
+      ]
+    }
+  ]
+}

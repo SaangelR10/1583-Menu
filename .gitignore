@@ -1,0 +1,15 @@
+# Dependencias
+node_modules/
+
+# Salidas de NPM
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Sistemas operativos
+.DS_Store
+Thumbs.db
+
+# Archivos temporales de Excel
+~$*
+

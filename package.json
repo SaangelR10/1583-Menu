@@ -1,0 +1,24 @@
+{
+  "name": "1583-menu",
+  "version": "1.0.0",
+  "description": "Sitio del menú Café 1583 con datos dinámicos",
+  "main": "index.js",
+  "scripts": {
+    "build:data": "node scripts/build-menu-data.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SaangelR10/1583-Menu.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SaangelR10/1583-Menu/issues"
+  },
+  "homepage": "https://github.com/SaangelR10/1583-Menu#readme",
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2025-11-18T18:03:41.528Z",
+  "generatedAt": "2025-11-19T11:16:32.224Z",
   "source": "Cargue productos\\Menu Web.xlsx",
   "categories": [
     {
@@ -114,8 +114,8 @@
           "image": "images/productos/1583 menu/Wafflebono.jpg"
         },
         {
-          "id": "panaderia-pastel-americano",
-          "name": "Pastel americano",
+          "id": "panaderia-horneado-americano",
+          "name": "Horneado americano",
           "description": ".",
           "additions": "",
           "price": 10000,
@@ -123,8 +123,8 @@
           "image": "images/productos/1583 menu/Pastel americano.ARW"
         },
         {
-          "id": "panaderia-pastel-de-carne",
-          "name": "Pastel de carne",
+          "id": "panaderia-horneado-de-carne",
+          "name": "Horneado de carne",
           "description": ".",
           "additions": "",
           "price": 10000,
@@ -132,8 +132,8 @@
           "image": "images/productos/1583 menu/Pastel C,I,H.ARW"
         },
         {
-          "id": "panaderia-pastel-italiano",
-          "name": "Pastel italiano",
+          "id": "panaderia-horneado-italiano",
+          "name": "Horneado italiano",
           "description": ".",
           "additions": "",
           "price": 10000,
@@ -141,8 +141,8 @@
           "image": "images/productos/1583 menu/Pastel C,I,H.ARW"
         },
         {
-          "id": "panaderia-pastel-hawaiano",
-          "name": "Pastel Hawaiano",
+          "id": "panaderia-horneado-hawaiano",
+          "name": "Horneado Hawaiano",
           "description": ".",
           "additions": "",
           "price": 10000,
@@ -374,6 +374,15 @@
           "price": 6000,
           "priceLabel": "$ 6.000",
           "image": "images/productos/1583 menu/Infusion.JPG"
+        },
+        {
+          "id": "bebidas-calientes-shot-baileys-40oz",
+          "name": "Shot Baileys 40oz",
+          "description": ".",
+          "additions": "",
+          "price": 19000,
+          "priceLabel": "$ 19.000",
+          "image": ""
         }
       ]
     },
@@ -465,15 +474,6 @@
           "price": 15000,
           "priceLabel": "$ 15.000",
           "image": "images/productos/1583 menu/soda maracuya.jpg"
-        },
-        {
-          "id": "sodas-italianas-soda-italiana-de-lychee",
-          "name": "SODA ITALIANA DE LYCHEE",
-          "description": ".",
-          "additions": "",
-          "price": 15000,
-          "priceLabel": "$ 15.000",
-          "image": "images/productos/1583 menu/LYCHEE.jpg"
         }
       ]
     },
@@ -606,6 +606,20 @@
           "additions": "",
           "price": 20000,
           "priceLabel": "$ 20.000",
+          "image": ""
+        }
+      ]
+    },
+    {
+      "name": "Combos",
+      "items": [
+        {
+          "id": "combos-capuccino-con-wafflebono",
+          "name": "Capuccino con Wafflebono",
+          "description": "",
+          "additions": "",
+          "price": 16500,
+          "priceLabel": "$ 16.500",
           "image": ""
         }
       ]

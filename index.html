@@ -1033,10 +1033,12 @@
 
             const description = document.createElement('p');
             description.className = 'menu-item-description';
-            description.textContent = item.description || translations[currentLang]['description-placeholder'];
+            description.textContent = item.description || '';
 
             li.appendChild(topRow);
-            li.appendChild(description);
+            if (item.description) {
+                li.appendChild(description);
+            }
 
             if (item.additions) {
                 const additions = document.createElement('p');
@@ -1084,7 +1086,13 @@
             const additionsLabel = translations[currentLang]['additions-label'];
 
             titleElement.textContent = item.name;
-            descriptionElement.textContent = item.description || translations[currentLang]['description-placeholder'];
+            descriptionElement.textContent = item.description || '';
+            
+            if (item.description) {
+                descriptionElement.style.display = '';
+            } else {
+                descriptionElement.style.display = 'none';
+            }
 
             if (item.additions) {
                 additionsElement.textContent = `${additionsLabel}: ${item.additions}`;

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2025-11-19T11:16:32.224Z",
+  "generatedAt": "2025-11-20T11:39:42.556Z",
   "source": "Cargue productos\\Menu Web.xlsx",
   "categories": [
     {
@@ -25,7 +25,7 @@
         },
         {
           "id": "panaderia-croissant-jamon-y-queso-85-g",
-          "name": "CROISSANT  JAMON Y QUESO  85 G",
+          "name": "CROISSANT  JAMÓN Y QUESO  85 G",
           "description": ".",
           "additions": "",
           "price": 7500,
@@ -52,7 +52,7 @@
         },
         {
           "id": "panaderia-pastel-triple-chicharron-115-g",
-          "name": "PASTEL TRIPLE CHICHARRON 115 G",
+          "name": "PASTEL TRIPLE CHICHARRÓN 115 G",
           "description": ".",
           "additions": "",
           "price": 4900,
@@ -87,8 +87,8 @@
           "image": "images/productos/1583 menu/Palito de queso.JPG"
         },
         {
-          "id": "panaderia-pastel-de-pollo-100-gr",
-          "name": "Pastel de pollo 100 gr",
+          "id": "panaderia-horneado-de-pollo-100-gr",
+          "name": "Horneado de pollo 100 gr",
           "description": ".",
           "additions": "",
           "price": 9000,
@@ -263,8 +263,8 @@
           "name": "Capuccino 1583 mediano 9 Onzas",
           "description": ".",
           "additions": "",
-          "price": 8500,
-          "priceLabel": "$ 8.500",
+          "price": 9500,
+          "priceLabel": "$ 9.500",
           "image": "images/productos/1583 menu/Capuccino.png"
         },
         {
@@ -468,7 +468,7 @@
         },
         {
           "id": "sodas-italianas-soda-italiana-de-maracuya",
-          "name": "SODA ITALIANA DE MARACUYA",
+          "name": "SODA ITALIANA DE MARACUYÁ",
           "description": ".",
           "additions": "",
           "price": 15000,
@@ -518,7 +518,7 @@
         },
         {
           "id": "vinos-sangria-media-jarra",
-          "name": "SANGRIA MEDIA  JARRA",
+          "name": "SANGRIA - MEDIA JARRA",
           "description": ".",
           "additions": "",
           "price": 47500,
@@ -587,7 +587,7 @@
       "items": [
         {
           "id": "mousse-mousse-maracuya-limon-mora",
-          "name": "MOUSSE (MARACUYA,LIMON,MORA)",
+          "name": "MOUSSE (MARACUYÁ,LIMÓN,MORA)",
           "description": ".",
           "additions": "",
           "price": 10000,

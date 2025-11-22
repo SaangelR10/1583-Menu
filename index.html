@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" href="images/1583logo/logo.png">
     <link rel="shortcut icon" type="image/png" href="images/1583logo/logo.png">
     <link rel="apple-touch-icon" href="images/1583logo/logo.png">
+    <link rel="preload" as="image" href="images/1583.png" fetchpriority="high">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -37,12 +38,25 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(rgba(74, 44, 20, 0.85), rgba(74, 44, 20, 0.85)), url('images/1583.png');
+            background-color: #1A0E05;
+            background-image: linear-gradient(rgba(74, 44, 20, 0.85), rgba(74, 44, 20, 0.85)), url('images/1583.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            background-attachment: scroll;
             z-index: -1;
             pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            will-change: opacity;
+        }
+        @media (min-width: 768px) {
+            body::before {
+                background-attachment: fixed;
+            }
+        }
+        body.bg-loaded::before {
+            opacity: 1;
         }
         .top-nav {
             min-height: var(--top-nav-height);
@@ -1211,10 +1225,54 @@
             }
         }
 
-        changeLanguage(defaultLang);
-        loadMenuData();
+        // Manejo global de errores para evitar pantalla en blanco
+        window.addEventListener('error', function(event) {
+            console.error('Error capturado:', event.error);
+            // Prevenir que errores no manejados causen pantalla en blanco
+            event.preventDefault();
+            return true;
+        });
 
-        // Show history button after 2 seconds
+        window.addEventListener('unhandledrejection', function(event) {
+            console.error('Promesa rechazada sin manejar:', event.reason);
+            event.preventDefault();
+        });
+
+        // Precargar imagen de fondo para evitar carga por partes
+        function preloadBackgroundImage() {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = function() {
+                    document.body.classList.add('bg-loaded');
+                    resolve();
+                };
+                img.onerror = function() {
+                    console.warn('No se pudo cargar la imagen de fondo, usando fallback');
+                    document.body.classList.add('bg-loaded');
+                    resolve(); // Continuar aunque falle
+                };
+                img.src = 'images/1583.png';
+            });
+        }
+
+        // Inicializar página
+        async function initPage() {
+            try {
+                // Precargar imagen de fondo primero
+                await preloadBackgroundImage();
+                
+                // Luego cargar datos del menú
+                changeLanguage(defaultLang);
+                await loadMenuData();
+            } catch (error) {
+                console.error('Error al inicializar página:', error);
+                menuLoading.classList.add('hidden');
+                menuError.textContent = translations[currentLang]['load-error'];
+                menuError.classList.remove('hidden');
+            }
+        }
+
+        // Mostrar botón de historia después de 2 segundos
         window.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
                 const historyButton = document.getElementById('history-button');
@@ -1223,6 +1281,13 @@
                 }
             }, 2000);
         });
+
+        // Iniciar cuando el DOM esté listo
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initPage);
+        } else {
+            initPage();
+        }
     </script>
 </body>
 </html>

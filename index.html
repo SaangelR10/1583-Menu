@@ -1145,60 +1145,58 @@
 
             priceElement.textContent = `${priceLabel}: ${item.priceLabel || formatCOP(item.price)}`;
             
-            // Mostrar loading inmediatamente mientras carga la imagen
-            imageElement.style.opacity = '0.5';
+            // Limpiar inmediatamente la imagen anterior para evitar que se vea
+            imageElement.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'; // 1x1 pixel transparente
+            imageElement.style.opacity = '0';
             imageElement.style.transition = 'opacity 0.3s ease-in-out';
+            imageElement.alt = item.name;
             
             // Precargar imagen antes de asignarla al elemento
             const preloadImg = new Image();
+            const imageUrl = item.image 
+                ? (item.image.startsWith('images/') 
+                    ? item.image.replace(/ /g, '%20') 
+                    : item.image)
+                : createPlaceholderImage(item.name);
+            
             preloadImg.onload = function() {
-                // Una vez cargada, asignarla al elemento visible
-                if (item.image) {
-                    if (item.image.startsWith('images/')) {
-                        imageElement.src = item.image.replace(/ /g, '%20');
-                    } else {
-                        imageElement.src = item.image;
-                    }
-                } else {
-                    imageElement.src = createPlaceholderImage(item.name);
-                }
+                // Una vez cargada completamente, asignarla al elemento visible
+                imageElement.src = imageUrl;
                 // Mostrar imagen con fade-in
                 setTimeout(() => {
                     imageElement.style.opacity = '1';
                 }, 50);
             };
+            
             preloadImg.onerror = function() {
                 console.warn(`No se pudo cargar la imagen: ${item.image}`);
-                // Intentar con ruta sin codificar
-                if (item.image && item.image.includes(' ')) {
-                    preloadImg.src = item.image.replace(/ /g, '%20');
-                    preloadImg.onerror = () => {
+                // Intentar con ruta alternativa si tiene espacios
+                if (item.image && item.image.includes(' ') && item.image !== imageUrl) {
+                    const altUrl = item.image.replace(/ /g, '%20');
+                    const retryImg = new Image();
+                    retryImg.onload = function() {
+                        imageElement.src = altUrl;
+                        setTimeout(() => {
+                            imageElement.style.opacity = '1';
+                        }, 50);
+                    };
+                    retryImg.onerror = function() {
                         imageElement.src = createPlaceholderImage(item.name);
                         imageElement.style.opacity = '1';
                     };
+                    retryImg.src = altUrl;
                 } else {
                     imageElement.src = createPlaceholderImage(item.name);
                     imageElement.style.opacity = '1';
                 }
             };
             
-            // Codificar la ruta correctamente (manejar espacios y caracteres especiales)
-            if (item.image) {
-                if (item.image.startsWith('images/')) {
-                    preloadImg.src = item.image.replace(/ /g, '%20');
-                } else {
-                    preloadImg.src = item.image;
-                }
-            } else {
-                imageElement.src = createPlaceholderImage(item.name);
-                imageElement.style.opacity = '1';
-            }
-            
-            imageElement.alt = item.name;
+            // Iniciar carga de la imagen
+            preloadImg.src = imageUrl;
             
             // Manejar error de carga en el elemento también (fallback adicional)
             imageElement.onerror = function() {
-                if (this.src !== createPlaceholderImage(item.name)) {
+                if (this.src && !this.src.includes('placeholder')) {
                     this.src = createPlaceholderImage(item.name);
                     this.style.opacity = '1';
                 }

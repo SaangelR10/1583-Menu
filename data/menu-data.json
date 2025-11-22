@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2025-11-20T11:39:42.556Z",
+  "generatedAt": "2025-11-22T14:55:29.709Z",
   "source": "Cargue productos\\Menu Web.xlsx",
   "categories": [
     {
@@ -462,8 +462,8 @@
           "name": "SODA ITALIANA DE FRUTOS ROJOS",
           "description": ".",
           "additions": "",
-          "price": 15000,
-          "priceLabel": "$ 15.000",
+          "price": 13000,
+          "priceLabel": "$ 13.000",
           "image": "images/productos/1583 menu/frutos rojos.jpg"
         },
         {
@@ -471,8 +471,8 @@
           "name": "SODA ITALIANA DE MARACUYÁ",
           "description": ".",
           "additions": "",
-          "price": 15000,
-          "priceLabel": "$ 15.000",
+          "price": 13000,
+          "priceLabel": "$ 13.000",
           "image": "images/productos/1583 menu/soda maracuya.jpg"
         }
       ]

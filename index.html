@@ -46,18 +46,16 @@
             background-attachment: scroll;
             z-index: -1;
             pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            will-change: opacity;
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+            will-change: background-image;
         }
         @media (min-width: 768px) {
             body::before {
                 background-attachment: fixed;
             }
         }
-        body.bg-loaded::before {
-            opacity: 1;
-        }
+        /* La imagen se carga directamente, sin necesidad de clase bg-loaded */
         .top-nav {
             min-height: var(--top-nav-height);
         }
@@ -942,10 +940,22 @@
 
         async function loadMenuData() {
             try {
-                const response = await fetch('data/menu-data.json', { cache: 'no-store' });
-                if (!response.ok) throw new Error('No se pudo obtener el menú');
+                // Usar timeout para evitar que se quede bloqueado
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 segundos timeout
+                
+                const response = await fetch('data/menu-data.json', { 
+                    cache: 'no-store',
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
                 const payload = await response.json();
-                if (!payload.categories || !Array.isArray(payload.categories)) {
+                if (!payload || !payload.categories || !Array.isArray(payload.categories)) {
                     throw new Error('Formato inválido en menu-data.json');
                 }
 
@@ -956,28 +966,45 @@
 
                 menuState.itemsById = {};
                 menuState.categories.forEach(category => {
-                    category.items = category.items.map(item => {
-                        const sanitized = {
-                            ...item,
-                            description: item.description && item.description !== '.' ? item.description : '',
-                            additions: item.additions || '',
-                            priceLabel: item.priceLabel || formatCOP(item.price),
-                            image: item.image && item.image.trim() ? item.image : createPlaceholderImage(item.name),
-                        };
-                        menuState.itemsById[item.id] = sanitized;
-                        return sanitized;
-                    });
+                    if (category.items && Array.isArray(category.items)) {
+                        category.items = category.items.map(item => {
+                            const sanitized = {
+                                ...item,
+                                description: item.description && item.description !== '.' ? item.description : '',
+                                additions: item.additions || '',
+                                priceLabel: item.priceLabel || formatCOP(item.price),
+                                image: item.image && item.image.trim() ? item.image : createPlaceholderImage(item.name),
+                            };
+                            menuState.itemsById[item.id] = sanitized;
+                            return sanitized;
+                        });
+                    }
                 });
 
-                menuError.classList.add('hidden');
-                menuError.textContent = '';
+                if (menuError) {
+                    menuError.classList.add('hidden');
+                    menuError.textContent = '';
+                }
                 renderMenu();
-                menuLoading.classList.add('hidden');
+                if (menuLoading) {
+                    menuLoading.classList.add('hidden');
+                }
             } catch (error) {
-                console.error(error);
-                menuLoading.classList.add('hidden');
-                menuError.textContent = translations[currentLang]['load-error'];
-                menuError.classList.remove('hidden');
+                console.error('Error al cargar menú:', error);
+                if (menuLoading) {
+                    menuLoading.classList.add('hidden');
+                }
+                if (menuError) {
+                    menuError.textContent = translations[currentLang]['load-error'];
+                    menuError.classList.remove('hidden');
+                }
+                // Intentar recargar automáticamente después de 3 segundos si es un error de red
+                if (error.name === 'AbortError' || (error.message && error.message.includes('fetch'))) {
+                    setTimeout(() => {
+                        console.log('Reintentando cargar menú...');
+                        loadMenuData();
+                    }, 3000);
+                }
             }
         }
 
@@ -1118,29 +1145,62 @@
 
             priceElement.textContent = `${priceLabel}: ${item.priceLabel || formatCOP(item.price)}`;
             
+            // Mostrar loading inmediatamente mientras carga la imagen
+            imageElement.style.opacity = '0.5';
+            imageElement.style.transition = 'opacity 0.3s ease-in-out';
+            
+            // Precargar imagen antes de asignarla al elemento
+            const preloadImg = new Image();
+            preloadImg.onload = function() {
+                // Una vez cargada, asignarla al elemento visible
+                if (item.image) {
+                    if (item.image.startsWith('images/')) {
+                        imageElement.src = item.image.replace(/ /g, '%20');
+                    } else {
+                        imageElement.src = item.image;
+                    }
+                } else {
+                    imageElement.src = createPlaceholderImage(item.name);
+                }
+                // Mostrar imagen con fade-in
+                setTimeout(() => {
+                    imageElement.style.opacity = '1';
+                }, 50);
+            };
+            preloadImg.onerror = function() {
+                console.warn(`No se pudo cargar la imagen: ${item.image}`);
+                // Intentar con ruta sin codificar
+                if (item.image && item.image.includes(' ')) {
+                    preloadImg.src = item.image.replace(/ /g, '%20');
+                    preloadImg.onerror = () => {
+                        imageElement.src = createPlaceholderImage(item.name);
+                        imageElement.style.opacity = '1';
+                    };
+                } else {
+                    imageElement.src = createPlaceholderImage(item.name);
+                    imageElement.style.opacity = '1';
+                }
+            };
+            
             // Codificar la ruta correctamente (manejar espacios y caracteres especiales)
             if (item.image) {
-                // Si es una ruta relativa, codificar solo los espacios y caracteres especiales
                 if (item.image.startsWith('images/')) {
-                    // Reemplazar espacios por %20, pero mantener las barras
-                    imageElement.src = item.image.replace(/ /g, '%20');
+                    preloadImg.src = item.image.replace(/ /g, '%20');
                 } else {
-            imageElement.src = item.image;
+                    preloadImg.src = item.image;
                 }
             } else {
                 imageElement.src = createPlaceholderImage(item.name);
+                imageElement.style.opacity = '1';
             }
+            
             imageElement.alt = item.name;
             
-            // Manejar error de carga de imagen (formato no soportado, archivo no encontrado, etc.)
+            // Manejar error de carga en el elemento también (fallback adicional)
             imageElement.onerror = function() {
-                console.warn(`No se pudo cargar la imagen: ${item.image}`);
-                // Intentar con ruta sin codificar por si acaso
-                if (item.image && item.image.includes(' ')) {
-                    this.src = item.image.replace(/ /g, '%20');
-                } else {
-                    // Si falla, usar placeholder
+                if (this.src !== createPlaceholderImage(item.name)) {
                     this.src = createPlaceholderImage(item.name);
+                    this.style.opacity = '1';
                 }
             };
 
@@ -1228,47 +1288,44 @@
         // Manejo global de errores para evitar pantalla en blanco
         window.addEventListener('error', function(event) {
             console.error('Error capturado:', event.error);
-            // Prevenir que errores no manejados causen pantalla en blanco
-            event.preventDefault();
-            return true;
+            // NO prevenir el comportamiento por defecto - solo loguear
+            // Prevenir errores de scripts externos (CDN) que puedan causar problemas
+            if (event.filename && (event.filename.includes('cdn') || event.filename.includes('google'))) {
+                event.preventDefault();
+                return true;
+            }
+            return false;
         });
 
         window.addEventListener('unhandledrejection', function(event) {
             console.error('Promesa rechazada sin manejar:', event.reason);
-            event.preventDefault();
+            // NO prevenir por defecto - solo loguear para debugging
+            // Solo prevenir si es crítico y está bloqueando la página
+            if (event.reason && event.reason.message && event.reason.message.includes('Failed to fetch')) {
+                // Intentar cargar el menú de nuevo si falla el fetch
+                if (menuError && menuError.classList.contains('hidden')) {
+                    setTimeout(() => {
+                        if (menuState.categories.length === 0) {
+                            loadMenuData();
+                        }
+                    }, 2000);
+                }
+            }
         });
 
-        // Precargar imagen de fondo para evitar carga por partes
-        function preloadBackgroundImage() {
-            return new Promise((resolve, reject) => {
-                const img = new Image();
-                img.onload = function() {
-                    document.body.classList.add('bg-loaded');
-                    resolve();
-                };
-                img.onerror = function() {
-                    console.warn('No se pudo cargar la imagen de fondo, usando fallback');
-                    document.body.classList.add('bg-loaded');
-                    resolve(); // Continuar aunque falle
-                };
-                img.src = 'images/1583.png';
-            });
-        }
-
-        // Inicializar página
-        async function initPage() {
+        // Inicializar página - carga en paralelo sin bloquear
+        function initPage() {
             try {
-                // Precargar imagen de fondo primero
-                await preloadBackgroundImage();
-                
-                // Luego cargar datos del menú
+                // Cargar datos del menú inmediatamente (no espera nada)
                 changeLanguage(defaultLang);
-                await loadMenuData();
+                loadMenuData();
             } catch (error) {
                 console.error('Error al inicializar página:', error);
-                menuLoading.classList.add('hidden');
-                menuError.textContent = translations[currentLang]['load-error'];
-                menuError.classList.remove('hidden');
+                if (menuLoading) menuLoading.classList.add('hidden');
+                if (menuError) {
+                    menuError.textContent = translations[currentLang]['load-error'];
+                    menuError.classList.remove('hidden');
+                }
             }
         }
 
@@ -1282,11 +1339,12 @@
             }, 2000);
         });
 
-        // Iniciar cuando el DOM esté listo
+        // Iniciar inmediatamente si el DOM ya está listo, sino esperar
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initPage);
         } else {
-            initPage();
+            // Usar setTimeout para asegurar que todos los elementos del DOM estén disponibles
+            setTimeout(initPage, 0);
         }
     </script>
 </body>

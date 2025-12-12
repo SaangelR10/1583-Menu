@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2025-11-22T14:55:29.709Z",
+  "generatedAt": "2025-12-12T20:38:37.589Z",
   "source": "Cargue productos\\Menu Web.xlsx",
   "categories": [
     {
@@ -618,8 +618,8 @@
           "name": "Capuccino con Wafflebono",
           "description": "",
           "additions": "",
-          "price": 16500,
-          "priceLabel": "$ 16.500",
+          "price": 17500,
+          "priceLabel": "$ 17.500",
           "image": ""
         }
       ]

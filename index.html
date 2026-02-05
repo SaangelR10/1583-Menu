@@ -790,7 +790,7 @@
     </header>
 
     <!-- Floating History Button -->
-    <button class="history-button" id="history-button" onclick="openHistoryModal()">
+    <button class="history-button" id="history-button" onclick="openHistoryModal()" data-i18n="history-button">
         ¿Sabes por qué somos 1583?
     </button>
 
@@ -827,7 +827,7 @@
     <div class="whatsapp-float">
         <a href="https://wa.me/+573181454142?text=Hola%20quisiera%20preguntar%20sobre.." target="_blank">
             <i class="fab fa-whatsapp"></i>
-            <span class="notification">Tienes dudas? Contactanos!!</span>
+            <span class="notification" data-i18n="whatsapp-notification">¿Tienes dudas? ¡Contáctanos!</span>
         </a>
     </div>
 
@@ -847,53 +847,108 @@
     <div id="history-modal" class="history-modal">
         <div class="history-modal-content">
             <button class="history-close" onclick="closeHistoryModal()">×</button>
-            <h2>Por qué se llama Café 1583?</h2>
-            
-            <p class="intro">Cuando escogimos el nombre Café 1583 no fue un número al azar. Quisimos anclar el café que servimos hoy en Cali a un momento preciso de la historia del café en el mundo: el año en que Europa dejó constancia escrita, por primera vez, de esta bebida que ya era famosa en el mundo árabe.</p>
 
-            <p>En <span class="highlight-year">1583</span> el médico y botánico alemán Leonhard Rauwolf publicó su relato de viaje por el Levante ("Aigentliche Beschreibung der Raiss inn die Morgenländer"), y allí describe una bebida oscura y caliente que los habitantes de Alepo tomaban y llamaban <em>chaube</em> —es decir, café. Ese texto es considerado uno de los primeros testimonios europeos impresos sobre el café.</p>
+            <!-- Contenido en Español -->
+            <div id="history-content-es" data-lang-section="es">
+                <h2>Por qué se llama Café 1583?</h2>
+                
+                <p class="intro">Cuando escogimos el nombre Café 1583 no fue un número al azar. Quisimos anclar el café que servimos hoy en Cali a un momento preciso de la historia del café en el mundo: el año en que Europa dejó constancia escrita, por primera vez, de esta bebida que ya era famosa en el mundo árabe.</p>
 
-            <p>¿Por qué eso es importante? Porque para entonces el café ya llevaba más de un siglo circulando entre Yemen, La Meca, El Cairo y Estambul, impulsado por las rutas comerciales del Imperio Otomano, pero todavía no tenía "acta de nacimiento" en Europa. El libro de <span class="highlight-year">1583</span> hace visible para Occidente una costumbre que en el mundo islámico ya estaba muy arraigada.</p>
+                <p>En <span class="highlight-year">1583</span> el médico y botánico alemán Leonhard Rauwolf publicó su relato de viaje por el Levante ("Aigentliche Beschreibung der Raiss inn die Morgenländer"), y allí describe una bebida oscura y caliente que los habitantes de Alepo tomaban y llamaban <em>chaube</em> —es decir, café. Ese texto es considerado uno de los primeros testimonios europeos impresos sobre el café.</p>
 
-            <h3>Si miramos la línea de tiempo, se entiende mejor:</h3>
-            
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="year">Siglo XV</div>
-                    <div class="description">El café se consume en Yemen, sobre todo entre sufíes, para mantenerse despiertos.</div>
+                <p>¿Por qué eso es importante? Porque para entonces el café ya llevaba más de un siglo circulando entre Yemen, La Meca, El Cairo y Estambul, impulsado por las rutas comerciales del Imperio Otomano, pero todavía no tenía "acta de nacimiento" en Europa. El libro de <span class="highlight-year">1583</span> hace visible para Occidente una costumbre que en el mundo islámico ya estaba muy arraigada.</p>
+
+                <h3>Si miramos la línea de tiempo, se entiende mejor:</h3>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="year">Siglo XV</div>
+                        <div class="description">El café se consume en Yemen, sobre todo entre sufíes, para mantenerse despiertos.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="year">Inicios del XVI</div>
+                        <div class="description">El café llega a ciudades como El Cairo, Damasco y Estambul, y aparecen las primeras cafeterías públicas.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="year">Segunda mitad del XVI</div>
+                        <div class="description">Comerciantes y viajeros europeos empiezan a verlo y a contarlo.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="year">1583</div>
+                        <div class="description">Rauwolf lo describe por escrito y ese relato circula en Europa. Ahí está nuestro número.</div>
+                    </div>
                 </div>
-                <div class="timeline-item">
-                    <div class="year">Inicios del XVI</div>
-                    <div class="description">El café llega a ciudades como El Cairo, Damasco y Estambul, y aparecen las primeras cafeterías públicas.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="year">Segunda mitad del XVI</div>
-                    <div class="description">Comerciantes y viajeros europeos empiezan a verlo y a contarlo.</div>
-                </div>
-                <div class="timeline-item">
-                    <div class="year">1583</div>
-                    <div class="description">Rauwolf lo describe por escrito y ese relato circula en Europa. Ahí está nuestro número.</div>
-                </div>
+
+                <h3>Entonces, Café 1583 significa esto:</h3>
+
+                <ul class="meaning-list">
+                    <li>
+                        <strong>1. Homenaje a la primera descripción europea conocida del café.</strong>
+                        Es la forma de decir: "estamos conectados con la raíz histórica de esta bebida".
+                    </li>
+                    <li>
+                        <strong>2. Reconocimiento al viaje del café.</strong>
+                        Antes de llegar a nuestras tazas en América, el café pasó por Etiopía, Yemen, los puertos de Moca, las ciudades del Mediterráneo y, finalmente, Europa. 1583 es una especie de faro en ese recorrido.
+                    </li>
+                    <li>
+                        <strong>3. Una promesa de marca.</strong>
+                        Así como en 1583 alguien se tomó el trabajo de documentar el café con rigor, nosotros queremos servirlo con el mismo respeto por su origen.
+                    </li>
+                </ul>
+
+                <p>Podríamos haber escogido el año de la primera cafetería en Venecia o el año en que llegó a América, pero <span class="highlight-year">1583</span> nos permite contar una historia menos obvia y totalmente verificable: es el año en que el café quedó registrado en un libro europeo y empezó, de verdad, a cruzar fronteras culturales. Eso es exactamente lo que queremos que pase en nuestra tienda: que una taza vuelva a unir mundos.</p>
             </div>
 
-            <h3>Entonces, Café 1583 significa esto:</h3>
+            <!-- Content in English -->
+            <div id="history-content-en" data-lang-section="en" style="display: none;">
+                <h2>Why is it called Café 1583?</h2>
+                
+                <p class="intro">When we chose the name Café 1583 it was not a random number. We wanted to anchor the coffee we serve today in Cali to a precise moment in the history of coffee in the world: the year in which Europe left a written record, for the first time, of this drink that was already famous in the Arab world.</p>
 
-            <ul class="meaning-list">
-                <li>
-                    <strong>1. Homenaje a la primera descripción europea conocida del café.</strong>
-                    Es la forma de decir: "estamos conectados con la raíz histórica de esta bebida".
-                </li>
-                <li>
-                    <strong>2. Reconocimiento al viaje del café.</strong>
-                    Antes de llegar a nuestras tazas en América, el café pasó por Etiopía, Yemen, los puertos de Moca, las ciudades del Mediterráneo y, finalmente, Europa. 1583 es una especie de faro en ese recorrido.
-                </li>
-                <li>
-                    <strong>3. Una promesa de marca.</strong>
-                    Así como en 1583 alguien se tomó el trabajo de documentar el café con rigor, nosotros queremos servirlo con el mismo respeto por su origen.
-                </li>
-            </ul>
+                <p>In <span class="highlight-year">1583</span>, the German physician and botanist Leonhard Rauwolf published his travel account through the Levant ("Aigentliche Beschreibung der Raiss inn die Morgenländer"), where he describes a dark, hot drink that the people of Aleppo drank and called <em>chaube</em> —that is, coffee. That text is considered one of the first printed European testimonies about coffee.</p>
 
-            <p>Podríamos haber escogido el año de la primera cafetería en Venecia o el año en que llegó a América, pero <span class="highlight-year">1583</span> nos permite contar una historia menos obvia y totalmente verificable: es el año en que el café quedó registrado en un libro europeo y empezó, de verdad, a cruzar fronteras culturales. Eso es exactamente lo que queremos que pase en nuestra tienda: que una taza vuelva a unir mundos.</p>
+                <p>Why is that important? Because by then coffee had already been circulating for more than a century between Yemen, Mecca, Cairo and Istanbul, driven by the trade routes of the Ottoman Empire, but it still had no official "birth certificate" in Europe. The <span class="highlight-year">1583</span> book makes visible to the West a custom that was already deeply rooted in the Islamic world.</p>
+
+                <h3>If we look at the timeline, it becomes clearer:</h3>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="year">15th century</div>
+                        <div class="description">Coffee is consumed in Yemen, especially among Sufis, to help them stay awake.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="year">Early 16th century</div>
+                        <div class="description">Coffee reaches cities such as Cairo, Damascus and Istanbul, and the first public coffeehouses appear.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="year">Second half of the 16th century</div>
+                        <div class="description">European merchants and travellers begin to see it and write about it.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="year">1583</div>
+                        <div class="description">Rauwolf describes it in writing and his account circulates in Europe. That is our number.</div>
+                    </div>
+                </div>
+
+                <h3>So, Café 1583 means this:</h3>
+
+                <ul class="meaning-list">
+                    <li>
+                        <strong>1. A tribute to the first known European description of coffee.</strong>
+                        It is our way of saying: “we are connected to the historical roots of this drink”.
+                    </li>
+                    <li>
+                        <strong>2. A recognition of coffee’s journey.</strong>
+                        Before reaching our cups in the Americas, coffee travelled through Ethiopia, Yemen, the port of Mocha, the cities of the Mediterranean and, finally, Europe. 1583 is like a lighthouse along that route.
+                    </li>
+                    <li>
+                        <strong>3. A brand promise.</strong>
+                        Just as in 1583 someone took the time to document coffee rigorously, we want to serve it with the same respect for its origin.
+                    </li>
+                </ul>
+
+                <p>We could have chosen the year of the first coffeehouse in Venice or the year coffee arrived in the Americas, but <span class="highlight-year">1583</span> lets us tell a less obvious and fully verifiable story: it is the year when coffee was recorded in a European book and truly began to cross cultural borders. That is exactly what we want to happen in our shop: for a cup to bring worlds together again.</p>
+            </div>
         </div>
     </div>
 
@@ -1022,7 +1077,7 @@
                 const li = document.createElement('li');
                 const link = document.createElement('a');
                 link.href = '#';
-                link.textContent = category.name;
+                link.textContent = getCategoryDisplayName(category);
                 link.dataset.sectionId = category.sectionId;
                 if (category.sectionId === activeSectionId || (!activeSectionId && index === 0)) {
                     link.classList.add('active');
@@ -1043,7 +1098,7 @@
 
                 const heading = document.createElement('h2');
                 heading.className = 'text-3xl font-semibold mb-6 text-center';
-                heading.textContent = category.name;
+                heading.textContent = getCategoryDisplayName(category);
                 section.appendChild(heading);
 
                 const list = document.createElement('ul');
@@ -1066,7 +1121,7 @@
             topRow.className = 'flex justify-between';
 
             const nameEl = document.createElement('span');
-            nameEl.textContent = item.name;
+            nameEl.textContent = getItemDisplayName(item);
             const priceEl = document.createElement('span');
             priceEl.textContent = item.priceLabel || formatCOP(item.price) || '';
             topRow.appendChild(nameEl);
@@ -1126,7 +1181,7 @@
             const priceLabel = translations[currentLang]['price-label'];
             const additionsLabel = translations[currentLang]['additions-label'];
 
-            titleElement.textContent = item.name;
+            titleElement.textContent = getItemDisplayName(item);
             descriptionElement.textContent = item.description || '';
             
             if (item.description) {
@@ -1149,7 +1204,7 @@
             imageElement.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'; // 1x1 pixel transparente
             imageElement.style.opacity = '0';
             imageElement.style.transition = 'opacity 0.3s ease-in-out';
-            imageElement.alt = item.name;
+            imageElement.alt = getItemDisplayName(item);
             
             // Precargar imagen antes de asignarla al elemento
             const preloadImg = new Image();
@@ -1157,7 +1212,7 @@
                 ? (item.image.startsWith('images/') 
                     ? item.image.replace(/ /g, '%20') 
                     : item.image)
-                : createPlaceholderImage(item.name);
+                : createPlaceholderImage(getItemDisplayName(item));
             
             preloadImg.onload = function() {
                 // Una vez cargada completamente, asignarla al elemento visible
@@ -1181,12 +1236,12 @@
                         }, 50);
                     };
                     retryImg.onerror = function() {
-                        imageElement.src = createPlaceholderImage(item.name);
+                        imageElement.src = createPlaceholderImage(getItemDisplayName(item));
                         imageElement.style.opacity = '1';
                     };
                     retryImg.src = altUrl;
                 } else {
-                    imageElement.src = createPlaceholderImage(item.name);
+                    imageElement.src = createPlaceholderImage(getItemDisplayName(item));
                     imageElement.style.opacity = '1';
                 }
             };
@@ -1258,7 +1313,9 @@
                 'price-label': 'Precio',
                 'additions-label': 'Adiciones',
                 'description-placeholder': 'Pronto tendremos la descripción de este producto.',
-                'load-error': 'No pudimos cargar el menú. Intenta nuevamente.'
+                'load-error': 'No pudimos cargar el menú. Intenta nuevamente.',
+                'history-button': '¿Sabes por qué somos 1583?',
+                'whatsapp-notification': '¿Tienes dudas? ¡Contáctanos!'
             },
             en: {
                 'menu-title': 'Our Menu',
@@ -1266,18 +1323,178 @@
                 'price-label': 'Price',
                 'additions-label': 'Add-ons',
                 'description-placeholder': 'We will publish this product description soon.',
-                'load-error': 'We could not load the menu. Please try again later.'
+                'load-error': 'We could not load the menu. Please try again later.',
+                'history-button': 'Do you know why we are 1583?',
+                'whatsapp-notification': 'Any questions? Contact us!'
             }
         };
 
+        // Traducciones de nombres de categorías (ES -> EN)
+        const categoryNameTranslations = {
+            'Panadería': { en: 'Bakery' },
+            'Tortas': { en: 'Cakes' },
+            'Bebidas Calientes': { en: 'Hot Beverages' },
+            'Bebidas Frias': { en: 'Cold Beverages' },
+            'Sodas Italianas': { en: 'Italian Sodas' },
+            'Vinos': { en: 'Wines' },
+            'Tabla de Quesos': { en: 'Cheese Board' },
+            'Galletas': { en: 'Cookies' },
+            'Mousse': { en: 'Mousse' },
+            'By 1583': { en: 'By 1583' },
+            'Combos': { en: 'Combos' }
+        };
+
+        // Traducciones de nombres de productos por ID (ES -> EN)
+        const itemNameTranslations = {
+            // Panadería
+            'panaderia-croissant-mantequilla-70-gms': { en: 'Butter Croissant 70 g' },
+            'panaderia-croissant-queso-66-gms': { en: 'Cheese Croissant 66 g' },
+            'panaderia-croissant-jamon-y-queso-85-g': { en: 'Ham & Cheese Croissant 85 g' },
+            'panaderia-croissant-almendras-80-gms': { en: 'Almond Croissant 80 g' },
+            'panaderia-croissant-chocolate-80-gms': { en: 'Chocolate Croissant 80 g' },
+            'panaderia-pastel-triple-chicharron-115-g': { en: 'Triple Pork Pastry 115 g' },
+            'panaderia-pastel-de-arequipe-95-gms': { en: 'Dulce de Leche Pastry 95 g' },
+            'panaderia-mini-croissant-integral-30-gr': { en: 'Mini Whole Grain Croissant 30 g' },
+            'panaderia-palito-de-queso-60-gr': { en: 'Cheese Stick 60 g' },
+            'panaderia-horneado-de-pollo-100-gr': { en: 'Baked Chicken Pastry 100 g' },
+            'panaderia-waflebonos-x-4-unid': { en: 'Waflebonos x 4 units' },
+            'panaderia-waflebonos-x-16-unid-480-gr': { en: 'Waflebonos x 16 units 480 g' },
+            'panaderia-horneado-americano': { en: 'American Baked Pastry' },
+            'panaderia-horneado-de-carne': { en: 'Beef Baked Pastry' },
+            'panaderia-horneado-italiano': { en: 'Italian Baked Pastry' },
+            'panaderia-horneado-hawaiano': { en: 'Hawaiian Baked Pastry' },
+
+            // Tortas
+            'tortas-torta-de-almojabana-1-porcion': { en: 'Almojábana Cake - 1 slice' },
+            'tortas-torta-de-zanahoria-1-porcion': { en: 'Carrot Cake - 1 slice' },
+            'tortas-torta-de-banano-1-porcion': { en: 'Banana Cake - 1 slice' },
+            'tortas-torta-de-chocolate-1-porcion': { en: 'Chocolate Cake - 1 slice' },
+            'tortas-torta-red-velvet-1-porcion': { en: 'Red Velvet Cake - 1 slice' },
+            'tortas-torta-de-queso-1-porcion': { en: 'Cheesecake - 1 slice' },
+            'tortas-torta-de-pina-1-porcion': { en: 'Pineapple Cake - 1 slice' },
+
+            // Bebidas Calientes
+            'bebidas-calientes-cafe-1583-espresso-sencillo': { en: '1583 Coffee Single Espresso' },
+            'bebidas-calientes-cafe-1583-espresso-doble': { en: '1583 Coffee Double Espresso' },
+            'bebidas-calientes-cafe-1583-americano': { en: '1583 Coffee Americano' },
+            'bebidas-calientes-capuccino-1583-7-onzas': { en: '1583 Cappuccino 7 oz' },
+            'bebidas-calientes-capuccino-1583-mediano-9-onzas': { en: '1583 Cappuccino Medium 9 oz' },
+            'bebidas-calientes-capuccino-1583-grande-12-onzas': { en: '1583 Cappuccino Large 12 oz' },
+            'bebidas-calientes-cafe-late-1583-mediano': { en: '1583 Latte Medium' },
+            'bebidas-calientes-cafe-late-1583-grande': { en: '1583 Latte Large' },
+            'bebidas-calientes-mocaccino-1583-mediano': { en: '1583 Mocha Medium' },
+            'bebidas-calientes-mocaccino-1583-grande': { en: '1583 Mocha Large' },
+            'bebidas-calientes-cafe-irlandes-1583': { en: '1583 Irish Coffee' },
+            'bebidas-calientes-cafe-campesino-1583': { en: '1583 Campesino Coffee' },
+            'bebidas-calientes-carajillo-1583-aguardiente': { en: '1583 Carajillo (Aguardiente)' },
+            'bebidas-calientes-carajillo-1583-brandy': { en: '1583 Carajillo (Brandy)' },
+            'bebidas-calientes-cafe-macchiato-1583': { en: '1583 Macchiato Coffee' },
+            'bebidas-calientes-cafe-macchiato-bombon-1583': { en: '1583 Macchiato Bombón Coffee' },
+            'bebidas-calientes-infusion-1583': { en: '1583 Herbal Infusion' },
+            'bebidas-calientes-shot-baileys-40oz': { en: 'Baileys Shot 40 oz' },
+
+            // Bebidas Frías
+            'bebidas-frias-cold-brew-orange': { en: 'Cold Brew Orange' },
+            'bebidas-frias-cold-brew-soda': { en: 'Cold Brew Soda' },
+            'bebidas-frias-cold-brew-mojito': { en: 'Cold Brew Mojito' },
+            'bebidas-frias-cold-brew-latte': { en: 'Cold Brew Latte' },
+            'bebidas-frias-afogatto-vainilla-shot-de-baileys': { en: 'Affogato (Vanilla) with Baileys Shot' },
+            'bebidas-frias-malteada-vainilla-fresa-oreo': { en: 'Milkshake (Vanilla, Strawberry, Oreo)' },
+            'bebidas-frias-granizado-de-cafe': { en: 'Coffee Frappe' },
+
+            // Sodas Italianas
+            'sodas-italianas-soda-italiana-de-frutos-rojos': { en: 'Italian Soda Red Berries' },
+            'sodas-italianas-soda-italiana-de-maracuya': { en: 'Italian Soda Passion Fruit' },
+
+            // Vinos
+            'vinos-tinto-de-verano-jarra': { en: 'Summer Red Wine - Pitcher' },
+            'vinos-tinto-de-verano-media-jarra': { en: 'Summer Red Wine - Half Pitcher' },
+            'vinos-tinto-de-verano-copa': { en: 'Summer Red Wine - Glass' },
+            'vinos-sangria-jarra': { en: 'Sangria - Pitcher' },
+            'vinos-sangria-media-jarra': { en: 'Sangria - Half Pitcher' },
+            'vinos-copa-vino-tinto': { en: 'Glass - Red Wine' },
+            'vinos-copa-vino-blanco': { en: 'Glass - White Wine' },
+
+            // Tabla de Quesos
+            'tabla-de-quesos-tabla-de-quesos-1583-individual': { en: '1583 Cheese Board - Individual' },
+            'tabla-de-quesos-tabla-de-quesos-1583-compartir-2-personas': { en: '1583 Cheese Board - To Share (2 people)' },
+
+            // Galletas
+            'galletas-galletas-chips-de-chocolate-80-gr': { en: 'Chocolate Chip Cookies 80 g' },
+
+            // Mousse
+            'mousse-mousse-maracuya-limon-mora': { en: 'Mousse (Passion Fruit, Lime, Blackberry)' },
+
+            // By 1583
+            'by-1583-mug': { en: 'Mug' },
+
+            // Combos
+            'combos-capuccino-con-wafflebono': { en: 'Cappuccino with Waflebonos' }
+        };
+
+        function getCategoryDisplayName(category) {
+            if (currentLang === 'en') {
+                const t = categoryNameTranslations[category.name];
+                if (t && t.en) return t.en;
+            }
+            return category.name;
+        }
+
+        function getItemDisplayName(item) {
+            if (currentLang === 'en') {
+                const t = itemNameTranslations[item.id];
+                if (t && t.en) return t.en;
+            }
+            return item.name;
+        }
+
         function changeLanguage(lang) {
+            // Validar idioma; si no existe, usar el idioma por defecto
+            if (!translations[lang]) {
+                lang = defaultLang;
+            }
+
             currentLang = lang;
+
+            // Actualizar atributo lang del documento para accesibilidad y SEO
+            document.documentElement.setAttribute('lang', currentLang);
+
+            // Mantener sincronizado el selector de idioma
+            const languageSelect = document.querySelector('.language-selector select');
+            if (languageSelect && languageSelect.value !== currentLang) {
+                languageSelect.value = currentLang;
+            }
+
+            // Guardar preferencia de idioma
+            try {
+                if (window && window.localStorage) {
+                    window.localStorage.setItem('menu-lang', currentLang);
+                }
+            } catch (e) {
+                // Si falla localStorage, simplemente lo ignoramos
+                console.warn('No se pudo guardar el idioma en localStorage:', e);
+            }
+
+            // Actualizar textos traducibles
             document.querySelectorAll('[data-i18n]').forEach(element => {
                 const key = element.getAttribute('data-i18n');
-                const translation = translations[lang][key] || translations[defaultLang][key] || key;
+                const translation =
+                    (translations[currentLang] && translations[currentLang][key]) ||
+                    (translations[defaultLang] && translations[defaultLang][key]) ||
+                    key;
                 element.textContent = translation;
             });
 
+            // Mostrar el contenido correcto del modal de historia según el idioma
+            document.querySelectorAll('[data-lang-section]').forEach(element => {
+                if (element.dataset.langSection === currentLang) {
+                    element.style.display = '';
+                } else {
+                    element.style.display = 'none';
+                }
+            });
+
+            // Volver a renderizar el menú para refrescar etiquetas como "Adiciones"/"Add-ons"
             if (menuState.categories.length > 0) {
                 renderMenu();
             }
@@ -1314,8 +1531,21 @@
         // Inicializar página - carga en paralelo sin bloquear
         function initPage() {
             try {
+                // Determinar idioma inicial (preferencia guardada o por defecto)
+                let initialLang = defaultLang;
+                try {
+                    if (window && window.localStorage) {
+                        const savedLang = window.localStorage.getItem('menu-lang');
+                        if (savedLang && translations[savedLang]) {
+                            initialLang = savedLang;
+                        }
+                    }
+                } catch (e) {
+                    console.warn('No se pudo leer el idioma desde localStorage:', e);
+                }
+
                 // Cargar datos del menú inmediatamente (no espera nada)
-                changeLanguage(defaultLang);
+                changeLanguage(initialLang);
                 loadMenuData();
             } catch (error) {
                 console.error('Error al inicializar página:', error);

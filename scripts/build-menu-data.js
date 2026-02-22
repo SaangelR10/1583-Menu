@@ -142,14 +142,17 @@ async function buildData() {
     const sheet     = workbook.Sheets[sheetName];
     const rows      = XLSX.utils.sheet_to_json(sheet, { defval: '' });
 
-    const slugCount = new Map();
+    const slugCount     = new Map();
+    const categoryEnMap = new Map(); // traducciones de categoría desde el Excel
 
     const categoriesMap = rows.reduce((acc, row) => {
         const category    = (row['Categoría'] || row['Categoria'] || 'Sin categoría').toString().trim();
         const name        = (row['Producto']  || row['Nombre']    || 'Producto sin nombre').toString().trim();
         const description = (row['Descripcion'] || row['Descripción'] || row['Description'] || '').toString().trim();
         const additions   = (row['Adiciones']   || row['Extras']      || '').toString().trim();
-        const imageUrl    = (row['Imagen'] || row['Imagenes'] || row['Imagen URL'] || row['Imagenes URL'] || '').toString().trim();
+        const imageUrl         = (row['Imagen'] || row['Imagenes'] || row['Imagen URL'] || row['Imagenes URL'] || '').toString().trim();
+        const nameEnManual     = (row['Nombre Inglés'] || row['Nombre Ingles'] || row['Name English'] || '').toString().trim();
+        const categoryEnManual = (row['Categoría Inglés'] || row['Categoria Inglés'] || row['Category English'] || '').toString().trim();
         const priceNumber = parsePrice(row['Precio']);
 
         let baseSlug = slugify(`${category}-${name}`) || 'producto';
@@ -165,7 +168,7 @@ async function buildData() {
         const item = {
             id:         finalSlug,
             name,
-            nameEn:     '',          // se llenará abajo con la traducción
+            nameEn:     nameEnManual, // vacío si no hay — se llenará con API abajo
             description,
             additions,
             price:      priceNumber,
@@ -173,36 +176,73 @@ async function buildData() {
             image:      imageUrl,
         };
 
+        if (categoryEnManual && !categoryEnMap.has(category)) {
+            categoryEnMap.set(category, categoryEnManual);
+        }
         if (!acc.has(category)) acc.set(category, []);
         acc.get(category).push(item);
         return acc;
     }, new Map());
 
     // ── 2. Traducir categorías e items ───────────────────────
-    const categoryNames = Array.from(categoriesMap.keys());
-    const allItems      = Array.from(categoriesMap.values()).flat();
-    const itemNames     = allItems.map(i => i.name);
+    // Mapa de categorías con traducción fija (se usa si no hay columna en Excel)
+    const CATEGORY_FALLBACK = {
+        'Panadería':        'Bakery',
+        'Snack':            'Snacks',
+        'Tortas':           'Cakes',
+        'Bebidas Calientes':'Hot Drinks',
+        'Bebidas Frías':    'Cold Drinks',
+        'Sodas Italianas':  'Italian Sodas',
+        'Vinos':            'Wines',
+        'Tabla de Quesos':  'Charcuterie Board',
+        'By 1583':          'By 1583',
+        'Adiciones':        'Extras',
+        'Combos':           'Combos',
+        'Galletería':       'Cookies & Pastries',
+        'Mousse':           'Mousse',
+    };
 
-    console.log(`\n🌐 Traduciendo ${categoryNames.length} categorías y ${itemNames.length} productos al inglés...`);
-    console.log('   (MyMemory API — gratis, sin key)\n');
+    const categoryNames        = Array.from(categoriesMap.keys());
+    const allItems             = Array.from(categoriesMap.values()).flat();
 
-    const [translatedCategories, translatedItems] = await Promise.all([
-        translateBatch(categoryNames),
-        translateBatch(itemNames),
+    // Solo traducir ítems sin traducción manual en Excel
+    const itemsToTranslate     = allItems.filter(i => !i.nameEn);
+    const itemNames            = itemsToTranslate.map(i => i.name);
+
+    // Solo traducir categorías sin cobertura manual ni fallback
+    const categoriesToTranslate = categoryNames.filter(n => !categoryEnMap.has(n) && !CATEGORY_FALLBACK[n]);
+
+    const needsAPI = itemNames.length > 0 || categoriesToTranslate.length > 0;
+    if (needsAPI) {
+        console.log(`\n🌐 Traduciendo ${categoriesToTranslate.length} categorías y ${itemNames.length} productos al inglés...`);
+        console.log('   (MyMemory API — gratis, sin key)\n');
+    } else {
+        console.log('\n✅ Todas las traducciones cubiertas por Excel o fallback — sin llamadas a la API\n');
+    }
+
+    const [translatedCategoriesList, translatedItemsList] = await Promise.all([
+        categoriesToTranslate.length > 0 ? translateBatch(categoriesToTranslate) : Promise.resolve([]),
+        itemNames.length > 0             ? translateBatch(itemNames)             : Promise.resolve([]),
     ]);
 
-    // Asignar nameEn a cada categoría
+    // Mapa de categorías traducidas por API
+    const apiCategoryMap = new Map();
+    categoriesToTranslate.forEach((name, i) => {
+        apiCategoryMap.set(name, translatedCategoriesList[i] || '');
+    });
+
+    // Asignar nameEn a cada categoría: Excel → fallback → API
     const categoryNameEnMap = new Map();
-    categoryNames.forEach((name, i) => {
-        const en = translatedCategories[i] || '';
+    categoryNames.forEach((name) => {
+        const en = categoryEnMap.get(name) || CATEGORY_FALLBACK[name] || apiCategoryMap.get(name) || '';
         categoryNameEnMap.set(name, en);
         if (en) console.log(`  ✔ ${name.padEnd(22)} →  ${en}`);
         else    console.log(`  ✘ ${name.padEnd(22)} →  (sin traducción, se usará español)`);
     });
 
-    // Asignar nameEn a cada item
-    allItems.forEach((item, i) => {
-        item.nameEn = translatedItems[i] || '';
+    // Asignar nameEn a ítems que necesitaban traducción API
+    itemsToTranslate.forEach((item, i) => {
+        item.nameEn = translatedItemsList[i] || '';
     });
 
     const translated   = allItems.filter(i => i.nameEn).length;

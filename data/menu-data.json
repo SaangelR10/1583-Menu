@@ -13,7 +13,7 @@
           "description": ".",
           "additions": "",
           "price": 4400,
-          "priceLabel": "$ 4.400",
+          "priceLabel": "$ 4.400",
           "image": "images/productos/1583 menu/Mantequilla.JPG"
         },
         {
@@ -23,17 +23,17 @@
           "description": ".",
           "additions": "",
           "price": 5500,
-          "priceLabel": "$ 5.500",
+          "priceLabel": "$ 5.500",
           "image": "images/productos/1583 menu/Croissant Queso.jpg"
         },
         {
           "id": "panaderia-croissant-con-jamon-y-queso",
           "name": "Croissant con jamón y queso",
-          "nameEn": "Croissant with ham and cheese",
+          "nameEn": "Ham & cheese croissant",
           "description": ".",
           "additions": "",
           "price": 8500,
-          "priceLabel": "$ 8.500",
+          "priceLabel": "$ 8.500",
           "image": "images/productos/1583 menu/Croissant JYQ.jpg"
         },
         {
@@ -43,7 +43,7 @@
           "description": ".",
           "additions": "",
           "price": 7300,
-          "priceLabel": "$ 7.300",
+          "priceLabel": "$ 7.300",
           "image": "images/productos/1583 menu/Croissant Almendras.jpg"
         },
         {
@@ -53,57 +53,57 @@
           "description": ".",
           "additions": "",
           "price": 5500,
-          "priceLabel": "$ 5.500",
+          "priceLabel": "$ 5.500",
           "image": "images/productos/1583 menu/Pastel arequipe.jpg"
         },
         {
           "id": "panaderia-mini-croissant-integral",
           "name": "Mini croissant integral",
-          "nameEn": "Wholemeal mini croissant",
+          "nameEn": "Whole wheat mini croissant",
           "description": ".",
           "additions": "",
           "price": 2300,
-          "priceLabel": "$ 2.300",
+          "priceLabel": "$ 2.300",
           "image": "images/productos/1583 menu/Mini croissant.png"
         },
         {
           "id": "panaderia-palito-de-queso",
           "name": "Palito de queso",
-          "nameEn": "Cheese Stick",
+          "nameEn": "Cheese stick",
           "description": ".",
           "additions": "",
           "price": 6700,
-          "priceLabel": "$ 6.700",
+          "priceLabel": "$ 6.700",
           "image": "images/productos/1583 menu/Palito de queso.JPG"
         },
         {
           "id": "panaderia-wafflebonos-x-4-unidades",
           "name": "Wafflebonos  X  4 unidades",
-          "nameEn": "Wafflebones  X  4 units",
+          "nameEn": "Wafflebonos (4 units)",
           "description": ".",
           "additions": "",
           "price": 12300,
-          "priceLabel": "$ 12.300",
+          "priceLabel": "$ 12.300",
           "image": "images/productos/1583 menu/Wafflebono.jpg"
         },
         {
           "id": "panaderia-dulce-tentacion",
           "name": "Dulce tentación",
-          "nameEn": "Sweet temptation",
+          "nameEn": "Dulce tentación",
           "description": ".",
           "additions": "",
           "price": 12000,
-          "priceLabel": "$ 12.000",
+          "priceLabel": "$ 12.000",
           "image": ""
         },
         {
           "id": "panaderia-hojaldre-de-bocadillo",
           "name": "Hojaldre de bocadillo",
-          "nameEn": "Sandwich puff pastry",
+          "nameEn": "Guava paste puff pastry",
           "description": ".",
           "additions": "",
           "price": 5500,
-          "priceLabel": "$ 5.500",
+          "priceLabel": "$ 5.500",
           "image": ""
         },
         {
@@ -113,7 +113,7 @@
           "description": ".",
           "additions": "",
           "price": 6500,
-          "priceLabel": "$ 6.500",
+          "priceLabel": "$ 6.500",
           "image": "images/productos/1583 menu/Croissant Chocolate.jpg"
         }
       ]
@@ -125,61 +125,61 @@
         {
           "id": "snack-horneado-de-pollo",
           "name": "Horneado de pollo",
-          "nameEn": "Chicken baking",
+          "nameEn": "Chicken baked pastry",
           "description": ".",
           "additions": "",
           "price": 10900,
-          "priceLabel": "$ 10.900",
+          "priceLabel": "$ 10.900",
           "image": "images/productos/1583 menu/Pastel pollo.jpg"
         },
         {
           "id": "snack-horneado-americano",
           "name": "Horneado americano",
-          "nameEn": "American baking",
+          "nameEn": "American-style baked pastry",
           "description": ".",
           "additions": "",
           "price": 10900,
-          "priceLabel": "$ 10.900",
+          "priceLabel": "$ 10.900",
           "image": "images/productos/1583 menu/Pastel americano.ARW"
         },
         {
           "id": "snack-horneado-de-carne",
           "name": "Horneado de carne",
-          "nameEn": "Meat baking",
+          "nameEn": "Beef baked pastry",
           "description": ".",
           "additions": "",
           "price": 10900,
-          "priceLabel": "$ 10.900",
+          "priceLabel": "$ 10.900",
           "image": "images/productos/1583 menu/Pastel C,I,H.ARW"
         },
         {
           "id": "snack-horneado-italiano",
           "name": "Horneado italiano",
-          "nameEn": "Italian baking",
+          "nameEn": "Italian-style baked pastry",
           "description": ".",
           "additions": "",
           "price": 10900,
-          "priceLabel": "$ 10.900",
+          "priceLabel": "$ 10.900",
           "image": "images/productos/1583 menu/Pastel C,I,H.ARW"
         },
         {
           "id": "snack-sandwich-gran-italiano-artellano",
           "name": "Sándwich gran italiano artellano",
-          "nameEn": "Grande Italiano Artellano sandwich",
+          "nameEn": "Gran Italiano sandwich (Artellano)",
           "description": ".",
           "additions": "",
           "price": 21900,
-          "priceLabel": "$ 21.900",
+          "priceLabel": "$ 21.900",
           "image": ""
         },
         {
           "id": "snack-sandwich-gran-italiano-ciabatta",
           "name": "Sándwich gran italiano ciabatta",
-          "nameEn": "Ciabatta large Italian sandwich",
+          "nameEn": "Gran Italiano sandwich (Ciabatta)",
           "description": ".",
           "additions": "",
           "price": 21900,
-          "priceLabel": "$ 21.900",
+          "priceLabel": "$ 21.900",
           "image": ""
         },
         {
@@ -189,27 +189,27 @@
           "description": ".",
           "additions": "",
           "price": 28900,
-          "priceLabel": "$ 28.900",
+          "priceLabel": "$ 28.900",
           "image": ""
         },
         {
           "id": "snack-horneado-ranchero",
-          "name": "Horneado ranchero",
-          "nameEn": "Rancher baking",
+          "name": "Trilogía",
+          "nameEn": "Trilogía",
           "description": ".",
           "additions": "",
           "price": 10900,
-          "priceLabel": "$ 10.900",
+          "priceLabel": "$ 10.900",
           "image": ""
         },
         {
           "id": "snack-queso-7-cueros",
           "name": "Queso 7 cueros",
-          "nameEn": "7-leather cheese",
+          "nameEn": "Queso 7 cueros",
           "description": ".",
           "additions": "",
           "price": 11000,
-          "priceLabel": "$ 11.000",
+          "priceLabel": "$ 11.000",
           "image": ""
         }
       ]
@@ -221,31 +221,31 @@
         {
           "id": "tortas-cheesecake-de-arandanos",
           "name": "Cheesecake de arándanos",
-          "nameEn": "Blueberry Cheesecake",
+          "nameEn": "Blueberry cheesecake",
           "description": ".",
           "additions": "",
           "price": 21000,
-          "priceLabel": "$ 21.000",
+          "priceLabel": "$ 21.000",
           "image": ""
         },
         {
           "id": "tortas-torta-de-almojabana",
           "name": "Torta de almojábana",
-          "nameEn": "Pillow cake",
+          "nameEn": "Almojábana cake",
           "description": ".",
           "additions": "",
           "price": 14000,
-          "priceLabel": "$ 14.000",
+          "priceLabel": "$ 14.000",
           "image": "images/productos/1583 menu/Torta almojabana.jpg"
         },
         {
           "id": "tortas-torta-de-almojabana-con-bocadillo",
           "name": "Torta de almojábana con bocadillo",
-          "nameEn": "Almokhabana cake with sandwich",
+          "nameEn": "Almojábana cake with sweet guava",
           "description": ".",
           "additions": "",
           "price": 14000,
-          "priceLabel": "$ 14.000",
+          "priceLabel": "$ 14.000",
           "image": ""
         },
         {
@@ -255,7 +255,7 @@
           "description": ".",
           "additions": "",
           "price": 17500,
-          "priceLabel": "$ 17.500",
+          "priceLabel": "$ 17.500",
           "image": "images/productos/1583 menu/Torta Zanahoria.jpg"
         },
         {
@@ -265,7 +265,7 @@
           "description": ".",
           "additions": "",
           "price": 14500,
-          "priceLabel": "$ 14.500",
+          "priceLabel": "$ 14.500",
           "image": "images/productos/1583 menu/Torta Banano.ARW"
         },
         {
@@ -275,7 +275,7 @@
           "description": ".",
           "additions": "",
           "price": 17500,
-          "priceLabel": "$ 17.500",
+          "priceLabel": "$ 17.500",
           "image": "images/productos/1583 menu/Torta de chocolate.jpg"
         },
         {
@@ -285,7 +285,7 @@
           "description": ".",
           "additions": "",
           "price": 17500,
-          "priceLabel": "$ 17.500",
+          "priceLabel": "$ 17.500",
           "image": "images/productos/1583 menu/Torta Red Velvet.jpg"
         },
         {
@@ -295,17 +295,17 @@
           "description": ".",
           "additions": "",
           "price": 17500,
-          "priceLabel": "$ 17.500",
+          "priceLabel": "$ 17.500",
           "image": "images/productos/1583 menu/Torta de queso.jpg"
         },
         {
           "id": "tortas-torta-de-pina-con-zanahoria",
           "name": "Torta de piña con zanahoría",
-          "nameEn": "Pineapple cake with carrot",
+          "nameEn": "Pineapple & carrot cake",
           "description": ".",
           "additions": "",
           "price": 17500,
-          "priceLabel": "$ 17.500",
+          "priceLabel": "$ 17.500",
           "image": ""
         }
       ]
@@ -317,71 +317,71 @@
         {
           "id": "bebidas-calientes-cafe-filtrado-personal",
           "name": "Café filtrado personal",
-          "nameEn": "Personal filtered coffee",
+          "nameEn": "Personal pour-over coffee",
           "description": ".",
           "additions": "",
           "price": 13300,
-          "priceLabel": "$ 13.300",
+          "priceLabel": "$ 13.300",
           "image": ""
         },
         {
           "id": "bebidas-calientes-carajillo-de-aguardiente",
           "name": "Carajillo de aguardiente",
-          "nameEn": "Carajillo de aguardiente",
+          "nameEn": "Carajillo with aguardiente",
           "description": ".",
           "additions": "",
           "price": 20000,
-          "priceLabel": "$ 20.000",
+          "priceLabel": "$ 20.000",
           "image": ""
         },
         {
           "id": "bebidas-calientes-cafe-1583-espresso-sencillo",
           "name": "Café 1583 espresso sencillo",
-          "nameEn": "1583 Espresso Simple Coffee",
+          "nameEn": "1583 single espresso",
           "description": ".",
           "additions": "",
           "price": 6500,
-          "priceLabel": "$ 6.500",
+          "priceLabel": "$ 6.500",
           "image": ""
         },
         {
           "id": "bebidas-calientes-cafe-1583-espresso-doble",
           "name": "Café 1583 espresso doble",
-          "nameEn": "Coffee 1583 double espresso",
+          "nameEn": "1583 double espresso",
           "description": ".",
           "additions": "",
           "price": 8900,
-          "priceLabel": "$ 8.900",
+          "priceLabel": "$ 8.900",
           "image": ""
         },
         {
           "id": "bebidas-calientes-cafe-1583-americano",
           "name": "Café 1583 americano",
-          "nameEn": "Café 1583 Americano",
+          "nameEn": "1583 Americano",
           "description": ".",
           "additions": "",
           "price": 6500,
-          "priceLabel": "$ 6.500",
+          "priceLabel": "$ 6.500",
           "image": "images/productos/1583 menu/americano.png"
         },
         {
           "id": "bebidas-calientes-cafe-1583-americano-12-onzas",
           "name": "Café 1583 americano 12 onzas",
-          "nameEn": "1583 American Coffee 12 oz",
+          "nameEn": "1583 Americano (12 oz)",
           "description": ".",
           "additions": "",
           "price": 9900,
-          "priceLabel": "$ 9.900",
+          "priceLabel": "$ 9.900",
           "image": ""
         },
         {
           "id": "bebidas-calientes-cafe-1583-campesino",
           "name": "Café 1583 campesino",
-          "nameEn": "Café 1583 campesino",
+          "nameEn": "1583 Campesino coffee",
           "description": ".",
           "additions": "",
           "price": 9500,
-          "priceLabel": "$ 9.500",
+          "priceLabel": "$ 9.500",
           "image": ""
         },
         {
@@ -391,207 +391,207 @@
           "description": ".",
           "additions": "",
           "price": 26900,
-          "priceLabel": "$ 26.900",
+          "priceLabel": "$ 26.900",
           "image": ""
         },
         {
           "id": "bebidas-calientes-capuchino-9-onzas-leche-deslactosada",
           "name": "Capuchino 9 Onzas leche deslactosada",
-          "nameEn": "9 Ounce Delactosed Milk Cappuccino",
+          "nameEn": "Cappuccino, lactose-free milk (9 oz)",
           "description": ".",
           "additions": "",
           "price": 10500,
-          "priceLabel": "$ 10.500",
+          "priceLabel": "$ 10.500",
           "image": ""
         },
         {
           "id": "bebidas-calientes-capuchino-12-onzas-leche-deslactosada",
           "name": "Capuchino 12 Onzas leche deslactosada",
-          "nameEn": "Cappuccino 12 Ounces Delactosed Milk",
+          "nameEn": "Cappuccino, lactose-free milk (12 oz)",
           "description": ".",
           "additions": "",
           "price": 11900,
-          "priceLabel": "$ 11.900",
+          "priceLabel": "$ 11.900",
           "image": "images/productos/1583 menu/Capuccino.png"
         },
         {
           "id": "bebidas-calientes-capuchino-9-onzas-leche-de-almendras",
           "name": "Capuchino 9 Onzas leche de almendras",
-          "nameEn": "9 Ounce Almond Milk Cappuccino",
+          "nameEn": "Cappuccino, almond milk (9 oz)",
           "description": ".",
           "additions": "",
           "price": 11900,
-          "priceLabel": "$ 11.900",
+          "priceLabel": "$ 11.900",
           "image": ""
         },
         {
           "id": "bebidas-calientes-capuchino-12-onzas-leche-de-almendras",
           "name": "Capuchino 12 Onzas leche de almendras",
-          "nameEn": "Cappuccino 12 Ounces almond milk",
+          "nameEn": "Cappuccino, almond milk (12 oz)",
           "description": ".",
           "additions": "",
           "price": 15900,
-          "priceLabel": "$ 15.900",
+          "priceLabel": "$ 15.900",
           "image": ""
         },
         {
           "id": "bebidas-calientes-capuchino-9-onzas-leche-entera",
           "name": "Capuchino 9 Onzas leche entera",
-          "nameEn": "Cappuccino 9 Ounce Whole Milk",
+          "nameEn": "Cappuccino, whole milk (9 oz)",
           "description": ".",
           "additions": "",
           "price": 10500,
-          "priceLabel": "$ 10.500",
+          "priceLabel": "$ 10.500",
           "image": ""
         },
         {
           "id": "bebidas-calientes-capuchino-12-onzas-leche-entera",
           "name": "Capuchino 12 Onzas leche entera",
-          "nameEn": "Cappuccino 12 Ounces whole milk",
+          "nameEn": "Cappuccino, whole milk (12 oz)",
           "description": ".",
           "additions": "",
           "price": 11900,
-          "priceLabel": "$ 11.900",
+          "priceLabel": "$ 11.900",
           "image": "images/productos/1583 menu/Capuccino.png"
         },
         {
           "id": "bebidas-calientes-cafe-1583-latte-mediano",
           "name": "Café 1583 latte mediano",
-          "nameEn": "Coffee 1583 medium milk",
+          "nameEn": "1583 latte (medium)",
           "description": ".",
           "additions": "",
           "price": 9500,
-          "priceLabel": "$ 9.500",
+          "priceLabel": "$ 9.500",
           "image": "images/productos/1583 menu/latte.jpg"
         },
         {
           "id": "bebidas-calientes-cafe-1583-latte-grande",
           "name": "Café 1583 latte grande",
-          "nameEn": "Café 1583 Latte Grande",
+          "nameEn": "1583 latte (large)",
           "description": ".",
           "additions": "",
           "price": 11500,
-          "priceLabel": "$ 11.500",
+          "priceLabel": "$ 11.500",
           "image": "images/productos/1583 menu/latte.jpg"
         },
         {
           "id": "bebidas-calientes-mocachino-mediano",
           "name": "Mocachino mediano",
-          "nameEn": "Medium Mocchino",
+          "nameEn": "Mocachino (medium)",
           "description": ".",
           "additions": "",
           "price": 11900,
-          "priceLabel": "$ 11.900",
+          "priceLabel": "$ 11.900",
           "image": "images/productos/1583 menu/mocaccino.jpg"
         },
         {
           "id": "bebidas-calientes-mocachino-grande",
           "name": "Mocachino grande",
-          "nameEn": "Mocachino grande",
+          "nameEn": "Mocachino (large)",
           "description": ".",
           "additions": "",
           "price": 13900,
-          "priceLabel": "$ 13.900",
+          "priceLabel": "$ 13.900",
           "image": "images/productos/1583 menu/mocaccino.jpg"
         },
         {
           "id": "bebidas-calientes-milo-caliente",
           "name": "Milo caliente",
-          "nameEn": "Hot milos",
+          "nameEn": "Hot Milo",
           "description": ".",
           "additions": "",
           "price": 8500,
-          "priceLabel": "$ 8.500",
+          "priceLabel": "$ 8.500",
           "image": ""
         },
         {
           "id": "bebidas-calientes-cafe-irlandes-1583",
           "name": "Café Irlandés 1583",
-          "nameEn": "Irish Coffee 1583",
+          "nameEn": "1583 Irish coffee",
           "description": ".",
           "additions": "",
           "price": 23000,
-          "priceLabel": "$ 23.000",
+          "priceLabel": "$ 23.000",
           "image": "images/productos/1583 menu/irlandes.jpg"
         },
         {
           "id": "bebidas-calientes-carajillo-de-brandy",
           "name": "Carajillo de brandy",
-          "nameEn": "Brandy Carajillo",
+          "nameEn": "Carajillo with brandy",
           "description": ".",
           "additions": "",
           "price": 23900,
-          "priceLabel": "$ 23.900",
+          "priceLabel": "$ 23.900",
           "image": ""
         },
         {
           "id": "bebidas-calientes-cafe-1583-macchiato",
           "name": "Café 1583 macchiato",
-          "nameEn": "Cafe 1583 Macchiato",
+          "nameEn": "1583 macchiato",
           "description": ".",
           "additions": "",
           "price": 8900,
-          "priceLabel": "$ 8.900",
+          "priceLabel": "$ 8.900",
           "image": "images/productos/1583 menu/Capuccino.png"
         },
         {
           "id": "bebidas-calientes-cafe-1583-macchiato-bombon",
           "name": "Café 1583 macchiato bombón",
-          "nameEn": "Café 1583 macchiato bonbon",
+          "nameEn": "1583 macchiato bombón",
           "description": ".",
           "additions": "",
           "price": 10300,
-          "priceLabel": "$ 10.300",
+          "priceLabel": "$ 10.300",
           "image": "images/productos/1583 menu/macciato bonbon.png"
         },
         {
           "id": "bebidas-calientes-infusion-1583",
           "name": "Infusión 1583",
-          "nameEn": "Infusion 1583",
+          "nameEn": "1583 herbal infusion",
           "description": ".",
           "additions": "",
           "price": 7900,
-          "priceLabel": "$ 7.900",
+          "priceLabel": "$ 7.900",
           "image": "images/productos/1583 menu/Infusion.JPG"
         },
         {
           "id": "bebidas-calientes-chocolate-9-onzas",
           "name": "Chocolate 9 onzas",
-          "nameEn": "Chocolate 9 oz",
+          "nameEn": "Hot chocolate (9 oz)",
           "description": ".",
           "additions": "",
           "price": 8900,
-          "priceLabel": "$ 8.900",
+          "priceLabel": "$ 8.900",
           "image": ""
         },
         {
           "id": "bebidas-calientes-chocolate-artesanal-9-onzas",
           "name": "Chocolate artesanal 9 onzas",
-          "nameEn": "Artisanal Chocolate 9 oz",
+          "nameEn": "Artisan hot chocolate (9 oz)",
           "description": ".",
           "additions": "",
           "price": 11500,
-          "priceLabel": "$ 11.500",
+          "priceLabel": "$ 11.500",
           "image": ""
         },
         {
           "id": "bebidas-calientes-te-chai-caliente-12-onzas",
           "name": "Té chai caliente 12 onzas",
-          "nameEn": "Hot chai tea 12 ounces",
+          "nameEn": "Hot chai tea (12 oz)",
           "description": ".",
           "additions": "",
           "price": 9900,
-          "priceLabel": "$ 9.900",
+          "priceLabel": "$ 9.900",
           "image": ""
         },
         {
           "id": "bebidas-calientes-te-chai-caliente-9-onzas",
           "name": "Té chai caliente 9 onzas",
-          "nameEn": "9-ounce hot chai tea",
+          "nameEn": "Hot chai tea (9 oz)",
           "description": ".",
           "additions": "",
           "price": 7900,
-          "priceLabel": "$ 7.900",
+          "priceLabel": "$ 7.900",
           "image": ""
         }
       ]
@@ -607,7 +607,7 @@
           "description": ".",
           "additions": "",
           "price": 19900,
-          "priceLabel": "$ 19.900",
+          "priceLabel": "$ 19.900",
           "image": "images/productos/1583 menu/orange.jpg"
         },
         {
@@ -617,7 +617,7 @@
           "description": ".",
           "additions": "",
           "price": 14500,
-          "priceLabel": "$ 14.500",
+          "priceLabel": "$ 14.500",
           "image": "images/productos/1583 menu/soda.jpg"
         },
         {
@@ -627,137 +627,137 @@
           "description": ".",
           "additions": "",
           "price": 26700,
-          "priceLabel": "$ 26.700",
+          "priceLabel": "$ 26.700",
           "image": "images/productos/1583 menu/mojito.png"
         },
         {
           "id": "bebidas-frias-cold-brew-latte",
           "name": "Cold brew latte",
-          "nameEn": "Cold brew milk",
+          "nameEn": "Cold brew latte",
           "description": ".",
           "additions": "",
           "price": 16600,
-          "priceLabel": "$ 16.600",
+          "priceLabel": "$ 16.600",
           "image": ""
         },
         {
           "id": "bebidas-frias-afogatto-de-vainilla-con-baileys",
           "name": "Afogatto de vainilla con baileys",
-          "nameEn": "Vanilla afogatto with baileys",
+          "nameEn": "Affogato with vanilla & Baileys",
           "description": ".",
           "additions": "",
           "price": 25600,
-          "priceLabel": "$ 25.600",
+          "priceLabel": "$ 25.600",
           "image": "images/productos/1583 menu/afogatto.png"
         },
         {
           "id": "bebidas-frias-malteada-vainilla-fresa-oreo",
           "name": "Malteada (vainilla, fresa, oreo)",
-          "nameEn": "Malted (vanilla, strawberry, oreous)",
+          "nameEn": "Milkshake (vanilla, strawberry, Oreo)",
           "description": ".",
           "additions": "",
           "price": 17800,
-          "priceLabel": "$ 17.800",
+          "priceLabel": "$ 17.800",
           "image": "images/productos/1583 menu/malteada.png"
         },
         {
           "id": "bebidas-frias-granizado-de-cafe",
           "name": "Granizado de café",
-          "nameEn": "Coffee slush",
+          "nameEn": "Frozen coffee",
           "description": ".",
           "additions": "",
           "price": 14900,
-          "priceLabel": "$ 14.900",
+          "priceLabel": "$ 14.900",
           "image": ""
         },
         {
           "id": "bebidas-frias-affogato-de-vainilla",
           "name": "Affogato de vainilla",
-          "nameEn": "Vanilla Affogato",
+          "nameEn": "Vanilla affogato",
           "description": ".",
           "additions": "",
           "price": 17700,
-          "priceLabel": "$ 17.700",
+          "priceLabel": "$ 17.700",
           "image": ""
         },
         {
           "id": "bebidas-frias-agua-500-ml",
           "name": "Agua 500 ml",
-          "nameEn": "Water 500 ml",
+          "nameEn": "Water (500 ml)",
           "description": ".",
           "additions": "",
           "price": 3400,
-          "priceLabel": "$ 3.400",
+          "priceLabel": "$ 3.400",
           "image": ""
         },
         {
           "id": "bebidas-frias-agua-con-gas-500-ml",
           "name": "Agua con gas 500 ml",
-          "nameEn": "Sparkling water 500ml",
+          "nameEn": "Sparkling water (500 ml)",
           "description": ".",
           "additions": "",
           "price": 4500,
-          "priceLabel": "$ 4.500",
+          "priceLabel": "$ 4.500",
           "image": ""
         },
         {
           "id": "bebidas-frias-cafe-latte-frio-grande",
           "name": "Café latte frío grande",
-          "nameEn": "Large cold latte coffee",
+          "nameEn": "Large iced latte",
           "description": ".",
           "additions": "",
           "price": 11700,
-          "priceLabel": "$ 11.700",
+          "priceLabel": "$ 11.700",
           "image": ""
         },
         {
           "id": "bebidas-frias-cafe-latte-frio-mediano",
           "name": "Café latte frío mediano",
-          "nameEn": "Medium cold latte coffee",
+          "nameEn": "Medium iced latte",
           "description": ".",
           "additions": "",
           "price": 9400,
-          "priceLabel": "$ 9.400",
+          "priceLabel": "$ 9.400",
           "image": ""
         },
         {
           "id": "bebidas-frias-coca-cola-original-400-ml",
           "name": "Coca cola original 400 ml",
-          "nameEn": "Original Coke 400ml",
+          "nameEn": "Coca-Cola (400 ml)",
           "description": ".",
           "additions": "",
           "price": 4900,
-          "priceLabel": "$ 4.900",
+          "priceLabel": "$ 4.900",
           "image": ""
         },
         {
           "id": "bebidas-frias-coca-cola-zero-400-ml",
           "name": "Coca cola zero 400 ml",
-          "nameEn": "Coca Cola zero 400 ml",
+          "nameEn": "Coca-Cola Zero (400 ml)",
           "description": ".",
           "additions": "",
           "price": 4900,
-          "priceLabel": "$ 4.900",
+          "priceLabel": "$ 4.900",
           "image": ""
         },
         {
           "id": "bebidas-frias-te-chai-frio-9-onzas",
           "name": "Té chai frío 9 onzas",
-          "nameEn": "9-ounce chai iced tea",
+          "nameEn": "Iced chai tea (9 oz)",
           "description": ".",
           "additions": "",
           "price": 9900,
-          "priceLabel": "$ 9.900",
+          "priceLabel": "$ 9.900",
           "image": ""
         },
         {
           "id": "bebidas-frias-te-chai-frio-12-onzas",
           "name": "Té chai frío 12 onzas",
-          "nameEn": "12-ounce chai iced tea",
+          "nameEn": "Iced chai tea (12 oz)",
           "description": ".",
           "additions": "",
           "price": 12800,
-          "priceLabel": "$ 12.800",
+          "priceLabel": "$ 12.800",
           "image": ""
         },
         {
@@ -767,47 +767,47 @@
           "description": ".",
           "additions": "",
           "price": 3500,
-          "priceLabel": "$ 3.500",
+          "priceLabel": "$ 3.500",
           "image": ""
         },
         {
           "id": "bebidas-frias-soda-bretana",
           "name": "Soda bretaña",
-          "nameEn": "Breton Soda",
+          "nameEn": "Bretaña soda",
           "description": ".",
           "additions": "",
           "price": 4900,
-          "priceLabel": "$ 4.900",
+          "priceLabel": "$ 4.900",
           "image": ""
         },
         {
           "id": "bebidas-frias-cafe-americano-frio",
           "name": "Café americano frío",
-          "nameEn": "Cold American Coffee",
+          "nameEn": "Iced Americano",
           "description": ".",
           "additions": "",
           "price": 11900,
-          "priceLabel": "$ 11.900",
+          "priceLabel": "$ 11.900",
           "image": ""
         },
         {
           "id": "bebidas-frias-soda-michelada",
           "name": "Soda michelada",
-          "nameEn": "Soda michelada",
+          "nameEn": "Michelada soda",
           "description": ".",
           "additions": "",
           "price": 7500,
-          "priceLabel": "$ 7.500",
+          "priceLabel": "$ 7.500",
           "image": ""
         },
         {
           "id": "bebidas-frias-te-hatsu",
           "name": "Té Hatsu",
-          "nameEn": "Hatsu Tea",
+          "nameEn": "Hatsu tea",
           "description": ".",
           "additions": "",
           "price": 12500,
-          "priceLabel": "$ 12.500",
+          "priceLabel": "$ 12.500",
           "image": ""
         },
         {
@@ -817,93 +817,93 @@
           "description": ".",
           "additions": "",
           "price": 10500,
-          "priceLabel": "$ 10.500",
+          "priceLabel": "$ 10.500",
           "image": ""
         },
         {
           "id": "bebidas-frias-jugo-natural-de-mango",
           "name": "Jugo natural de mango",
-          "nameEn": "Natural mango juice",
+          "nameEn": "Fresh mango juice",
           "description": ".",
           "additions": "",
           "price": 11900,
-          "priceLabel": "$ 11.900",
+          "priceLabel": "$ 11.900",
           "image": ""
         },
         {
           "id": "bebidas-frias-jugo-natural-de-maracuya",
           "name": "Jugo natural de maracuyá",
-          "nameEn": "Natural passion fruit juice",
+          "nameEn": "Fresh passion fruit juice",
           "description": ".",
           "additions": "",
           "price": 11900,
-          "priceLabel": "$ 11.900",
+          "priceLabel": "$ 11.900",
           "image": ""
         },
         {
           "id": "bebidas-frias-jugo-natural-de-fresa",
           "name": "Jugo natural de fresa",
-          "nameEn": "Natural strawberry juice",
+          "nameEn": "Fresh strawberry juice",
           "description": ".",
           "additions": "",
           "price": 11900,
-          "priceLabel": "$ 11.900",
+          "priceLabel": "$ 11.900",
           "image": ""
         },
         {
           "id": "bebidas-frias-jugo-natural-de-fresa-en-leche",
           "name": "Jugo natural de fresa en leche",
-          "nameEn": "Natural strawberry juice in milk",
+          "nameEn": "Strawberry juice with milk",
           "description": ".",
           "additions": "",
           "price": 13900,
-          "priceLabel": "$ 13.900",
+          "priceLabel": "$ 13.900",
           "image": ""
         },
         {
           "id": "bebidas-frias-milo-frio",
           "name": "Milo frío",
-          "nameEn": "Cold millet",
+          "nameEn": "Iced Milo",
           "description": ".",
           "additions": "",
           "price": 9500,
-          "priceLabel": "$ 9.500",
+          "priceLabel": "$ 9.500",
           "image": ""
         }
       ]
     },
     {
       "name": "Sodas Italianas",
-      "nameEn": "Italian sodas",
+      "nameEn": "Italian Sodas",
       "items": [
         {
           "id": "sodas-italianas-soda-italiana-de-frutos-rojos",
           "name": "Soda italiana de frutos rojos",
-          "nameEn": "Italian red fruit soda",
+          "nameEn": "Italian red berry soda",
           "description": ".",
           "additions": "",
           "price": 17800,
-          "priceLabel": "$ 17.800",
+          "priceLabel": "$ 17.800",
           "image": "images/productos/1583 menu/frutos rojos.jpg"
         },
         {
           "id": "sodas-italianas-soda-italiana-de-frutos-amarillos",
           "name": "Soda italiana de frutos amarillos",
-          "nameEn": "Italian yellow fruit soda",
+          "nameEn": "Italian tropical fruit soda",
           "description": ".",
           "additions": "",
           "price": 17800,
-          "priceLabel": "$ 17.800",
+          "priceLabel": "$ 17.800",
           "image": "images/productos/1583 menu/soda maracuya.jpg"
         },
         {
           "id": "sodas-italianas-soda-italiana-de-cereza",
           "name": "Soda italiana de cereza",
-          "nameEn": "Italian Cherry Soda",
+          "nameEn": "Italian cherry soda",
           "description": ".",
           "additions": "",
           "price": 17800,
-          "priceLabel": "$ 17.800",
+          "priceLabel": "$ 17.800",
           "image": ""
         }
       ]
@@ -915,87 +915,87 @@
         {
           "id": "vinos-tinto-de-verano-en-jarra",
           "name": "Tinto de verano en jarra",
-          "nameEn": "Summer Jug Dye",
+          "nameEn": "Tinto de verano (carafe)",
           "description": ".",
           "additions": "",
           "price": 84000,
-          "priceLabel": "$ 84.000",
+          "priceLabel": "$ 84.000",
           "image": "images/productos/1583 menu/Jarra Sangria.JPG"
         },
         {
           "id": "vinos-tinto-de-verano-en-media-jarra",
           "name": "Tinto de verano en media jarra",
-          "nameEn": "Summer red in half a jar",
+          "nameEn": "Summer red wine (half carafe)",
           "description": ".",
           "additions": "",
           "price": 53800,
-          "priceLabel": "$ 53.800",
+          "priceLabel": "$ 53.800",
           "image": "images/productos/1583 menu/Jarra Sangria.JPG"
         },
         {
           "id": "vinos-sangria-en-jarra",
           "name": "Sangría en jarra",
-          "nameEn": "Jarred sangria",
+          "nameEn": "Sangria (carafe)",
           "description": ".",
           "additions": "",
           "price": 106500,
-          "priceLabel": "$ 106.500",
+          "priceLabel": "$ 106.500",
           "image": "images/productos/1583 menu/Media Jarra.JPG"
         },
         {
           "id": "vinos-sangria-en-media-jarra",
           "name": "Sangría en media jarra",
-          "nameEn": "Sangria in half a jar",
+          "nameEn": "Sangria (half carafe)",
           "description": ".",
           "additions": "",
           "price": 72900,
-          "priceLabel": "$ 72.900",
+          "priceLabel": "$ 72.900",
           "image": "images/productos/1583 menu/Media Jarra.JPG"
         },
         {
           "id": "vinos-vino-tinto-en-copa",
           "name": "Vino tinto en copa",
-          "nameEn": "Red wine by the glass",
+          "nameEn": "Red wine (glass)",
           "description": ".",
           "additions": "",
           "price": 29000,
-          "priceLabel": "$ 29.000",
+          "priceLabel": "$ 29.000",
           "image": "images/productos/1583 menu/Vino tinto.JPG"
         },
         {
           "id": "vinos-vino-blanco-en-copa",
           "name": "Vino blanco en copa",
-          "nameEn": "White wine by the glass",
+          "nameEn": "White wine (glass)",
           "description": ".",
           "additions": "",
           "price": 29000,
-          "priceLabel": "$ 29.000",
+          "priceLabel": "$ 29.000",
           "image": ""
         }
       ]
     },
     {
       "name": "Tabla de Quesos",
-      "nameEn": "Cheese Board",
+      "nameEn": "Charcuterie Board",
       "items": [
         {
           "id": "tabla-de-quesos-tabla-de-quesos-pequena",
           "name": "Tabla de quesos pequeña",
-          "nameEn": "Small cheese board",
+          "nameEn": "Charcuterie board (individual)",
           "description": ".",
           "additions": "",
           "price": 49000,
-          "priceLabel": "$ 49.000",
+          "priceLabel": "$ 49.000",
           "image": "images/productos/1583 menu/Tabla de quesos.JPG"
         },
         {
           "id": "tabla-de-quesos-tabla-de-quesos-grande",
           "name": "Tabla de quesos grande",
-          "nameEn": "Large Cheese Board",
+          "nameEn": "Charcuterie board (for two)",
           "description": ".",
           "additions": "",
           "price": 72000,
-          "priceLabel": "$ 72.000",
+          "priceLabel": "$ 72.000",
           "image": "images/productos/1583 menu/Tabla de queso 2.JPG"
         }
       ]
@@ -1011,153 +1011,153 @@
           "description": ".",
           "additions": "",
           "price": 22000,
-          "priceLabel": "$ 22.000",
+          "priceLabel": "$ 22.000",
           "image": ""
         },
         {
           "id": "by-1583-bolsa-de-cafe-340-gr",
           "name": "Bolsa de café 340 gr",
-          "nameEn": "Coffee bag 340 g",
+          "nameEn": "Coffee bag (340 g)",
           "description": "",
           "additions": "",
           "price": 37000,
-          "priceLabel": "$ 37.000",
+          "priceLabel": "$ 37.000",
           "image": ""
         },
         {
           "id": "by-1583-bono-50-mil-1583",
           "name": "Bono 50 mil 1583",
-          "nameEn": "Bonus 50 thousand 1583",
+          "nameEn": "Gift card ($50.000)",
           "description": "",
           "additions": "",
           "price": 50000,
-          "priceLabel": "$ 50.000",
+          "priceLabel": "$ 50.000",
           "image": ""
         }
       ]
     },
     {
       "name": "Adiciones",
-      "nameEn": "Additions",
+      "nameEn": "Extras",
       "items": [
         {
           "id": "adiciones-adicion-de-amaretto-1-onza",
           "name": "Adición de amaretto 1 onza",
-          "nameEn": "Addition of amaretto 1 ounce",
+          "nameEn": "Extra amaretto (1 oz)",
           "description": ".",
           "additions": "",
           "price": 16000,
-          "priceLabel": "$ 16.000",
+          "priceLabel": "$ 16.000",
           "image": ""
         },
         {
           "id": "adiciones-adicion-de-baileys-1-onza",
           "name": "Adición de baileys 1 onza",
-          "nameEn": "Addition of Baileys 1 oz",
+          "nameEn": "Extra Baileys (1 oz)",
           "description": ".",
           "additions": "",
           "price": 8500,
-          "priceLabel": "$ 8.500",
+          "priceLabel": "$ 8.500",
           "image": ""
         },
         {
           "id": "adiciones-adicion-de-brandy-1-onza",
           "name": "Adición de brandy 1 onza",
-          "nameEn": "Addition of brandy 1 ounce",
+          "nameEn": "Extra brandy (1 oz)",
           "description": ".",
           "additions": "",
           "price": 6900,
-          "priceLabel": "$ 6.900",
+          "priceLabel": "$ 6.900",
           "image": ""
         },
         {
           "id": "adiciones-adicion-de-licor-de-cafe",
           "name": "Adición de licor de café",
-          "nameEn": "Addition of coffee liquor",
+          "nameEn": "Coffee liqueur",
           "description": ".",
           "additions": "",
           "price": 6900,
-          "priceLabel": "$ 6.900",
+          "priceLabel": "$ 6.900",
           "image": ""
         },
         {
           "id": "adiciones-adicion-de-vainilla",
           "name": "Adición de vainilla",
-          "nameEn": "Addition of vanilla",
+          "nameEn": "Extra vanilla",
           "description": ".",
           "additions": "",
           "price": 2900,
-          "priceLabel": "$ 2.900",
+          "priceLabel": "$ 2.900",
           "image": ""
         },
         {
           "id": "adiciones-adicion-de-whisky-1-onza",
           "name": "Adición de whisky 1 onza",
-          "nameEn": "Addition of whiskey 1 ounce",
+          "nameEn": "Extra whisky (1 oz)",
           "description": ".",
           "additions": "",
           "price": 8900,
-          "priceLabel": "$ 8.900",
+          "priceLabel": "$ 8.900",
           "image": ""
         },
         {
           "id": "adiciones-shot-de-whisky",
           "name": "Shot de whisky",
-          "nameEn": "Whiskey Shot",
+          "nameEn": "Whisky shot",
           "description": ".",
           "additions": "",
           "price": 15000,
-          "priceLabel": "$ 15.000",
+          "priceLabel": "$ 15.000",
           "image": ""
         },
         {
           "id": "adiciones-adicion-de-caramelo",
           "name": "Adición de caramelo",
-          "nameEn": "Addition of caramel",
+          "nameEn": "Extra caramel",
           "description": ".",
           "additions": "",
           "price": 4000,
-          "priceLabel": "$ 4.000",
+          "priceLabel": "$ 4.000",
           "image": ""
         },
         {
           "id": "adiciones-adicion-salsa-wafflebono",
           "name": "Adición salsa wafflebono",
-          "nameEn": "Addition of wafflebono sauce",
+          "nameEn": "Wafflebono sauce",
           "description": ".",
           "additions": "",
           "price": 1800,
-          "priceLabel": "$ 1.800",
+          "priceLabel": "$ 1.800",
           "image": ""
         },
         {
           "id": "adiciones-adicion-m-m",
           "name": "Adición M&M",
-          "nameEn": "M&M Addition",
+          "nameEn": "M&M add-on",
           "description": ".",
           "additions": "",
           "price": 1800,
-          "priceLabel": "$ 1.800",
+          "priceLabel": "$ 1.800",
           "image": ""
         },
         {
           "id": "adiciones-adicion-salsa-de-ajo",
           "name": "Adición salsa de ajo",
-          "nameEn": "Added garlic sauce",
+          "nameEn": "Garlic sauce",
           "description": ".",
           "additions": "",
           "price": 1800,
-          "priceLabel": "$ 1.800",
+          "priceLabel": "$ 1.800",
           "image": ""
         },
         {
           "id": "adiciones-adicion-jugo-de-limon",
           "name": "Adición jugo de limón",
-          "nameEn": "Added lemon juice",
+          "nameEn": "Lemon juice",
           "description": ".",
           "additions": "",
           "price": 1900,
-          "priceLabel": "$ 1.900",
+          "priceLabel": "$ 1.900",
           "image": ""
         }
       ]
@@ -1169,11 +1169,11 @@
         {
           "id": "combos-combo-1583-capuchino-con-wafflebonos-x-4",
           "name": "Combo 1583 capuchino con wafflebonos x 4",
-          "nameEn": "Combo 1583 cappuccino with wafflebonos x 4",
+          "nameEn": "1583 cappuccino combo with 4 wafflebonos",
           "description": ".",
           "additions": "",
           "price": 19900,
-          "priceLabel": "$ 19.900",
+          "priceLabel": "$ 19.900",
           "image": "images/productos/1583 menu/Jarra Sangria.JPG"
         },
         {
@@ -1183,103 +1183,103 @@
           "description": ".",
           "additions": "",
           "price": 5000,
-          "priceLabel": "$ 5.000",
+          "priceLabel": "$ 5.000",
           "image": "images/productos/1583 menu/Jarra Sangria.JPG"
         },
         {
           "id": "combos-combo-tabla-de-quesos-grande-y-dos-vinos",
           "name": "Combo tabla de quesos grande y dos vinos",
-          "nameEn": "Large cheese board and two wines combo",
+          "nameEn": "Large charcuterie board and two glasses of wine combo",
           "description": ".",
           "additions": "",
           "price": 107000,
-          "priceLabel": "$ 107.000",
+          "priceLabel": "$ 107.000",
           "image": ""
         },
         {
           "id": "combos-combo-tabla-de-quesos-pequena-y-dos-vinos",
           "name": "Combo tabla de quesos pequeña y dos vinos",
-          "nameEn": "Small cheese board and two wines combo",
+          "nameEn": "Small charcuterie board and two glasses of wine combo",
           "description": ".",
           "additions": "",
           "price": 85000,
-          "priceLabel": "$ 85.000",
+          "priceLabel": "$ 85.000",
           "image": ""
         },
         {
           "id": "combos-combo-capuchino-con-croissant-de-almendras",
           "name": "Combo capuchino con croissant de almendras",
-          "nameEn": "Cappuccino combo with almond croissant",
+          "nameEn": "Cappuccino & almond croissant combo",
           "description": ".",
           "additions": "",
           "price": 11900,
-          "priceLabel": "$ 11.900",
+          "priceLabel": "$ 11.900",
           "image": ""
         },
         {
           "id": "combos-combo-hojaldre-de-arequipe-con-latte",
           "name": "Combo hojaldre de arequipe con latte",
-          "nameEn": "Arequipe puff pastry combo with milk",
+          "nameEn": "Arequipe puff pastry & latte combo",
           "description": ".",
           "additions": "",
           "price": 11900,
-          "priceLabel": "$ 11.900",
+          "priceLabel": "$ 11.900",
           "image": ""
         },
         {
           "id": "combos-combo-galleta-de-chocolate-con-helado",
           "name": "Combo galleta de chocolate con helado",
-          "nameEn": "Ice Cream Chocolate Biscuit Combo",
+          "nameEn": "Chocolate cookie & ice cream combo",
           "description": ".",
           "additions": "",
           "price": 18900,
-          "priceLabel": "$ 18.900",
+          "priceLabel": "$ 18.900",
           "image": ""
         },
         {
           "id": "combos-combo-chocolate-queso-y-croissant-de-mantequilla",
           "name": "Combo chocolate, queso y croissant de mantequilla",
-          "nameEn": "Chocolate, cheese and butter croissant combo",
+          "nameEn": "Chocolate, cheese & butter croissant combo",
           "description": ".",
           "additions": "",
           "price": 19900,
-          "priceLabel": "$ 19.900",
+          "priceLabel": "$ 19.900",
           "image": ""
         },
         {
           "id": "combos-combo-capuchino-con-leche-de-almendras-y-wafflebonos-x-4",
           "name": "Combo capuchino con leche de almendras y wafflebonos x 4",
-          "nameEn": "Cappuccino combo with almond milk and wafflebones x 4",
+          "nameEn": "Cappuccino with almond milk & 4 wafflebonos combo",
           "description": ".",
           "additions": "",
           "price": 21900,
-          "priceLabel": "$ 21.900",
+          "priceLabel": "$ 21.900",
           "image": ""
         }
       ]
     },
     {
       "name": "Galletería",
-      "nameEn": "Biscuits",
+      "nameEn": "Cookies & Pastries",
       "items": [
         {
           "id": "galleteria-torta-galleta-de-chocolate",
           "name": "Torta galleta de chocolate",
-          "nameEn": "Chocolate Cookie Cake",
+          "nameEn": "Chocolate cookie cake",
           "description": ".",
           "additions": "",
           "price": 17500,
-          "priceLabel": "$ 17.500",
+          "priceLabel": "$ 17.500",
           "image": ""
         },
         {
           "id": "galleteria-alfajor-unidad",
           "name": "Alfajor Unidad",
-          "nameEn": "Alfajor Unidad",
+          "nameEn": "Single alfajor",
           "description": ".",
           "additions": "",
           "price": 2000,
-          "priceLabel": "$ 2.000",
+          "priceLabel": "$ 2.000",
           "image": ""
         }
       ]
@@ -1295,7 +1295,7 @@
           "description": ".",
           "additions": "",
           "price": 15000,
-          "priceLabel": "$ 15.000",
+          "priceLabel": "$ 15.000",
           "image": ""
         }
       ]

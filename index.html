@@ -266,6 +266,11 @@
                 display: flex;
             }
         }
+        @media (min-width: 769px) {
+            /* Desktop: mostrar ícono de Maps, ocultar mapa embedded */
+            .footer-map-icon { display: inline-flex !important; }
+            .footer-map      { display: none !important; }
+        }
         .history-button {
             position: fixed;
             top: calc(var(--top-nav-height) + 15px);
@@ -468,15 +473,36 @@
         }
         footer {
             background-color: var(--color-nav);
-            text-align: center;
-            padding: 20px 0;
             border-top: 2px solid var(--color-gold);
             width: 100%;
+        }
+        .footer-bottom {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+            width: 100%;
+            text-align: center;
         }
+        .footer-map {
+            width: 100%;
+            order: -1;
+            overflow: hidden;
+            line-height: 0;
+            display: none; /* oculto en desktop; visible solo en móvil */
+        }
+        .footer-map iframe {
+            display: block;
+            width: 100%;
+            height: 160px;
+            border: 0;
+            filter: brightness(0.88) contrast(1.05) saturate(0.8);
+        }
+        /* Ícono de Maps en desktop — oculto en móvil (tiene el mapa embedded) */
+        .footer-map-icon { display: none; }
+        /* Fila debajo del mapa: developer | social | copyright */
+        .developer-signature { padding: 20px 0 20px 20px; }
+        .copyright           { padding: 20px 20px 20px 0; }
         footer .social-links a {
             color: var(--color-white);
             margin: 0 15px;
@@ -547,21 +573,6 @@
         }
         .whatsapp-float i {
             font-size: 1.8rem;
-        }
-        .whatsapp-float .notification {
-            position: absolute;
-            top: -10px;
-            left: -10px;
-            background-color: #25D366;
-            color: var(--color-white);
-            font-family: var(--font-body);
-            font-size: 0.7rem;
-            font-weight: 500;
-            padding: 5px 10px;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            white-space: nowrap;
-            transform: translateX(-100%);
         }
         @keyframes pulse {
             0% {
@@ -984,16 +995,19 @@
             }
 
             /* Footer apilado */
-            footer {
+            .footer-bottom {
                 flex-direction: column;
-                gap: 12px;
+                align-items: center;
+                gap: 14px;
                 padding: 20px var(--page-padding-x);
             }
-            .developer-signature,
-            .copyright {
-                padding: 0;
-                text-align: center;
-            }
+            /* Orden móvil: redes → mapa → developer → copyright */
+            .footer-bottom .social-links  { order: 1; }
+            .footer-bottom .footer-map    { order: 2; width: 100%; display: block; } /* visible en móvil */
+            .footer-bottom .footer-map iframe { height: 140px; }
+            .footer-bottom .developer-signature { order: 3; padding: 0; text-align: center; }
+            .footer-bottom .copyright     { order: 4; padding: 0; text-align: center; }
+            .footer-map-icon { display: none !important; } /* ícono solo en desktop */
             footer .social-links a {
                 /* Área táctil mínima */
                 min-width: var(--touch-target);
@@ -1010,10 +1024,6 @@
             }
             .whatsapp-float i {
                 font-size: 1.5rem;
-            }
-            .whatsapp-float .notification {
-                font-size: 0.6rem;
-                padding: 4px 8px;
             }
 
             /* Modal de producto: bottom-sheet en móvil */
@@ -1160,10 +1170,6 @@
             .whatsapp-float a {
                 width: var(--touch-target);
                 height: var(--touch-target);
-            }
-            .whatsapp-float .notification {
-                font-size: 0.6rem;
-                padding: 4px 8px;
             }
 
             /* Modal de historia */
@@ -1630,16 +1636,31 @@
         <div id="menu-sections"></div>
     </main>
 
-    <footer class="py-8">
-        <div class="developer-signature">
-            Developed by <a href="https://instagram.com/sergioangel.00" target="_blank" rel="noopener noreferrer">@sergioangel.00</a>
-        </div>
-        <div class="social-links">
-            <a href="https://www.instagram.com/cafe_1583/" target="_blank" rel="noopener noreferrer" aria-label="Instagram de 1583 Café"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.tiktok.com/@cafe1583_" target="_blank" rel="noopener noreferrer" aria-label="TikTok de 1583 Café"><i class="fab fa-tiktok"></i></a>
-        </div>
-        <div class="copyright">
-            © 2025 1583 Café. All Rights Reserved.
+    <footer>
+        <div class="footer-bottom">
+            <div class="developer-signature">
+                Developed by <a href="https://instagram.com/sergioangel.00" target="_blank" rel="noopener noreferrer">@sergioangel.00</a>
+            </div>
+            <div class="social-links">
+                <a href="https://www.instagram.com/cafe_1583/" target="_blank" rel="noopener noreferrer" aria-label="Instagram de 1583 Café"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@cafe1583_" target="_blank" rel="noopener noreferrer" aria-label="TikTok de 1583 Café"><i class="fab fa-tiktok"></i></a>
+                <a href="https://maps.app.goo.gl/XgiUUk7f3trCE1mLA" target="_blank" rel="noopener noreferrer" aria-label="Ubicación Café 1583 en Google Maps" class="footer-map-icon"><i class="fas fa-map-marker-alt"></i></a>
+            </div>
+            <div class="footer-map">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d996.439!2d-76.539438!3d3.3712645!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e30a15d69e6fa5b%3A0xd26653fe784e34a3!2sCaf%C3%A9%201583!5e0!3m2!1ses!2sco!4v1708564830000!5m2!1ses!2sco"
+                    width="100%"
+                    height="160"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="Ubicación Café 1583">
+                </iframe>
+            </div>
+            <div class="copyright">
+                © 2025 1583 Café. All Rights Reserved.
+            </div>
         </div>
     </footer>
 
@@ -1647,7 +1668,6 @@
     <div class="whatsapp-float">
         <a href="https://wa.me/+573181454142?text=Hola%20quisiera%20preguntar%20sobre.." target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
             <i class="fab fa-whatsapp"></i>
-            <span class="notification" data-i18n="whatsapp-notification">¿Tienes dudas? ¡Contáctanos!</span>
         </a>
     </div>
 
@@ -2240,8 +2260,7 @@
                 'additions-label': 'Adiciones',
                 'description-placeholder': 'Pronto tendremos la descripción de este producto.',
                 'load-error': 'No pudimos cargar el menú. Intenta nuevamente.',
-                'history-button': '¿Sabes por qué somos 1583?',
-                'whatsapp-notification': '¿Tienes dudas? ¡Contáctanos!'
+                'history-button': '¿Sabes por qué somos 1583?'
             },
             en: {
                 'menu-title': 'Our Menu',
@@ -2250,8 +2269,7 @@
                 'additions-label': 'Add-ons',
                 'description-placeholder': 'We will publish this product description soon.',
                 'load-error': 'We could not load the menu. Please try again later.',
-                'history-button': 'Do you know why we are 1583?',
-                'whatsapp-notification': 'Any questions? Contact us!'
+                'history-button': 'Do you know why we are 1583?'
             }
         };
 

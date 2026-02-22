@@ -21,3 +21,6 @@ Thumbs.db
 *.raw
 *.RAW
 
+# Guía local (no necesaria en el repositorio)
+LEEME.txt
+

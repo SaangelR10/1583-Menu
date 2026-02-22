@@ -4,72 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>1583 Café - Menú</title>
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=()">
     <link rel="icon" type="image/png" href="images/1583logo/logo.png">
     <link rel="shortcut icon" type="image/png" href="images/1583logo/logo.png">
     <link rel="apple-touch-icon" href="images/1583logo/logo.png">
     <link rel="preload" as="image" href="images/1583.png" fetchpriority="high">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <!-- Tailwind: bloqueante pero ligero (~28KB gzip) -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Google Fonts: display=swap evita FOIT -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Font Awesome: carga no bloqueante con media trick -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
     <style>
         :root {
             --top-nav-height: 90px;
+            --color-bg:          #1A0E05;
+            --color-nav:         #3A220F;
+            --color-gold:        #D4A017;
+            --color-gold-dark:   #B58900;
+            --color-gold-bright: #FFD700;
+            --color-white:       #FFFFFF;
+            --color-overlay:     rgba(74, 44, 20, 0.85);
+            --font-display:      'Playfair Display', serif;
+            --font-body:         'Montserrat', sans-serif;
+            --transition-fast:   0.2s ease;
+            --transition-med:    0.3s ease;
+            /* Espaciado horizontal consistente en móvil */
+            --page-padding-x:    1rem;
+            /* Área táctil mínima recomendada por WCAG / Apple HIG */
+            --touch-target:      44px;
         }
         body {
-            color: #FFFFFF;
-            font-family: 'Montserrat', sans-serif;
+            color: var(--color-white);
+            font-family: var(--font-body);
             margin: 0;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             position: relative;
-            background-color: #1A0E05;
+            background-color: var(--color-bg);
+            overflow-x: hidden;
             overflow-y: scroll;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
         }
         body::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Opera */
+            display: none;
         }
         body::before {
             content: '';
             position: fixed;
-            top: var(--top-nav-height);
+            top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #1A0E05;
-            background-image: linear-gradient(rgba(74, 44, 20, 0.85), rgba(74, 44, 20, 0.85)), url('images/1583.png');
+            background-color: var(--color-bg);
+            background-image: linear-gradient(var(--color-overlay), var(--color-overlay)), url('images/1583.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: scroll;
             z-index: -1;
             pointer-events: none;
-            opacity: 1;
-            transition: opacity 0.3s ease-in-out;
-            will-change: background-image;
         }
         @media (min-width: 768px) {
             body::before {
                 background-attachment: fixed;
             }
         }
-        /* La imagen se carga directamente, sin necesidad de clase bg-loaded */
+        h1, h2, h3 {
+            font-family: var(--font-display);
+        }
         .top-nav {
             min-height: var(--top-nav-height);
-        }
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-        }
-        /* Navbar superior */
-        .top-nav {
-            background-color: #3A220F;
+            background-color: var(--color-nav);
             padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #D4A017;
+            border-bottom: 2px solid var(--color-gold);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -84,19 +105,176 @@
             max-width: 200px;
             object-fit: contain;
         }
+        /* Ícono historia — oculto en desktop, visible en móvil dentro del header */
+        .history-btn-icon {
+            display: none;
+            background: rgba(212, 160, 23, 0.08);
+            border: 1px solid rgba(212, 160, 23, 0.5);
+            color: var(--color-gold);
+            font-size: 1rem;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+            flex-shrink: 0;
+            /* Glow intermitente suave */
+            animation: icon-glow 3.2s ease-in-out infinite;
+        }
+        @keyframes icon-glow {
+            0%, 100% {
+                box-shadow: 0 0 0px rgba(212, 160, 23, 0);
+                border-color: rgba(212, 160, 23, 0.45);
+            }
+            50% {
+                box-shadow: 0 0 10px rgba(212, 160, 23, 0.45), 0 0 22px rgba(212, 160, 23, 0.18);
+                border-color: rgba(212, 160, 23, 0.9);
+            }
+        }
+        .history-btn-icon:active {
+            background: rgba(212, 160, 23, 0.22);
+            transform: scale(0.9);
+        }
+        @media (hover: hover) {
+            .history-btn-icon:hover {
+                background: rgba(212, 160, 23, 0.18);
+                color: var(--color-gold-bright);
+                border-color: var(--color-gold-bright);
+                box-shadow: 0 0 14px rgba(212, 160, 23, 0.5);
+                animation: none;
+            }
+        }
+
+        /* ── Hint de swipe en la imagen del modal ────────────────── */
+        .modal-swipe-hint {
+            position: absolute;
+            bottom: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(0, 0, 0, 0.52);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.18);
+            color: rgba(255,255,255,0.9);
+            font-size: 0.72rem;
+            font-family: var(--font-body);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 6px 14px 6px 10px;
+            border-radius: 20px;
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 4;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+        .modal-swipe-hint.hint-hide {
+            opacity: 0;
+        }
+        /* Flechas animadas dentro del hint */
+        .modal-swipe-hint::before,
+        .modal-swipe-hint::after {
+            content: '←';
+            color: var(--color-gold);
+            font-size: 0.9rem;
+            animation: hint-pulse 1.4s ease-in-out infinite;
+        }
+        .modal-swipe-hint::after {
+            content: '→';
+            animation-delay: 0.7s;
+        }
+        @keyframes hint-pulse {
+            0%, 100% { opacity: 0.4; transform: translateX(0); }
+            50%       { opacity: 1;   transform: translateX(3px); }
+        }
+        .modal-swipe-hint::before {
+            animation-name: hint-pulse-left;
+        }
+        @keyframes hint-pulse-left {
+            0%, 100% { opacity: 0.4; transform: translateX(0); }
+            50%       { opacity: 1;   transform: translateX(-3px); }
+        }
+
+        /* Crossfade suave al navegar entre productos */
+        .modal-img-wrap {
+            transition: opacity 0.22s ease;
+        }
+        .modal-img-wrap.img-fading {
+            opacity: 0;
+        }
+        /* Transición suave del body del modal (nombre, precio) */
+        .modal-body {
+            transition: opacity 0.2s ease;
+        }
+        .modal-body.body-fade {
+            opacity: 0;
+        }
+
+        /* ── Flechas de navegación desktop (ocultas en móvil) ──── */
+        .modal-nav-btn {
+            display: none; /* visible solo en desktop via media query */
+            position: absolute;
+            top: 0;
+            width: 52px;
+            height: 100%;
+            background: linear-gradient(to right, rgba(0,0,0,0.42), transparent);
+            border: none;
+            color: rgba(255,255,255,0.85);
+            font-size: 1.6rem;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            transition: color 0.18s ease, background 0.18s ease;
+            padding: 0;
+        }
+        .modal-nav-btn.nav-prev {
+            left: 0;
+            border-radius: 16px 0 0 0;
+            background: linear-gradient(to right, rgba(0,0,0,0.45), transparent);
+        }
+        .modal-nav-btn.nav-next {
+            right: 0;
+            border-radius: 0 16px 0 0;
+            background: linear-gradient(to left, rgba(0,0,0,0.45), transparent);
+        }
+        @media (hover: hover) {
+            .modal-nav-btn:hover {
+                color: var(--color-gold);
+            }
+            .modal-nav-btn.nav-prev:hover {
+                background: linear-gradient(to right, rgba(0,0,0,0.65), transparent);
+            }
+            .modal-nav-btn.nav-next:hover {
+                background: linear-gradient(to left, rgba(0,0,0,0.65), transparent);
+            }
+        }
+        .modal-nav-btn:active {
+            color: var(--color-gold-bright);
+        }
+        /* Mostrar flechas solo en desktop con hover */
+        @media (hover: hover) and (min-width: 769px) {
+            .modal-nav-btn {
+                display: flex;
+            }
+        }
         .history-button {
             position: fixed;
             top: calc(var(--top-nav-height) + 15px);
             left: 30px;
             background: rgba(58, 34, 15, 0.95);
-            border: 1px solid #D4A017;
-            color: #D4A017;
+            border: 1px solid var(--color-gold);
+            color: var(--color-gold);
             padding: 6px 14px;
             border-radius: 15px;
             font-size: 0.7rem;
-            font-family: 'Montserrat', sans-serif;
+            font-family: var(--font-body);
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all var(--transition-med);
             text-transform: uppercase;
             letter-spacing: 0.5px;
             font-weight: 500;
@@ -121,50 +299,47 @@
                 transform: translateY(0);
             }
         }
-        .history-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(212, 160, 23, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-        .history-button:hover::before {
-            left: 100%;
-        }
-        .history-button:hover {
-            background-color: rgba(212, 160, 23, 0.15);
-            border-color: #FFD700;
-            color: #FFD700;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(212, 160, 23, 0.5);
+        @media (hover: hover) {
+            .history-button::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(212, 160, 23, 0.2), transparent);
+                transition: left 0.5s ease;
+            }
+            .history-button:hover::before {
+                left: 100%;
+            }
         }
         .history-button:active {
             transform: translateY(0);
+            background-color: rgba(212, 160, 23, 0.2);
         }
         .language-selector select {
-            background-color: #D4A017;
-            color: #FFFFFF;
+            background-color: var(--color-gold);
+            color: var(--color-white);
             padding: 6px 12px;
             border-radius: 5px;
             border: none;
             cursor: pointer;
-            font-family: 'Montserrat', sans-serif;
+            font-family: var(--font-body);
             font-size: 0.9rem;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            transition: background-color var(--transition-med), transform var(--transition-fast);
         }
-        .language-selector select:hover {
-            background-color: #B58900;
-            transform: scale(1.05);
+        @media (hover: hover) {
+            .language-selector select:hover {
+                background-color: var(--color-gold-dark);
+                transform: scale(1.05);
+            }
         }
         .language-selector select:active {
             transform: scale(0.95);
         }
         /* Navbar secundario para las pestañas */
         .menu-nav {
-            background-color: transparent;
             padding: 30px 0;
             text-align: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
@@ -183,20 +358,49 @@
             display: inline-block;
         }
         .menu-nav a {
-            color: #FFFFFF;
+            color: var(--color-white);
             text-decoration: none;
             font-size: 1rem;
             font-weight: 500;
             padding: 10px 15px;
-            transition: color 0.3s ease, transform 0.2s ease;
+            transition: color var(--transition-med), transform var(--transition-fast);
             position: relative;
         }
-        .menu-nav a:hover {
-            color: #FFD700;
-            transform: scale(1.05);
+        @media (hover: hover) {
+            .menu-nav a:hover {
+                color: var(--color-gold-bright);
+                transform: scale(1.05);
+            }
+            .developer-signature a:hover {
+                color: var(--color-gold-bright);
+            }
+            .history-button:hover {
+                background-color: rgba(212, 160, 23, 0.15);
+                border-color: var(--color-gold-bright);
+                color: var(--color-gold-bright);
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(212, 160, 23, 0.5);
+            }
+            .whatsapp-float a:hover {
+                background-color: #20b358;
+                transform: scale(1.1);
+            }
+            .modal-close:hover {
+                color: var(--color-gold);
+            }
+            .history-close:hover {
+                color: var(--color-gold);
+                background: rgba(212, 160, 23, 0.1);
+                transform: rotate(90deg);
+            }
+            .meaning-list li:hover {
+                background: rgba(212, 160, 23, 0.2);
+                transform: translateX(5px);
+            }
         }
         .menu-nav a:active {
             transform: scale(0.95);
+            color: var(--color-gold-bright);
         }
         .menu-nav a.active::after {
             content: '';
@@ -205,7 +409,7 @@
             left: 0;
             width: 100%;
             height: 2px;
-            background-color: #D4A017;
+            background-color: var(--color-gold);
         }
         .menu-section {
             display: none;
@@ -229,27 +433,40 @@
         }
         .menu-item {
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 12px 0;
+            /* min-height garantiza área táctil de 44px en móvil */
+            min-height: var(--touch-target);
+            padding: 12px 8px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            transition: background-color var(--transition-med);
+            /* Evita salto de layout en hover: solo bg, no transform */
         }
-        .menu-item:hover {
-            background-color: rgba(255, 255, 255, 0.05);
-            transform: scale(1.02);
+        @media (hover: hover) {
+            /* Transform solo en dispositivos con mouse real */
+            .menu-item:hover {
+                background-color: rgba(255, 255, 255, 0.05);
+                transform: scale(1.02);
+            }
+        }
+        .menu-item:active {
+            background-color: rgba(255, 255, 255, 0.07);
         }
         .menu-item-description {
-            font-size: 0.8rem;
+            font-size: 0.875rem; /* 14px — no menor para legibilidad */
             color: rgba(255, 255, 255, 0.7);
             margin-top: 4px;
+            line-height: 1.4;
         }
         main {
             flex: 1;
+            /* Evita desbordamiento horizontal del contenido */
+            min-width: 0;
+            overflow-x: hidden;
         }
         footer {
-            background-color: #3A220F;
+            background-color: var(--color-nav);
             text-align: center;
             padding: 20px 0;
-            border-top: 2px solid #D4A017;
+            border-top: 2px solid var(--color-gold);
             width: 100%;
             display: flex;
             justify-content: space-between;
@@ -257,19 +474,25 @@
             flex-wrap: wrap;
         }
         footer .social-links a {
-            color: #FFFFFF;
+            color: var(--color-white);
             margin: 0 15px;
             font-size: 1.5rem;
-            transition: color 0.3s ease, transform 0.2s ease;
+            transition: color var(--transition-med), transform var(--transition-fast);
         }
-        footer .social-links a:hover {
-            color: #D4A017;
-            transform: scale(1.1);
+        @media (hover: hover) {
+            footer .social-links a:hover {
+                color: var(--color-gold);
+                transform: scale(1.1);
+            }
+        }
+        footer .social-links a:active {
+            color: var(--color-gold);
+            transform: scale(0.95);
         }
         .developer-signature {
             font-size: 0.7rem;
-            font-family: 'Montserrat', sans-serif;
-            color: #D4A017;
+            font-family: var(--font-body);
+            color: var(--color-gold);
             text-transform: uppercase;
             letter-spacing: 1px;
             opacity: 0.9;
@@ -277,17 +500,17 @@
             text-shadow: 0 0 5px rgba(212, 160, 23, 0.5);
         }
         .developer-signature a {
-            color: #D4A017;
+            color: var(--color-gold);
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: color var(--transition-med);
         }
-        .developer-signature a:hover {
-            color: #FFD700;
+        .developer-signature a:active {
+            color: var(--color-gold-bright);
         }
         .copyright {
             font-size: 0.7rem;
-            font-family: 'Montserrat', sans-serif;
-            color: #FFFFFF;
+            font-family: var(--font-body);
+            color: var(--color-white);
             opacity: 0.8;
             padding-right: 20px;
         }
@@ -306,19 +529,16 @@
             align-items: center;
             justify-content: center;
             background-color: #25D366;
-            color: #FFFFFF;
+            color: var(--color-white);
             width: 50px;
             height: 50px;
             border-radius: 50%;
             text-decoration: none;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
-        .whatsapp-float a:hover {
-            background-color: #20b358;
-            transform: scale(1.1);
+            transition: transform var(--transition-med), background-color var(--transition-med);
         }
         .whatsapp-float a:active {
+            background-color: #20b358;
             transform: scale(0.95);
         }
         .whatsapp-float i {
@@ -329,8 +549,8 @@
             top: -10px;
             left: -10px;
             background-color: #25D366;
-            color: #FFFFFF;
-            font-family: 'Montserrat', sans-serif;
+            color: var(--color-white);
+            font-family: var(--font-body);
             font-size: 0.7rem;
             font-weight: 500;
             padding: 5px 10px;
@@ -366,79 +586,143 @@
             justify-content: center;
             align-items: center;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity var(--transition-med);
         }
         .modal.active {
             display: flex;
             opacity: 1;
         }
         .modal-content {
-            background-color: #3A220F;
-            border: 2px solid #D4A017;
-            border-radius: 10px;
-            max-width: 700px;
-            width: 90%;
+            background-color: #1c0f05;
+            border: 1px solid rgba(212, 160, 23, 0.35);
+            border-radius: 16px;
+            max-width: 480px;
+            width: 92%;
             max-height: 90vh;
             overflow-y: auto;
-            padding: 30px;
+            overflow-x: hidden;
+            padding: 0;
             position: relative;
-            transform: scale(0.8);
-            transition: transform 0.3s ease;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            transform: scale(0.88) translateY(20px);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+            opacity: 0;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(212,160,23,0.15);
         }
         .modal.active .modal-content {
-            transform: scale(1);
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+        /* Skeleton shimmer en la imagen */
+        .modal-img-wrap {
+            width: 100%;
+            min-height: 280px;
+            max-height: 380px;
+            border-radius: 16px 16px 0 0;
+            background: linear-gradient(90deg, #2a1608 25%, #3d2210 50%, #2a1608 75%);
+            background-size: 200% 100%;
+            animation: skeleton-shimmer 1.4s infinite;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        @keyframes skeleton-shimmer {
+            0%   { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
         .modal-content img {
             width: 100%;
             height: auto;
-            min-height: 350px;
-            max-height: 500px;
-            object-fit: contain;
+            min-height: 280px;
+            max-height: 380px;
+            object-fit: cover;
             object-position: center;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            background-color: rgba(0, 0, 0, 0.2);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border-radius: 16px 16px 0 0;
+            display: block;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .modal-content img.img-loaded {
+            opacity: 1;
+        }
+        /* Cuerpo del modal debajo de la imagen */
+        .modal-body {
+            padding: 20px 24px 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        /* Línea decorativa dorada */
+        .modal-divider {
+            width: 48px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+            border: none;
+            margin: 0 auto 16px;
+            flex-shrink: 0;
         }
         .modal-content h3 {
-            font-size: 2rem;
-            margin-bottom: 15px;
-            color: #FFFFFF;
-            line-height: 1.3;
-            font-weight: 600;
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            margin: 0 0 8px;
+            color: var(--color-white);
+            line-height: 1.2;
+            font-weight: 700;
+            letter-spacing: 0.01em;
         }
         .modal-content p {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 12px;
-            line-height: 1.6;
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.75);
+            margin: 0 0 10px;
+            line-height: 1.65;
         }
         .modal-content .ingredients {
-            font-size: 0.95rem;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 15px;
+            font-size: 0.88rem;
+            color: rgba(212, 160, 23, 0.8);
+            margin: 0 0 14px;
             line-height: 1.5;
+            font-style: italic;
         }
         .modal-content .price {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: #D4A017;
-            margin-top: 10px;
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--color-gold);
+            margin: 6px 0 0;
+            letter-spacing: 0.02em;
         }
+        /* Botón de cierre — círculo en esquina superior derecha */
         .modal-close {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background: none;
-            border: none;
-            color: #FFFFFF;
-            font-size: 1.5rem;
+            top: 12px;
+            right: 12px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--color-white);
+            font-size: 1.1rem;
+            line-height: 1;
             cursor: pointer;
-            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast);
+            z-index: 10;
         }
-        .modal-close:hover {
-            color: #D4A017;
+        .modal-close:active {
+            background: rgba(212, 160, 23, 0.4);
+            border-color: var(--color-gold);
+        }
+        @media (hover: hover) {
+            .modal-close:hover {
+                background: rgba(212, 160, 23, 0.3);
+                border-color: var(--color-gold);
+            }
         }
         /* History Modal Styles */
         .history-modal {
@@ -462,8 +746,8 @@
             opacity: 1;
         }
         .history-modal-content {
-            background: linear-gradient(135deg, #3A220F 0%, #2A1809 100%);
-            border: 2px solid #D4A017;
+            background: linear-gradient(135deg, var(--color-nav) 0%, #2A1809 100%);
+            border: 2px solid var(--color-gold);
             border-radius: 15px;
             max-width: 900px;
             width: 100%;
@@ -474,18 +758,18 @@
             transition: transform 0.4s ease;
             overflow-y: auto;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
         }
         .history-modal-content::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Opera */
+            display: none;
         }
         .history-modal.active .history-modal-content {
             transform: scale(1) translateY(0);
         }
         .history-modal-content h2 {
             font-size: 2.5rem;
-            color: #D4A017;
+            color: var(--color-gold);
             margin-bottom: 30px;
             text-align: center;
             border-bottom: 2px solid rgba(212, 160, 23, 0.3);
@@ -493,7 +777,7 @@
         }
         .history-modal-content h3 {
             font-size: 1.8rem;
-            color: #D4A017;
+            color: var(--color-gold);
             margin-top: 30px;
             margin-bottom: 15px;
         }
@@ -508,7 +792,7 @@
             font-size: 1.1rem;
             font-style: italic;
             color: rgba(255, 255, 255, 0.95);
-            border-left: 3px solid #D4A017;
+            border-left: 3px solid var(--color-gold);
             padding-left: 20px;
             margin-bottom: 30px;
         }
@@ -524,7 +808,7 @@
             top: 0;
             bottom: 0;
             width: 2px;
-            background: linear-gradient(180deg, #D4A017, rgba(212, 160, 23, 0.3));
+            background: linear-gradient(180deg, var(--color-gold), rgba(212, 160, 23, 0.3));
         }
         .timeline-item {
             position: relative;
@@ -546,16 +830,16 @@
             width: 16px;
             height: 16px;
             border-radius: 50%;
-            background: #D4A017;
-            border: 3px solid #3A220F;
+            background: var(--color-gold);
+            border: 3px solid var(--color-nav);
             box-shadow: 0 0 10px rgba(212, 160, 23, 0.5);
         }
         .timeline-item .year {
             font-size: 1.3rem;
             font-weight: 700;
-            color: #D4A017;
+            color: var(--color-gold);
             margin-bottom: 8px;
-            font-family: 'Playfair Display', serif;
+            font-family: var(--font-display);
         }
         .timeline-item .description {
             font-size: 0.95rem;
@@ -571,9 +855,9 @@
             padding: 15px 20px;
             margin-bottom: 15px;
             background: rgba(212, 160, 23, 0.1);
-            border-left: 4px solid #D4A017;
+            border-left: 4px solid var(--color-gold);
             border-radius: 5px;
-            transition: all 0.3s ease;
+            transition: background var(--transition-med), transform var(--transition-med);
             opacity: 0;
             transform: translateX(-10px);
             animation: slideInLeft 0.5s ease forwards;
@@ -581,12 +865,11 @@
         .meaning-list li:nth-child(1) { animation-delay: 0.2s; }
         .meaning-list li:nth-child(2) { animation-delay: 0.3s; }
         .meaning-list li:nth-child(3) { animation-delay: 0.4s; }
-        .meaning-list li:hover {
+        .meaning-list li:active {
             background: rgba(212, 160, 23, 0.2);
-            transform: translateX(5px);
         }
         .meaning-list li strong {
-            color: #D4A017;
+            color: var(--color-gold);
             font-size: 1.1rem;
             display: block;
             margin-bottom: 8px;
@@ -597,10 +880,10 @@
             right: 15px;
             background: transparent;
             border: none;
-            color: #FFFFFF;
+            color: var(--color-white);
             font-size: 2rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: color var(--transition-med), background var(--transition-med), transform var(--transition-med);
             width: 40px;
             height: 40px;
             display: flex;
@@ -608,10 +891,9 @@
             justify-content: center;
             border-radius: 50%;
         }
-        .history-close:hover {
-            color: #D4A017;
-            background: rgba(212, 160, 23, 0.1);
-            transform: rotate(90deg);
+        .history-close:active {
+            color: var(--color-gold);
+            background: rgba(212, 160, 23, 0.15);
         }
         @keyframes slideInLeft {
             to {
@@ -620,48 +902,107 @@
             }
         }
         .highlight-year {
-            color: #D4A017;
+            color: var(--color-gold);
             font-weight: 700;
             font-size: 1.1em;
         }
-        /* Media queries para pantallas pequeñas */
+        /* ============================================
+           MOBILE — tablets y phablets (≤768px)
+           ============================================ */
         @media (max-width: 768px) {
+            :root {
+                --top-nav-height: 70px;
+            }
+
+            /* Nav móvil: ✦ izq | logo centro | idioma der */
             .top-nav {
-                padding: 10px 20px;
+                padding: 10px var(--page-padding-x);
+                justify-content: space-between;
             }
             .top-nav .logo {
-                height: 45px;
-                max-width: 150px;
+                height: 40px;
+                max-width: 130px;
+                /* logo en flujo natural — queda centrado entre los dos extremos */
+                position: static;
+                transform: none;
             }
+            /* Ícono ✦ visible en móvil */
+            .history-btn-icon {
+                display: inline-flex;
+            }
+
+            /* Selector de idioma: más compacto en móvil */
+            .language-selector select {
+                min-height: 32px;
+                padding: 4px 8px;
+                font-size: 0.75rem;
+            }
+
+            /* Nav de categorías: scroll horizontal si hay muchas */
             .menu-nav {
-                padding: 20px 0;
-                margin-top: 15px;
+                padding: 16px 0 12px;
+                margin-top: 12px;
             }
             .menu-nav ul {
-                gap: 15px;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scroll-snap-type: x mandatory;
+                padding: 4px var(--page-padding-x) 8px;
+                gap: 0;
+                justify-content: flex-start;
+                /* ocultar scrollbar horizontal del nav */
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+            .menu-nav ul::-webkit-scrollbar {
+                display: none;
+            }
+            .menu-nav li {
+                flex-shrink: 0;
+                scroll-snap-align: start;
             }
             .menu-nav a {
                 font-size: 0.9rem;
-                padding: 8px 12px;
+                /* mínimo 44px de área táctil en altura */
+                padding: 12px 14px;
+                display: inline-flex;
+                align-items: center;
+                white-space: nowrap;
             }
+
+            /* Items del menú */
             .menu-section {
-                margin: 30px 0;
+                margin: 24px 0;
             }
-            .menu-item-description {
-                font-size: 0.75rem;
+            .menu-item {
+                padding: 14px var(--page-padding-x);
             }
+
+            /* Footer apilado */
             footer {
                 flex-direction: column;
-                gap: 10px;
+                gap: 12px;
+                padding: 20px var(--page-padding-x);
             }
             .developer-signature,
             .copyright {
                 padding: 0;
                 text-align: center;
             }
+            footer .social-links a {
+                /* Área táctil mínima */
+                min-width: var(--touch-target);
+                min-height: var(--touch-target);
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* WhatsApp: mantener 44px mínimo */
             .whatsapp-float a {
-                width: 40px;
-                height: 40px;
+                width: var(--touch-target);
+                height: var(--touch-target);
             }
             .whatsapp-float i {
                 font-size: 1.5rem;
@@ -670,127 +1011,602 @@
                 font-size: 0.6rem;
                 padding: 4px 8px;
             }
+
+            /* Modal de producto: bottom-sheet en móvil */
+            .modal {
+                align-items: flex-end;
+                padding: 0;
+            }
             .modal-content {
-                width: 95%;
-                padding: 15px;
+                width: 100%;
+                max-width: 100%;
+                max-height: 92vh;
+                border-radius: 20px 20px 0 0;
+                border-left: none;
+                border-right: none;
+                border-bottom: none;
+                padding: 0;
+                transform: translateY(100%);
+                opacity: 1; /* en móvil usamos slide, no fade */
+                transition: transform 0.38s cubic-bezier(0.32, 0.72, 0, 1);
+                overflow-y: auto;
+            }
+            .modal.active .modal-content {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            /* Pill indicador de sheet */
+            .modal-content::before {
+                content: '';
+                display: block;
+                width: 40px;
+                height: 4px;
+                background: rgba(255, 255, 255, 0.25);
+                border-radius: 2px;
+                position: absolute;
+                top: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 5;
+            }
+            .modal-img-wrap {
+                min-height: 200px;
+                max-height: 280px;
+                border-radius: 20px 20px 0 0;
             }
             .modal-content img {
-                height: 120px;
+                min-height: 200px;
+                max-height: 280px;
+                border-radius: 20px 20px 0 0;
+            }
+            .modal-body {
+                padding: 16px 20px max(28px, env(safe-area-inset-bottom));
             }
             .modal-content h3 {
-                font-size: 1.5rem;
+                font-size: 1.35rem;
             }
             .modal-content p,
-            .modal-content .ingredients,
+            .modal-content .ingredients {
+                font-size: 1rem;
+            }
             .modal-content .price {
-                font-size: 0.8rem;
+                font-size: 1.6rem;
+            }
+            /* Botón de cierre: área táctil mínima */
+            .modal-close {
+                top: 14px;
+                right: 14px;
+                width: 36px;
+                height: 36px;
             }
         }
+
+        /* ============================================
+           MOBILE — smartphones pequeños (≤480px)
+           ============================================ */
         @media (max-width: 480px) {
+            :root {
+                --top-nav-height: 62px;
+            }
+
             .top-nav {
-                padding: 8px 15px;
+                padding: 8px var(--page-padding-x);
             }
             .top-nav .logo {
-                height: 35px;
+                height: 38px;
                 max-width: 120px;
             }
-            .menu-nav {
-                padding: 15px 0;
-                margin-top: 10px;
+
+            /* Botón flotante historia: oculto en móvil */
+            .history-button {
+                display: none !important;
             }
-            .menu-nav ul {
-                gap: 10px;
+            /* Nav de categorías */
+            .menu-nav {
+                padding: 12px 0 8px;
+                margin-top: 8px;
             }
             .menu-nav a {
-                font-size: 0.8rem;
-                padding: 6px 10px;
+                font-size: 0.85rem;
+                padding: 10px 12px;
             }
-            .menu-section {
-                margin: 20px 0;
+
+            /* Items: más respiración entre nombre y precio */
+            .menu-item {
+                padding: 14px var(--page-padding-x);
             }
             .menu-item-description {
-                font-size: 0.7rem;
+                font-size: 0.875rem; /* nunca < 14px */
             }
+
+            /* Modal en pantallas pequeñas */
+            .modal-img-wrap {
+                min-height: 170px;
+                max-height: 230px;
+            }
+            .modal-content img {
+                min-height: 170px;
+                max-height: 230px;
+            }
+            .modal-body {
+                padding: 14px 16px max(24px, env(safe-area-inset-bottom));
+            }
+            .modal-content h3 {
+                font-size: 1.25rem;
+            }
+            .modal-content .price {
+                font-size: 1.5rem;
+            }
+
+            /* Footer */
             footer .social-links a {
-                font-size: 1.2rem;
-                margin: 0 10px;
+                font-size: 1.3rem;
+                margin: 0 8px;
             }
             .developer-signature,
             .copyright {
-                font-size: 0.65rem;
+                font-size: 0.7rem;
+            }
+
+            /* WhatsApp */
+            .whatsapp-float {
+                bottom: max(16px, env(safe-area-inset-bottom));
+                right: 16px;
             }
             .whatsapp-float a {
-                width: 35px;
-                height: 35px;
-            }
-            .whatsapp-float i {
-                font-size: 1.3rem;
+                width: var(--touch-target);
+                height: var(--touch-target);
             }
             .whatsapp-float .notification {
-                font-size: 0.55rem;
-                padding: 3px 6px;
+                font-size: 0.6rem;
+                padding: 4px 8px;
             }
-            .modal-content {
-                max-width: 95%;
-                padding: 20px;
-            }
-            .modal-content img {
-                min-height: 250px;
-                max-height: 350px;
-            }
-            .modal-content h3 {
-                font-size: 1.5rem;
-            }
-            .modal-content p {
-                font-size: 0.9rem;
-            }
-            .modal-content .ingredients {
-                font-size: 0.85rem;
-            }
-            .modal-content .price {
-                font-size: 1.2rem;
+
+            /* Modal de historia */
+            .history-modal {
+                padding: 0;
+                align-items: flex-end;
             }
             .history-modal-content {
-                padding: 25px 20px;
+                width: 100%;
+                max-width: 100%;
                 max-height: 95vh;
+                border-radius: 20px 20px 0 0;
+                border-left: none;
+                border-right: none;
+                border-bottom: none;
+                padding: 24px 16px;
+                padding-bottom: max(24px, env(safe-area-inset-bottom));
             }
             .history-modal-content h2 {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
             }
             .history-modal-content h3 {
-                font-size: 1.4rem;
+                font-size: 1.3rem;
             }
             .history-modal-content p {
-                font-size: 0.9rem;
+                font-size: 1rem;
+                text-align: left; /* justify dificulta lectura en pantallas angostas */
+            }
+            .history-close {
+                top: 12px;
+                right: 12px;
+                width: var(--touch-target);
+                height: var(--touch-target);
             }
             .timeline {
-                padding-left: 25px;
+                padding-left: 24px;
             }
             .timeline-item {
-                padding-left: 35px;
-            }
-            .history-button {
-                font-size: 0.65rem;
-                padding: 5px 12px;
-                left: 15px;
-                top: calc(var(--top-nav-height) + 10px);
+                padding-left: 32px;
             }
         }
+
+        /* ============================================
+           REDUCE MOTION — respeta preferencia del SO
+           ============================================ */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* ===== SPLASH COMBOS ===== */
+
+        /* El menú principal arranca invisible; el splash lo activa */
+        .menu-main-wrapper {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease-out;
+            /* Necesario para que el footer quede siempre al fondo */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .menu-main-wrapper.menu-visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        /* Entrada del header y nav */
+        .menu-main-wrapper.menu-visible .top-nav,
+        .menu-main-wrapper.menu-visible .menu-nav {
+            animation: splash-slide-down 0.4s ease-out 0.2s both;
+        }
+        @keyframes splash-slide-down {
+            from { opacity: 0; transform: translateY(-20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Pantalla splash */
+        .splash-container {
+            position: fixed;
+            inset: 0;
+            z-index: 9000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: env(safe-area-inset-top, 0) 0 env(safe-area-inset-bottom, 0);
+            /* Reutiliza la misma imagen de fondo del menú */
+            background-color: var(--color-bg);
+            background-image:
+                linear-gradient(rgba(15, 8, 0, 0.72), rgba(15, 8, 0, 0.72)),
+                url('images/1583.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            overflow: hidden;
+        }
+        /* Overlay para fade a negro al salir */
+        .splash-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: #000;
+            opacity: 0;
+            pointer-events: none;
+            will-change: opacity;
+            transition: opacity 0.3s ease-in;
+            z-index: 1;
+        }
+        .splash-container.splash-exit::after {
+            opacity: 1;
+        }
+        .splash-container.splash-gone {
+            display: none;
+        }
+
+        /* Logo */
+        .splash-logo {
+            margin-top: 32px;
+            display: flex;
+            justify-content: center;
+            animation: splash-logo-in 0.6s ease-out both;
+            flex-shrink: 0;
+        }
+        @keyframes splash-logo-in {
+            from { opacity: 0; transform: scale(0.92); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+        .splash-logo img {
+            width: 120px;
+            height: auto;
+        }
+
+        /* Área central: carrusel */
+        .splash-carousel-area {
+            flex: 1;
+            width: 100%;
+            max-width: 860px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 20px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Track de slides */
+        .splash-track {
+            width: 100%;
+            position: relative;
+            /* altura fija para evitar CLS */
+            min-height: 380px;
+        }
+
+        /* Slide individual */
+        .splash-slide {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.45s ease;
+        }
+        .splash-slide.splash-active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Imagen del combo */
+        .splash-img-wrap {
+            width: 100%;
+            height: 220px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.45);
+            margin-bottom: 18px;
+            flex-shrink: 0;
+            background: var(--color-nav);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .splash-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Ken Burns muy sutil: solo en el slide activo */
+            transform: scale(1.04);
+            transition: transform 0.5s ease-out;
+        }
+        .splash-slide.splash-active .splash-img-wrap img {
+            transform: scale(1);
+        }
+        /* Placeholder cuando no hay imagen */
+        .splash-no-img {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--color-gold);
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Tag sobre la imagen */
+        .splash-tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(15, 8, 0, 0.75);
+            border: 1px solid var(--color-gold);
+            color: var(--color-gold);
+            font-family: var(--font-body);
+            font-size: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 20px;
+            pointer-events: none;
+        }
+
+        /* Textos del slide */
+        .splash-text {
+            width: 100%;
+            text-align: center;
+        }
+        .splash-name {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            color: #f5f0e8;
+            line-height: 1.2;
+            margin: 0 0 6px;
+            /* Entrada animada cuando el slide se activa */
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.35s ease 0.05s, transform 0.35s ease 0.05s;
+        }
+        .splash-slide.splash-active .splash-name {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .splash-price {
+            font-family: var(--font-body);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--color-gold);
+            margin: 0 0 6px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.35s ease 0.17s, transform 0.35s ease 0.17s;
+        }
+        .splash-slide.splash-active .splash-price {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .splash-desc {
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            font-style: italic;
+            color: rgba(245, 240, 232, 0.65);
+            margin: 0;
+            opacity: 0;
+            transform: translateY(8px);
+            transition: opacity 0.3s ease 0.26s, transform 0.3s ease 0.26s;
+        }
+        .splash-slide.splash-active .splash-desc {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Dots indicadores */
+        .splash-dots {
+            display: flex;
+            gap: 7px;
+            align-items: center;
+            justify-content: center;
+            margin: 14px 0 0;
+            flex-shrink: 0;
+        }
+        .splash-dot {
+            height: 7px;
+            border-radius: 4px;
+            background: rgba(201, 168, 76, 0.35);
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            transition: width 0.3s ease, background 0.3s ease;
+            width: 7px;
+        }
+        .splash-dot.splash-dot-active {
+            width: 20px;
+            background: #c9a84c;
+        }
+
+        /* Zona inferior: botón */
+        .splash-footer {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px 20px 28px;
+            flex-shrink: 0;
+        }
+        .splash-eyebrow {
+            font-family: var(--font-body);
+            font-size: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(245, 240, 232, 0.55);
+            margin-bottom: 10px;
+        }
+        .splash-btn {
+            width: 88%;
+            min-height: 52px;
+            max-width: 380px;
+            border: 1px solid var(--color-gold);
+            background: transparent;
+            color: var(--color-gold);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background var(--transition-fast), color var(--transition-fast);
+            will-change: transform;
+        }
+        @media (hover: hover) {
+            .splash-btn:hover {
+                background: var(--color-gold);
+                color: var(--color-bg);
+            }
+        }
+        .splash-btn:active {
+            background: var(--color-gold);
+            color: var(--color-bg);
+        }
+        /* Pulse al llegar al último slide */
+        .splash-btn.splash-btn-pulse {
+            animation: splash-btn-pulse 0.6s ease 0.1s 2;
+        }
+        @keyframes splash-btn-pulse {
+            0%   { transform: scale(1); }
+            50%  { transform: scale(1.04); }
+            100% { transform: scale(1); }
+        }
+
+        /* Estado vacío (sin combos con imagen) */
+        .splash-empty {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: rgba(245, 240, 232, 0.5);
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        /* Desktop ≥768px */
+        @media (min-width: 768px) {
+            .splash-logo img {
+                width: 160px;
+            }
+            .splash-track {
+                min-height: 340px;
+            }
+            .splash-img-wrap {
+                height: 260px;
+                max-width: 420px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .splash-name {
+                font-size: 2.2rem;
+            }
+            .splash-price {
+                font-size: 1.35rem;
+            }
+            .splash-desc {
+                font-size: 0.95rem;
+            }
+            .splash-btn {
+                width: auto;
+                padding: 14px 48px;
+                min-height: 48px;
+            }
+        }
+
+        /* ===== FIN SPLASH COMBOS ===== */
     </style>
 </head>
 <body class="text-white">
+
+    <!-- ===== SPLASH COMBOS ===== -->
+    <div class="splash-container" id="splash-container" role="region" aria-label="Combos destacados">
+
+        <!-- Logo centrado -->
+        <div class="splash-logo">
+            <img src="images/1583logo/logo.png" alt="Café 1583" width="160" height="48" fetchpriority="high">
+        </div>
+
+        <!-- Carrusel -->
+        <div class="splash-carousel-area">
+            <!-- El track y los slides se generan dinámicamente desde menu-data.json -->
+            <div class="splash-track" id="splash-track">
+                <p class="splash-empty" id="splash-empty" style="display:none">
+                    Cargando combos…
+                </p>
+            </div>
+            <!-- Dots generados por JS -->
+            <div class="splash-dots" id="splash-dots" aria-label="Navegación del carrusel"></div>
+        </div>
+
+        <!-- Botón Ver Menú -->
+        <div class="splash-footer">
+            <!-- TODO: texto — cambia el eyebrow si lo deseas -->
+            <span class="splash-eyebrow">✦ Explora nuestro menú ✦</span>
+            <button class="splash-btn" id="splash-btn" aria-label="Ver el menú completo">
+                Ver Menú
+            </button>
+        </div>
+
+    </div>
+    <!-- ===== FIN SPLASH COMBOS ===== -->
+
+    <!-- Wrapper del menú principal: invisible hasta que el splash lo active -->
+    <div class="menu-main-wrapper" id="menu-main-wrapper">
     <header class="top-nav">
-        <img src="images/1583logo/logo.png" alt="1583 Café" class="logo">
+        <!-- Botón ✦ historia — izquierda en móvil, oculto en desktop -->
+        <button class="history-btn-icon" id="history-button-icon" aria-label="Historia del café">✦</button>
+        <!-- Logo centrado — clic recarga la página -->
+        <img src="images/1583logo/logo.png" alt="1583 Café" class="logo" fetchpriority="high" width="200" height="60" role="button" tabindex="0" title="Recargar menú" style="cursor:pointer;" onclick="location.reload(true)" onkeydown="if(event.key==='Enter')location.reload(true)">
+        <!-- Selector de idioma — derecha -->
         <div class="language-selector">
-            <select onchange="changeLanguage(this.value)">
+            <select id="language-select">
                 <option value="es">Español</option>
                 <option value="en">English</option>
             </select>
         </div>
     </header>
 
-    <!-- Floating History Button -->
-    <button class="history-button" id="history-button" onclick="openHistoryModal()" data-i18n="history-button">
+    <!-- Floating History Button (solo desktop) -->
+    <button class="history-button" id="history-button" data-i18n="history-button">
         ¿Sabes por qué somos 1583?
     </button>
 
@@ -801,7 +1617,7 @@
         </ul>
     </nav>
 
-    <main class="container mx-auto px-6 max-w-3xl">
+    <main class="container mx-auto px-4 max-w-3xl">
         <div id="menu-loading" class="text-center py-10 text-yellow-300 text-xs uppercase tracking-widest">
             Cargando menú...
                     </div>
@@ -811,12 +1627,11 @@
 
     <footer class="py-8">
         <div class="developer-signature">
-            Developed by <a href="https://instagram.com/sergioangel.00" target="_blank">@sergioangel.00</a>
+            Developed by <a href="https://instagram.com/sergioangel.00" target="_blank" rel="noopener noreferrer">@sergioangel.00</a>
         </div>
         <div class="social-links">
-            <a href="https://instagram.com/1583cafe" target="_blank"><i class="fab fa-instagram"></i></a>
-            <a href="https://tiktok.com/@cafe_1583" target="_blank"><i class="fab fa-tiktok"></i></a>
-            <a href="https://1583cafe.com" target="_blank"><i class="fas fa-globe"></i></a>
+            <a href="https://instagram.com/cafe_1583" target="_blank" rel="noopener noreferrer" aria-label="Instagram de 1583 Café"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.tiktok.com/@cafe1583_" target="_blank" rel="noopener noreferrer" aria-label="TikTok de 1583 Café"><i class="fab fa-tiktok"></i></a>
         </div>
         <div class="copyright">
             © 2025 1583 Café. All Rights Reserved.
@@ -825,7 +1640,7 @@
 
     <!-- WhatsApp Floating Button -->
     <div class="whatsapp-float">
-        <a href="https://wa.me/+573181454142?text=Hola%20quisiera%20preguntar%20sobre.." target="_blank">
+        <a href="https://wa.me/+573181454142?text=Hola%20quisiera%20preguntar%20sobre.." target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
             <i class="fab fa-whatsapp"></i>
             <span class="notification" data-i18n="whatsapp-notification">¿Tienes dudas? ¡Contáctanos!</span>
         </a>
@@ -834,19 +1649,28 @@
     <!-- Modal -->
     <div id="product-modal" class="modal">
         <div class="modal-content">
-            <button class="modal-close" onclick="closeModal()">×</button>
-            <img id="modal-image" src="" alt="Producto">
-            <h3 id="modal-title"></h3>
-            <p id="modal-description"></p>
-            <p class="ingredients" id="modal-ingredients"></p>
-            <p class="price" id="modal-price"></p>
+            <button class="modal-close" id="modal-close-btn" aria-label="Cerrar">×</button>
+            <div class="modal-img-wrap" id="modal-img-wrap">
+                <img id="modal-image" src="" alt="Producto" decoding="async">
+                <div class="modal-swipe-hint" id="modal-swipe-hint">Desliza</div>
+                <!-- Flechas desktop (ocultas en móvil) -->
+                <button class="modal-nav-btn nav-prev" id="modal-nav-prev" aria-label="Producto anterior">&#8249;</button>
+                <button class="modal-nav-btn nav-next" id="modal-nav-next" aria-label="Siguiente producto">&#8250;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <hr class="modal-divider">
+                <h3 id="modal-title"></h3>
+                <p id="modal-description"></p>
+                <p class="ingredients" id="modal-ingredients"></p>
+                <p class="price" id="modal-price"></p>
+            </div>
         </div>
     </div>
 
     <!-- History Modal -->
     <div id="history-modal" class="history-modal">
         <div class="history-modal-content">
-            <button class="history-close" onclick="closeHistoryModal()">×</button>
+            <button class="history-close" id="history-close-btn" aria-label="Cerrar">×</button>
 
             <!-- Contenido en Español -->
             <div id="history-content-es" data-lang-section="es">
@@ -952,6 +1776,8 @@
         </div>
     </div>
 
+    </div><!-- /menu-main-wrapper -->
+
     <script>
         const defaultLang = 'es';
         let currentLang = defaultLang;
@@ -965,6 +1791,34 @@
         const menuSectionsContainer = document.getElementById('menu-sections');
         const menuLoading = document.getElementById('menu-loading');
         const menuError = document.getElementById('menu-error');
+
+        // Cache de elementos del modal para evitar getElementById en cada apertura
+        const productModal   = document.getElementById('product-modal');
+        const modalImage     = document.getElementById('modal-image');
+        const modalImgWrap   = document.getElementById('modal-img-wrap');
+        const modalBodyEl    = document.getElementById('modal-body');
+        const modalTitle     = document.getElementById('modal-title');
+        const modalDescription = document.getElementById('modal-description');
+        const modalIngredients = document.getElementById('modal-ingredients');
+        const modalPrice     = document.getElementById('modal-price');
+        const modalSwipeHint = document.getElementById('modal-swipe-hint');
+        const historyModalEl = document.getElementById('history-modal');
+
+        // ── Estado de navegación entre productos en el modal ──────────
+        let modalAllItems   = [];   // lista plana de todos los items
+        let modalCurrentIdx = 0;    // índice del item visible
+        let swipeHintShown  = false; // flag para mostrar hint solo 1 vez
+
+        // Construir lista plana cuando el menú esté cargado
+        function buildModalItemList() {
+            modalAllItems = [];
+            menuState.categories.forEach(cat => {
+                if (cat.items) cat.items.forEach(item => modalAllItems.push(item));
+            });
+        }
+
+        // Cache de imágenes precargadas por id de producto
+        const imageCache = new Map();
 
         function slugify(text) {
             return text
@@ -989,8 +1843,9 @@
         }
 
         function createPlaceholderImage(name) {
-            const safeName = encodeURIComponent(name || 'Producto 1583');
-            return `https://via.placeholder.com/500x150?text=${safeName}`;
+            const safeName = (name || 'Producto 1583').replace(/[<>&"]/g, '');
+            const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="500" height="150" viewBox="0 0 500 150"><rect width="500" height="150" fill="#3A220F"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#D4A017">${safeName}</text></svg>`;
+            return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
         }
 
         async function loadMenuData() {
@@ -999,8 +1854,8 @@
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 segundos timeout
                 
-                const response = await fetch('data/menu-data.json', { 
-                    cache: 'no-store',
+                const response = await fetch('data/menu-data.json', {
+                    cache: 'no-cache',
                     signal: controller.signal
                 });
                 
@@ -1041,6 +1896,7 @@
                     menuError.textContent = '';
                 }
                 renderMenu();
+                buildModalItemList();
                 if (menuLoading) {
                     menuLoading.classList.add('hidden');
                 }
@@ -1111,11 +1967,23 @@
             });
         }
 
+        function preloadImage(item) {
+            if (!item.image || imageCache.has(item.id)) return;
+            const url = item.image.startsWith('images/')
+                ? item.image.replace(/ /g, '%20')
+                : item.image;
+            const img = new Image();
+            img.onload = () => imageCache.set(item.id, url);
+            img.onerror = () => imageCache.set(item.id, createPlaceholderImage(item.name));
+            img.src = url;
+        }
+
         function createMenuItemElement(item) {
             const li = document.createElement('li');
             li.className = 'menu-item flex flex-col';
             li.dataset.itemId = item.id;
             li.addEventListener('click', () => openModal(item.id));
+            li.addEventListener('mouseenter', () => preloadImage(item), { once: true });
 
             const topRow = document.createElement('div');
             topRow.className = 'flex justify-between';
@@ -1167,129 +2035,184 @@
             });
         }
 
+        // ── Rellenar datos del modal (sin animación de transición) ──
+        function fillModal(item) {
+            const displayName = getItemDisplayName(item);
+            const t = translations[currentLang];
+
+            modalTitle.textContent = displayName;
+            modalDescription.textContent = item.description || '';
+            modalDescription.style.display = item.description ? '' : 'none';
+
+            if (item.additions) {
+                modalIngredients.textContent = `${t['additions-label']}: ${item.additions}`;
+                modalIngredients.style.display = '';
+            } else {
+                modalIngredients.textContent = '';
+                modalIngredients.style.display = 'none';
+            }
+            modalPrice.textContent = `${t['price-label']}: ${item.priceLabel || formatCOP(item.price)}`;
+            modalImage.alt = displayName;
+        }
+
+        // ── Cargar imagen en el modal (con crossfade opcional) ────
+        function loadModalImage(item, withFade) {
+            const id = item.id;
+            modalImage.classList.remove('img-loaded');
+            modalImgWrap.style.animation = '';
+
+            const applyImage = (src) => {
+                modalImage.src = src;
+                modalImgWrap.style.animation = 'none';
+                modalImage.classList.add('img-loaded');
+                if (withFade) {
+                    // Restaurar opacidad del wrap después de que el fade haya ocurrido
+                    requestAnimationFrame(() => {
+                        modalImgWrap.classList.remove('img-fading');
+                    });
+                }
+            };
+
+            if (imageCache.has(id)) {
+                applyImage(imageCache.get(id));
+            } else {
+                modalImage.src = '';
+                const imageUrl = item.image
+                    ? item.image.replace(/ /g, '%20')
+                    : createPlaceholderImage(getItemDisplayName(item));
+                const loader = new Image();
+                loader.onload  = () => { imageCache.set(id, imageUrl); applyImage(imageUrl); };
+                loader.onerror = () => {
+                    const fb = createPlaceholderImage(getItemDisplayName(item));
+                    imageCache.set(id, fb);
+                    applyImage(fb);
+                };
+                loader.src = imageUrl;
+            }
+        }
+
         function openModal(id) {
             const item = menuState.itemsById[id];
             if (!item) return;
 
-            const modal = document.getElementById('product-modal');
-            const titleElement = document.getElementById('modal-title');
-            const descriptionElement = document.getElementById('modal-description');
-            const additionsElement = document.getElementById('modal-ingredients');
-            const priceElement = document.getElementById('modal-price');
-            const imageElement = document.getElementById('modal-image');
+            // Actualizar índice de navegación
+            const idx = modalAllItems.findIndex(i => i.id === id);
+            if (idx !== -1) modalCurrentIdx = idx;
 
-            const priceLabel = translations[currentLang]['price-label'];
-            const additionsLabel = translations[currentLang]['additions-label'];
+            fillModal(item);
+            loadModalImage(item, null);
 
-            titleElement.textContent = getItemDisplayName(item);
-            descriptionElement.textContent = item.description || '';
-            
-            if (item.description) {
-                descriptionElement.style.display = '';
+            // Mostrar hint de swipe si aún no se ha interactuado
+            if (!swipeHintShown && modalAllItems.length > 1) {
+                modalSwipeHint.classList.remove('hint-hide');
             } else {
-                descriptionElement.style.display = 'none';
+                modalSwipeHint.classList.add('hint-hide');
             }
 
-            if (item.additions) {
-                additionsElement.textContent = `${additionsLabel}: ${item.additions}`;
-                additionsElement.style.display = '';
-            } else {
-                additionsElement.textContent = '';
-                additionsElement.style.display = 'none';
+            productModal.classList.add('active');
+            document.addEventListener('keydown', modalKeyNav);
+        }
+
+        // ── Navegar al producto anterior/siguiente (crossfade) ───
+        let modalNavLocked = false;
+        function navigateModal(direction) {
+            if (modalAllItems.length < 2 || modalNavLocked) return;
+            modalNavLocked = true;
+
+            // Ocultar hint para siempre tras primer swipe/clic
+            if (!swipeHintShown) {
+                swipeHintShown = true;
+                modalSwipeHint.classList.add('hint-hide');
             }
 
-            priceElement.textContent = `${priceLabel}: ${item.priceLabel || formatCOP(item.price)}`;
-            
-            // Limpiar inmediatamente la imagen anterior para evitar que se vea
-            imageElement.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'; // 1x1 pixel transparente
-            imageElement.style.opacity = '0';
-            imageElement.style.transition = 'opacity 0.3s ease-in-out';
-            imageElement.alt = getItemDisplayName(item);
-            
-            // Precargar imagen antes de asignarla al elemento
-            const preloadImg = new Image();
-            const imageUrl = item.image 
-                ? (item.image.startsWith('images/') 
-                    ? item.image.replace(/ /g, '%20') 
-                    : item.image)
-                : createPlaceholderImage(getItemDisplayName(item));
-            
-            preloadImg.onload = function() {
-                // Una vez cargada completamente, asignarla al elemento visible
-                imageElement.src = imageUrl;
-                // Mostrar imagen con fade-in
-                setTimeout(() => {
-                    imageElement.style.opacity = '1';
-                }, 50);
-            };
-            
-            preloadImg.onerror = function() {
-                console.warn(`No se pudo cargar la imagen: ${item.image}`);
-                // Intentar con ruta alternativa si tiene espacios
-                if (item.image && item.image.includes(' ') && item.image !== imageUrl) {
-                    const altUrl = item.image.replace(/ /g, '%20');
-                    const retryImg = new Image();
-                    retryImg.onload = function() {
-                        imageElement.src = altUrl;
-                        setTimeout(() => {
-                            imageElement.style.opacity = '1';
-                        }, 50);
-                    };
-                    retryImg.onerror = function() {
-                        imageElement.src = createPlaceholderImage(getItemDisplayName(item));
-                        imageElement.style.opacity = '1';
-                    };
-                    retryImg.src = altUrl;
+            // Fase 1: fade out (imagen + texto)
+            modalImgWrap.classList.add('img-fading');
+            modalBodyEl.classList.add('body-fade');
+
+            setTimeout(() => {
+                // Avanzar índice
+                if (direction === 'next') {
+                    modalCurrentIdx = (modalCurrentIdx + 1) % modalAllItems.length;
                 } else {
-                    imageElement.src = createPlaceholderImage(getItemDisplayName(item));
-                    imageElement.style.opacity = '1';
+                    modalCurrentIdx = (modalCurrentIdx - 1 + modalAllItems.length) % modalAllItems.length;
                 }
-            };
-            
-            // Iniciar carga de la imagen
-            preloadImg.src = imageUrl;
-            
-            // Manejar error de carga en el elemento también (fallback adicional)
-            imageElement.onerror = function() {
-                if (this.src && !this.src.includes('placeholder')) {
-                    this.src = createPlaceholderImage(item.name);
-                    this.style.opacity = '1';
-                }
-            };
 
-            modal.classList.add('active');
-            document.addEventListener('keydown', closeModalOnEsc);
+                const nextItem = modalAllItems[modalCurrentIdx];
+
+                // Actualizar texto y cargar imagen (fade in al terminar)
+                fillModal(nextItem);
+                loadModalImage(nextItem, true);
+
+                // Restaurar texto
+                requestAnimationFrame(() => {
+                    modalBodyEl.classList.remove('body-fade');
+                });
+
+                // Prefetch del siguiente vecino
+                const peekIdx = direction === 'next'
+                    ? (modalCurrentIdx + 1) % modalAllItems.length
+                    : (modalCurrentIdx - 1 + modalAllItems.length) % modalAllItems.length;
+                preloadImage(modalAllItems[peekIdx]);
+
+                // Desbloquear después de que termine el fade in
+                setTimeout(() => { modalNavLocked = false; }, 280);
+            }, 220);
         }
 
         function closeModal() {
-            const modal = document.getElementById('product-modal');
-            modal.classList.remove('active');
-            document.removeEventListener('keydown', closeModalOnEsc);
+            productModal.classList.remove('active');
+            document.removeEventListener('keydown', modalKeyNav);
         }
 
-        function closeModalOnEsc(event) {
-            if (event.key === 'Escape') {
-                closeModal();
-            }
+        function modalKeyNav(event) {
+            if (event.key === 'Escape')     { closeModal(); return; }
+            if (event.key === 'ArrowRight') { navigateModal('next'); }
+            if (event.key === 'ArrowLeft')  { navigateModal('prev'); }
         }
 
-        document.getElementById('product-modal').addEventListener('click', function(event) {
-            if (event.target === this) {
-                closeModal();
-            }
+        productModal.addEventListener('click', function(event) {
+            if (event.target === this) closeModal();
         });
 
-        // History Modal Functions
+        // ── Swipe táctil en la imagen del modal ────────────────────
+        (function () {
+            let startX = 0, startY = 0, dragging = false;
+            const THRESHOLD = 45;
+
+            modalImgWrap.addEventListener('touchstart', function (e) {
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+                dragging = true;
+            }, { passive: true });
+
+            modalImgWrap.addEventListener('touchend', function (e) {
+                if (!dragging) return;
+                dragging = false;
+                const dx = e.changedTouches[0].clientX - startX;
+                const dy = e.changedTouches[0].clientY - startY;
+                if (Math.abs(dx) < THRESHOLD || Math.abs(dy) > Math.abs(dx)) return;
+                navigateModal(dx < 0 ? 'next' : 'prev');
+            }, { passive: true });
+
+            // ── Flechas desktop ────────────────────────────────────
+            document.getElementById('modal-nav-prev').addEventListener('click', function (e) {
+                e.stopPropagation();
+                navigateModal('prev');
+            });
+            document.getElementById('modal-nav-next').addEventListener('click', function (e) {
+                e.stopPropagation();
+                navigateModal('next');
+            });
+        })();
+
         function openHistoryModal() {
-            const modal = document.getElementById('history-modal');
-            modal.classList.add('active');
+            historyModalEl.classList.add('active');
             document.body.style.overflow = 'hidden';
             document.addEventListener('keydown', closeHistoryModalOnEsc);
         }
 
         function closeHistoryModal() {
-            const modal = document.getElementById('history-modal');
-            modal.classList.remove('active');
+            historyModalEl.classList.remove('active');
             document.body.style.overflow = '';
             document.removeEventListener('keydown', closeHistoryModalOnEsc);
         }
@@ -1300,10 +2223,8 @@
             }
         }
 
-        document.getElementById('history-modal').addEventListener('click', function(event) {
-            if (event.target === this) {
-                closeHistoryModal();
-            }
+        historyModalEl.addEventListener('click', function(event) {
+            if (event.target === this) closeHistoryModal();
         });
 
         const translations = {
@@ -1434,6 +2355,9 @@
 
         function getCategoryDisplayName(category) {
             if (currentLang === 'en') {
+                // 1. Traducción automática del JSON (generada por build-menu-data.js)
+                if (category.nameEn && category.nameEn.trim()) return category.nameEn;
+                // 2. Legado hardcodeado (fallback mientras no se regenere el JSON)
                 const t = categoryNameTranslations[category.name];
                 if (t && t.en) return t.en;
             }
@@ -1442,6 +2366,9 @@
 
         function getItemDisplayName(item) {
             if (currentLang === 'en') {
+                // 1. Traducción automática del JSON (generada por build-menu-data.js)
+                if (item.nameEn && item.nameEn.trim()) return item.nameEn;
+                // 2. Legado hardcodeado (fallback mientras no se regenere el JSON)
                 const t = itemNameTranslations[item.id];
                 if (t && t.en) return t.en;
             }
@@ -1460,7 +2387,7 @@
             document.documentElement.setAttribute('lang', currentLang);
 
             // Mantener sincronizado el selector de idioma
-            const languageSelect = document.querySelector('.language-selector select');
+            const languageSelect = document.getElementById('language-select');
             if (languageSelect && languageSelect.value !== currentLang) {
                 languageSelect.value = currentLang;
             }
@@ -1497,6 +2424,7 @@
             // Volver a renderizar el menú para refrescar etiquetas como "Adiciones"/"Add-ons"
             if (menuState.categories.length > 0) {
                 renderMenu();
+                buildModalItemList();
             }
         }
 
@@ -1557,23 +2485,240 @@
             }
         }
 
-        // Mostrar botón de historia después de 2 segundos
-        window.addEventListener('DOMContentLoaded', function() {
-            setTimeout(function() {
-                const historyButton = document.getElementById('history-button');
-                if (historyButton) {
-                    historyButton.classList.add('visible');
-                }
+        // El script está al final del body: el DOM siempre está listo aquí.
+        // Un único punto de entrada para toda la inicialización.
+        document.addEventListener('DOMContentLoaded', function() {
+            // Conectar event listeners (sin onclick inline)
+            document.getElementById('history-button').addEventListener('click', openHistoryModal);
+            document.getElementById('history-button-icon').addEventListener('click', openHistoryModal);
+            document.getElementById('modal-close-btn').addEventListener('click', closeModal);
+            document.getElementById('history-close-btn').addEventListener('click', closeHistoryModal);
+            document.getElementById('language-select').addEventListener('change', function() {
+                changeLanguage(this.value);
+            });
+
+            // Mostrar botón de historia tras 2 s (no bloquea nada)
+            setTimeout(() => {
+                document.getElementById('history-button').classList.add('visible');
             }, 2000);
+
+            // Arrancar la app
+            initPage();
+        });
+    </script>
+
+    <!-- ===== SPLASH COMBOS ===== -->
+    <script>
+    (function () {
+        'use strict';
+
+        // ── Elementos del DOM ──────────────────────────────────────────────
+        const splashEl   = document.getElementById('splash-container');
+        const track      = document.getElementById('splash-track');
+        const dotsEl     = document.getElementById('splash-dots');
+        const btnVer     = document.getElementById('splash-btn');
+        const menuWrapper = document.getElementById('menu-main-wrapper');
+
+        // ── Estado del carrusel ────────────────────────────────────────────
+        let slides       = [];
+        let current      = 0;
+        let autoTimer    = null;
+        let resumeTimer  = null;
+        const AUTO_MS    = 4000;
+        const RESUME_MS  = 6000;
+
+        // ── Construir slides dinámicamente desde menu-data.json ────────────
+        // Solo se muestran combos que tengan imagen (campo image no vacío).
+        // Así, cuando actualices el Excel y regeneres el JSON, el splash
+        // refleja los cambios automáticamente.
+        async function loadSplashCombos() {
+            let combos = [];
+            try {
+                const res = await fetch('data/menu-data.json', { cache: 'no-cache' });
+                if (!res.ok) throw new Error('fetch failed');
+                const data = await res.json();
+                const cat = data.categories.find(c => c.name === 'Combos');
+                if (cat && Array.isArray(cat.items)) {
+                    // Solo incluir items con imagen válida
+                    combos = cat.items.filter(item => item.image && item.image.trim());
+                }
+            } catch (_) { /* silencioso: si falla, carrusel queda vacío */ }
+
+            if (combos.length === 0) {
+                // Sin combos con imagen → ir directo al menú sin splash
+                activateMenu();
+                return;
+            }
+
+            buildCarousel(combos);
+            goTo(0, false);
+            startAuto();
+        }
+
+        // ── Construir HTML de cada slide ───────────────────────────────────
+        function buildCarousel(combos) {
+            // Vaciar el placeholder de carga
+            track.innerHTML = '';
+            dotsEl.innerHTML = '';
+
+            combos.forEach(function (item, idx) {
+                const imgUrl = item.image.replace(/ /g, '%20');
+
+                // Slide
+                const slide = document.createElement('div');
+                slide.className = 'splash-slide';
+                slide.setAttribute('role', 'group');
+                slide.setAttribute('aria-label', 'Combo ' + (idx + 1) + ' de ' + combos.length);
+
+                // Imagen o placeholder tipográfico
+                const imgWrap = document.createElement('div');
+                imgWrap.className = 'splash-img-wrap';
+                imgWrap.style.position = 'relative';
+
+                const tag = document.createElement('span');
+                tag.className = 'splash-tag';
+                tag.textContent = '✦ Combo Especial';
+
+                // TODO: imagen — si el combo no tiene imagen en el JSON esta rama no se alcanza
+                const img = document.createElement('img');
+                img.src   = imgUrl;
+                img.alt   = item.name;
+                img.width = 600;
+                img.height = 400;
+                img.loading = idx === 0 ? 'eager' : 'lazy';
+                img.decoding = 'async';
+                // Fallback si la imagen falla
+                img.onerror = function () {
+                    imgWrap.innerHTML = '';
+                    const noImg = document.createElement('p');
+                    noImg.className = 'splash-no-img';
+                    noImg.textContent = item.name;
+                    imgWrap.appendChild(noImg);
+                };
+
+                imgWrap.appendChild(img);
+                imgWrap.appendChild(tag);
+
+                // Textos
+                const text = document.createElement('div');
+                text.className = 'splash-text';
+
+                // TODO: texto — nombre y precio vienen del JSON; descripción también
+                const nameEl = document.createElement('h2');
+                nameEl.className = 'splash-name';
+                nameEl.textContent = item.name;
+
+                const priceEl = document.createElement('p');
+                priceEl.className = 'splash-price';
+                priceEl.textContent = item.priceLabel || '';
+
+                const descEl = document.createElement('p');
+                descEl.className = 'splash-desc';
+                // Usa description del JSON si existe; si no, frase genérica
+                descEl.textContent = (item.description && item.description !== '.')
+                    ? item.description
+                    : 'El maridaje perfecto para tu visita';
+
+                text.appendChild(nameEl);
+                text.appendChild(priceEl);
+                text.appendChild(descEl);
+
+                slide.appendChild(imgWrap);
+                slide.appendChild(text);
+                track.appendChild(slide);
+                slides.push(slide);
+
+                // Dot
+                const dot = document.createElement('button');
+                dot.className = 'splash-dot';
+                dot.setAttribute('aria-label', 'Ir al combo ' + (idx + 1));
+                dot.addEventListener('click', function () {
+                    userInteracted();
+                    goTo(idx, true);
+                });
+                dotsEl.appendChild(dot);
+            });
+
+            // Mostrar dots solo si hay más de un slide
+            dotsEl.style.display = slides.length > 1 ? 'flex' : 'none';
+        }
+
+        // ── Ir a un slide ──────────────────────────────────────────────────
+        function goTo(idx, animate) {
+            if (slides.length === 0) return;
+            slides[current].classList.remove('splash-active');
+            dotsEl.querySelectorAll('.splash-dot')[current]
+                ?.classList.remove('splash-dot-active');
+
+            current = (idx + slides.length) % slides.length;
+            slides[current].classList.add('splash-active');
+            dotsEl.querySelectorAll('.splash-dot')[current]
+                ?.classList.add('splash-dot-active');
+
+            // Pulse en el botón al llegar al último slide
+            if (current === slides.length - 1) {
+                btnVer.classList.remove('splash-btn-pulse');
+                // reflow para reiniciar la animación
+                void btnVer.offsetWidth;
+                btnVer.classList.add('splash-btn-pulse');
+            }
+        }
+
+        // ── Auto-avance ────────────────────────────────────────────────────
+        function startAuto() {
+            stopAuto();
+            if (slides.length <= 1) return;
+            autoTimer = setInterval(function () { goTo(current + 1, true); }, AUTO_MS);
+        }
+        function stopAuto() {
+            clearInterval(autoTimer);
+            autoTimer = null;
+        }
+        function userInteracted() {
+            stopAuto();
+            clearTimeout(resumeTimer);
+            resumeTimer = setTimeout(startAuto, RESUME_MS);
+        }
+
+        // ── Swipe táctil ───────────────────────────────────────────────────
+        let touchStartX = 0;
+        track.addEventListener('touchstart', function (e) {
+            touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+        track.addEventListener('touchend', function (e) {
+            const delta = e.changedTouches[0].clientX - touchStartX;
+            if (Math.abs(delta) < 50) return;
+            userInteracted();
+            goTo(delta < 0 ? current + 1 : current - 1, true);
+        }, { passive: true });
+
+        // ── Botón "Ver Menú" ───────────────────────────────────────────────
+        btnVer.addEventListener('click', function () {
+            stopAuto();
+            clearTimeout(resumeTimer);
+
+            // PASO 1-2: overlay → negro (300ms)
+            splashEl.classList.add('splash-exit');
+
+            // PASO 3-4: mostrar menú desde negro, hacer fade-in (600ms)
+            requestAnimationFrame(function () {
+                setTimeout(function () {
+                    splashEl.classList.add('splash-gone');
+                    activateMenu();
+                }, 300);
+            });
         });
 
-        // Iniciar inmediatamente si el DOM ya está listo, sino esperar
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initPage);
-        } else {
-            // Usar setTimeout para asegurar que todos los elementos del DOM estén disponibles
-            setTimeout(initPage, 0);
+        function activateMenu() {
+            menuWrapper.classList.add('menu-visible');
         }
+
+        // ── Arrancar ───────────────────────────────────────────────────────
+        loadSplashCombos();
+
+    })();
     </script>
+    <!-- ===== FIN SPLASH COMBOS ===== -->
+
 </body>
 </html>

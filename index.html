@@ -56,6 +56,10 @@
             scrollbar-width: none;
             -ms-overflow-style: none;
         }
+        /* Bloquea el scroll mientras el splash está visible */
+        body.splash-open {
+            overflow: hidden;
+        }
         body::-webkit-scrollbar {
             display: none;
         }
@@ -1313,8 +1317,7 @@
         .splash-track {
             width: 100%;
             position: relative;
-            /* altura fija para evitar CLS */
-            min-height: 380px;
+            height: 380px;
         }
 
         /* Slide individual */
@@ -1326,7 +1329,9 @@
             align-items: center;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.45s ease;
+            transition: opacity 0.5s ease;
+            /* garantiza que no colapsa cuando está oculto */
+            height: 100%;
         }
         .splash-slide.splash-active {
             opacity: 1;
@@ -1528,7 +1533,7 @@
                 width: 160px;
             }
             .splash-track {
-                min-height: 340px;
+                height: 340px;
             }
             .splash-img-wrap {
                 height: 260px;
@@ -1630,7 +1635,7 @@
             Developed by <a href="https://instagram.com/sergioangel.00" target="_blank" rel="noopener noreferrer">@sergioangel.00</a>
         </div>
         <div class="social-links">
-            <a href="https://instagram.com/cafe_1583" target="_blank" rel="noopener noreferrer" aria-label="Instagram de 1583 Café"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.instagram.com/cafe_1583/" target="_blank" rel="noopener noreferrer" aria-label="Instagram de 1583 Café"><i class="fab fa-instagram"></i></a>
             <a href="https://www.tiktok.com/@cafe1583_" target="_blank" rel="noopener noreferrer" aria-label="TikTok de 1583 Café"><i class="fab fa-tiktok"></i></a>
         </div>
         <div class="copyright">
@@ -2532,6 +2537,9 @@
         // Así, cuando actualices el Excel y regeneres el JSON, el splash
         // refleja los cambios automáticamente.
         async function loadSplashCombos() {
+            // Bloquear scroll del body mientras el splash esté visible
+            document.body.classList.add('splash-open');
+
             let combos = [];
             try {
                 const res = await fetch('data/menu-data.json', { cache: 'no-cache' });
@@ -2549,6 +2557,18 @@
                 activateMenu();
                 return;
             }
+
+            // Precargar la imagen del primer combo antes de mostrar el carrusel
+            // evita el flash de imagen rota en Vercel (latencia de red)
+            await new Promise(function (resolve) {
+                const firstUrl = combos[0].image.replace(/ /g, '%20');
+                const preloader = new Image();
+                preloader.onload  = resolve;
+                preloader.onerror = resolve; // aunque falle, continuar
+                preloader.src = firstUrl;
+                // Timeout de seguridad: si tarda más de 4s, mostrar igual
+                setTimeout(resolve, 4000);
+            });
 
             buildCarousel(combos);
             goTo(0, false);
@@ -2710,6 +2730,7 @@
         });
 
         function activateMenu() {
+            document.body.classList.remove('splash-open');
             menuWrapper.classList.add('menu-visible');
         }
 

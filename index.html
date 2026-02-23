@@ -1547,6 +1547,9 @@
             .splash-logo img {
                 width: 160px;
             }
+            .splash-heading-title {
+                font-size: 2.2rem;
+            }
             .splash-track {
                 height: 340px;
             }
@@ -1604,13 +1607,14 @@
         .splash-heading {
             width: 100%;
             text-align: center;
-            padding: 4px 20px 0;
+            padding: 0 20px;
             flex-shrink: 0;
+            margin-top: 24px; /* más separación del logo */
         }
         .splash-heading-eyebrow {
             display: block;
             font-family: var(--font-body);
-            font-size: 0.6rem;
+            font-size: 0.72rem;
             font-weight: 500;
             letter-spacing: 3px;
             text-transform: uppercase;
@@ -1619,7 +1623,7 @@
         }
         .splash-heading-title {
             font-family: var(--font-serif);
-            font-size: 1.5rem;
+            font-size: 1.9rem;
             font-weight: 400;
             color: var(--color-text);
             letter-spacing: 1px;
@@ -2630,6 +2634,7 @@
 
         // ── Estado del carrusel ────────────────────────────────────────────
         let slides       = [];
+        let splashNameEls = []; // [{el, es, en}] para traducción en vivo
         let current      = 0;
         let autoTimer    = null;
         let resumeTimer  = null;
@@ -2641,14 +2646,19 @@
         // Así, cuando actualices el Excel y regeneres el JSON, el splash
         // refleja los cambios automáticamente.
         async function loadSplashCombos() {
-            // Bloquear scroll del body mientras el splash esté visible
-            document.body.classList.add('splash-open');
-
             let combos = [];
             try {
                 const res = await fetch('data/menu-data.json', { cache: 'no-cache' });
                 if (!res.ok) throw new Error('fetch failed');
                 const data = await res.json();
+
+                // ── Salida temprana 1: build script determinó que no hay imágenes ──
+                if (!data.splashEnabled) {
+                    splashEl.classList.add('splash-gone');
+                    activateMenu();
+                    return;
+                }
+
                 const cat = data.categories.find(c => c.name === 'Combos');
                 if (cat && Array.isArray(cat.items)) {
                     // Solo incluir items con imagen válida
@@ -2656,11 +2666,15 @@
                 }
             } catch (_) { /* silencioso: si falla, carrusel queda vacío */ }
 
+            // ── Salida temprana 2: sin combos con imagen (fallback runtime) ──
             if (combos.length === 0) {
-                // Sin combos con imagen → ir directo al menú sin splash
+                splashEl.classList.add('splash-gone');
                 activateMenu();
                 return;
             }
+
+            // Confirmado que el splash se mostrará → bloquear scroll
+            document.body.classList.add('splash-open');
 
             // Precargar la imagen del primer combo antes de mostrar el carrusel
             // evita el flash de imagen rota en Vercel (latencia de red)
@@ -2679,11 +2693,24 @@
             startAuto();
         }
 
+        // ── Helpers de idioma en splash ────────────────────────────────────
+        function getSplashLang() {
+            try { return localStorage.getItem('menu-lang') || 'es'; } catch (_) { return 'es'; }
+        }
+        function updateSplashLanguage(lang) {
+            splashNameEls.forEach(function (entry) {
+                entry.el.textContent = (lang === 'en' && entry.en) ? entry.en : entry.es;
+            });
+        }
+
         // ── Construir HTML de cada slide ───────────────────────────────────
         function buildCarousel(combos) {
             // Vaciar el placeholder de carga
             track.innerHTML = '';
             dotsEl.innerHTML = '';
+            splashNameEls = [];
+
+            const lang = getSplashLang();
 
             combos.forEach(function (item, idx) {
                 const imgUrl = item.image.replace(/ /g, '%20');
@@ -2727,25 +2754,17 @@
                 const text = document.createElement('div');
                 text.className = 'splash-text';
 
-                // TODO: texto — nombre y precio vienen del JSON; descripción también
                 const nameEl = document.createElement('h2');
                 nameEl.className = 'splash-name';
-                nameEl.textContent = item.name;
+                nameEl.textContent = (lang === 'en' && item.nameEn) ? item.nameEn : item.name;
+                splashNameEls.push({ el: nameEl, es: item.name, en: item.nameEn || item.name });
 
                 const priceEl = document.createElement('p');
                 priceEl.className = 'splash-price';
                 priceEl.textContent = item.priceLabel || '';
 
-                const descEl = document.createElement('p');
-                descEl.className = 'splash-desc';
-                // Usa description del JSON si existe; si no, frase genérica
-                descEl.textContent = (item.description && item.description !== '.')
-                    ? item.description
-                    : 'El maridaje perfecto para tu visita';
-
                 text.appendChild(nameEl);
                 text.appendChild(priceEl);
-                text.appendChild(descEl);
 
                 slide.appendChild(imgWrap);
                 slide.appendChild(text);
@@ -2832,6 +2851,7 @@
                 mainSel.value = this.value;
                 mainSel.dispatchEvent(new Event('change'));
             }
+            updateSplashLanguage(this.value);
         });
 
         btnVer.addEventListener('click', function () {

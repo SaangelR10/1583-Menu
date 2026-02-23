@@ -259,9 +259,17 @@ async function buildData() {
 
     // ── 4. Escribir JSON ─────────────────────────────────────
     ensureDir(OUTPUT_DIR);
+
+    // Flag para el splash: true solo si algún combo tiene imagen válida
+    const combosCategory = categories.find(c => c.name === 'Combos');
+    const splashEnabled  = combosCategory
+        ? combosCategory.items.some(item => item.image && item.image.trim() !== '')
+        : false;
+
     const payload = {
         generatedAt: new Date().toISOString(),
         source:      path.relative(process.cwd(), EXCEL_PATH),
+        splashEnabled,
         categories,
     };
     fs.writeFileSync(OUTPUT_PATH, JSON.stringify(payload, null, 2), 'utf-8');

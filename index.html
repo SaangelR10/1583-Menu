@@ -559,6 +559,14 @@
             display: flex;
             align-items: center;
             animation: pulse 2s infinite;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease 0.3s;
+        }
+        /* Aparece cuando el menú está activo (hermano del wrapper) */
+        .menu-main-wrapper.menu-visible ~ .whatsapp-float {
+            opacity: 1;
+            pointer-events: auto;
         }
         .whatsapp-float a {
             display: flex;
@@ -1746,13 +1754,6 @@
         </div>
     </footer>
 
-    <!-- WhatsApp Floating Button -->
-    <div class="whatsapp-float">
-        <a href="https://wa.me/+573181454142?text=Hola%20quisiera%20preguntar%20sobre.." target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
-            <i class="fab fa-whatsapp"></i>
-        </a>
-    </div>
-
     <!-- Modal -->
     <div id="product-modal" class="modal">
         <div class="modal-content">
@@ -1884,6 +1885,13 @@
     </div>
 
     </div><!-- /menu-main-wrapper -->
+
+    <!-- WhatsApp Floating Button — fuera del wrapper para que position:fixed funcione con el transform -->
+    <div class="whatsapp-float">
+        <a href="https://wa.me/+573181454142?text=Hola%20quisiera%20preguntar%20sobre.." target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
 
     <script>
         const defaultLang = 'es';

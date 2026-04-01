@@ -126,7 +126,7 @@
         {
           "id": "snack-horneado-de-pollo",
           "name": "Horneado de pollo",
-          "nameEn": "Chicken baking",
+          "nameEn": "Chicken baked pastry",
           "description": ".",
           "additions": "",
           "price": 10900,
@@ -136,7 +136,7 @@
         {
           "id": "snack-horneado-americano",
           "name": "Horneado americano",
-          "nameEn": "American baking",
+          "nameEn": "American-style baked pastry",
           "description": ".",
           "additions": "",
           "price": 10900,
@@ -146,7 +146,7 @@
         {
           "id": "snack-horneado-de-carne",
           "name": "Horneado de carne",
-          "nameEn": "Meat baking",
+          "nameEn": "Beef baked pastry",
           "description": ".",
           "additions": "",
           "price": 10900,
@@ -156,7 +156,7 @@
         {
           "id": "snack-horneado-italiano",
           "name": "Horneado italiano",
-          "nameEn": "Italian baking",
+          "nameEn": "Italian-style baked pastry",
           "description": ".",
           "additions": "",
           "price": 10900,
@@ -166,7 +166,7 @@
         {
           "id": "snack-sandwich-gran-italiano-artellano",
           "name": "Sándwich gran italiano artellano",
-          "nameEn": "Grande Italiano Artellano sandwich",
+          "nameEn": "Grande italiano artellano sandwich",
           "description": ".",
           "additions": "",
           "price": 21900,
@@ -176,7 +176,7 @@
         {
           "id": "snack-sandwich-gran-italiano-ciabatta",
           "name": "Sándwich gran italiano ciabatta",
-          "nameEn": "Ciabatta large Italian sandwich",
+          "nameEn": "Grande italiano ciabatta sandwich",
           "description": ".",
           "additions": "",
           "price": 21900,
@@ -196,7 +196,7 @@
         {
           "id": "snack-horneado-ranchero",
           "name": "Horneado ranchero",
-          "nameEn": "Rancher baking",
+          "nameEn": "Ranchero baked pastry",
           "description": ".",
           "additions": "",
           "price": 10900,
@@ -206,7 +206,7 @@
         {
           "id": "snack-queso-7-cueros",
           "name": "Queso 7 cueros",
-          "nameEn": "7-leather cheese",
+          "nameEn": "7 cueros cheese",
           "description": ".",
           "additions": "",
           "price": 11000,
@@ -222,7 +222,7 @@
         {
           "id": "tortas-cheesecake-de-arandanos",
           "name": "Cheesecake de arándanos",
-          "nameEn": "Blueberry Cheesecake",
+          "nameEn": "Blueberry cheesecake",
           "description": ".",
           "additions": "",
           "price": 21000,
@@ -232,7 +232,7 @@
         {
           "id": "tortas-torta-de-almojabana",
           "name": "Torta de almojábana",
-          "nameEn": "Pillow cake",
+          "nameEn": "Almojábana cake",
           "description": ".",
           "additions": "",
           "price": 14000,
@@ -242,7 +242,7 @@
         {
           "id": "tortas-torta-de-almojabana-con-bocadillo",
           "name": "Torta de almojábana con bocadillo",
-          "nameEn": "Almokhabana cake with sandwich",
+          "nameEn": "Almojábana cake with guava paste",
           "description": ".",
           "additions": "",
           "price": 14000,
@@ -302,7 +302,7 @@
         {
           "id": "tortas-torta-de-pina-con-zanahoria",
           "name": "Torta de piña con zanahoría",
-          "nameEn": "Pineapple cake with carrot",
+          "nameEn": "Pineapple carrot cake",
           "description": ".",
           "additions": "",
           "price": 17500,
@@ -318,7 +318,7 @@
         {
           "id": "bebidas-calientes-cafe-filtrado-personal",
           "name": "Café filtrado personal",
-          "nameEn": "Personal filtered coffee",
+          "nameEn": "Filtered coffee (personal)",
           "description": ".",
           "additions": "",
           "price": 13300,
@@ -328,7 +328,7 @@
         {
           "id": "bebidas-calientes-carajillo-de-aguardiente",
           "name": "Carajillo de aguardiente",
-          "nameEn": "Carajillo de aguardiente",
+          "nameEn": "Carajillo with aguardiente",
           "description": ".",
           "additions": "",
           "price": 20000,
@@ -338,7 +338,7 @@
         {
           "id": "bebidas-calientes-cafe-1583-espresso-sencillo",
           "name": "Café 1583 espresso sencillo",
-          "nameEn": "1583 Espresso Simple Coffee",
+          "nameEn": "Single espresso",
           "description": ".",
           "additions": "",
           "price": 6500,
@@ -348,7 +348,7 @@
         {
           "id": "bebidas-calientes-cafe-1583-espresso-doble",
           "name": "Café 1583 espresso doble",
-          "nameEn": "Coffee 1583 double espresso",
+          "nameEn": "Double espresso",
           "description": ".",
           "additions": "",
           "price": 8900,
@@ -358,7 +358,7 @@
         {
           "id": "bebidas-calientes-cafe-1583-americano",
           "name": "Café 1583 americano",
-          "nameEn": "Café 1583 Americano",
+          "nameEn": "Americano",
           "description": ".",
           "additions": "",
           "price": 6500,
@@ -368,7 +368,7 @@
         {
           "id": "bebidas-calientes-cafe-1583-americano-12-onzas",
           "name": "Café 1583 americano 12 onzas",
-          "nameEn": "1583 American Coffee 12 oz",
+          "nameEn": "Americano 12 oz",
           "description": ".",
           "additions": "",
           "price": 9900,
@@ -378,7 +378,7 @@
         {
           "id": "bebidas-calientes-cafe-1583-campesino",
           "name": "Café 1583 campesino",
-          "nameEn": "Café 1583 campesino",
+          "nameEn": "Campesino coffee",
           "description": ".",
           "additions": "",
           "price": 9500,
@@ -388,7 +388,7 @@
         {
           "id": "bebidas-calientes-cafe-filtrado-para-compartir",
           "name": "Café filtrado para compartir",
-          "nameEn": "Filtered coffee to share",
+          "nameEn": "Filtered coffee (to share)",
           "description": ".",
           "additions": "",
           "price": 26900,
@@ -398,7 +398,7 @@
         {
           "id": "bebidas-calientes-capuchino-9-onzas-leche-deslactosada",
           "name": "Capuchino 9 Onzas leche deslactosada",
-          "nameEn": "9 Ounce Delactosed Milk Cappuccino",
+          "nameEn": "Cappuccino with lactose-free milk 9 oz",
           "description": ".",
           "additions": "",
           "price": 10500,
@@ -408,7 +408,7 @@
         {
           "id": "bebidas-calientes-capuchino-12-onzas-leche-deslactosada",
           "name": "Capuchino 12 Onzas leche deslactosada",
-          "nameEn": "Cappuccino 12 Ounces Delactosed Milk",
+          "nameEn": "Cappuccino with lactose-free milk 12 oz",
           "description": ".",
           "additions": "",
           "price": 11900,
@@ -418,7 +418,7 @@
         {
           "id": "bebidas-calientes-capuchino-9-onzas-leche-de-almendras",
           "name": "Capuchino 9 Onzas leche de almendras",
-          "nameEn": "9 Ounce Almond Milk Cappuccino",
+          "nameEn": "Cappuccino with almond milk 9 oz",
           "description": ".",
           "additions": "",
           "price": 11900,
@@ -428,7 +428,7 @@
         {
           "id": "bebidas-calientes-capuchino-12-onzas-leche-de-almendras",
           "name": "Capuchino 12 Onzas leche de almendras",
-          "nameEn": "Cappuccino 12 Ounces almond milk",
+          "nameEn": "Cappuccino with almond milk 12 oz",
           "description": ".",
           "additions": "",
           "price": 15900,
@@ -438,7 +438,7 @@
         {
           "id": "bebidas-calientes-capuchino-9-onzas-leche-entera",
           "name": "Capuchino 9 Onzas leche entera",
-          "nameEn": "Cappuccino 9 Ounce Whole Milk",
+          "nameEn": "Cappuccino with whole milk 9 oz",
           "description": ".",
           "additions": "",
           "price": 10500,
@@ -448,7 +448,7 @@
         {
           "id": "bebidas-calientes-capuchino-12-onzas-leche-entera",
           "name": "Capuchino 12 Onzas leche entera",
-          "nameEn": "Cappuccino 12 Ounces whole milk",
+          "nameEn": "Cappuccino with whole milk 12 oz",
           "description": ".",
           "additions": "",
           "price": 11900,
@@ -458,7 +458,7 @@
         {
           "id": "bebidas-calientes-cafe-1583-latte-mediano",
           "name": "Café 1583 latte mediano",
-          "nameEn": "Coffee 1583 medium milk",
+          "nameEn": "Latte 9 oz",
           "description": ".",
           "additions": "",
           "price": 9500,
@@ -468,7 +468,7 @@
         {
           "id": "bebidas-calientes-cafe-1583-latte-grande",
           "name": "Café 1583 latte grande",
-          "nameEn": "Café 1583 Latte Grande",
+          "nameEn": "Latte 12 oz",
           "description": ".",
           "additions": "",
           "price": 11500,
@@ -478,7 +478,7 @@
         {
           "id": "bebidas-calientes-mocachino-mediano",
           "name": "Mocachino mediano",
-          "nameEn": "Medium Mocchino",
+          "nameEn": "Mocha 9 oz",
           "description": ".",
           "additions": "",
           "price": 11900,
@@ -488,7 +488,7 @@
         {
           "id": "bebidas-calientes-mocachino-grande",
           "name": "Mocachino grande",
-          "nameEn": "Mocachino grande",
+          "nameEn": "Mocha 12 oz",
           "description": ".",
           "additions": "",
           "price": 13900,
@@ -498,7 +498,7 @@
         {
           "id": "bebidas-calientes-milo-caliente",
           "name": "Milo caliente",
-          "nameEn": "Hot milos",
+          "nameEn": "Hot Milo",
           "description": ".",
           "additions": "",
           "price": 8500,
@@ -508,7 +508,7 @@
         {
           "id": "bebidas-calientes-cafe-irlandes-1583",
           "name": "Café Irlandés 1583",
-          "nameEn": "Irish Coffee 1583",
+          "nameEn": "Irish coffee",
           "description": ".",
           "additions": "",
           "price": 23000,
@@ -518,7 +518,7 @@
         {
           "id": "bebidas-calientes-carajillo-de-brandy",
           "name": "Carajillo de brandy",
-          "nameEn": "Brandy Carajillo",
+          "nameEn": "Carajillo with brandy",
           "description": ".",
           "additions": "",
           "price": 23900,
@@ -528,7 +528,7 @@
         {
           "id": "bebidas-calientes-cafe-1583-macchiato",
           "name": "Café 1583 macchiato",
-          "nameEn": "Cafe 1583 Macchiato",
+          "nameEn": "Macchiato",
           "description": ".",
           "additions": "",
           "price": 8900,
@@ -538,7 +538,7 @@
         {
           "id": "bebidas-calientes-cafe-1583-macchiato-bombon",
           "name": "Café 1583 macchiato bombón",
-          "nameEn": "Café 1583 macchiato bonbon",
+          "nameEn": "Macchiato with condensed milk",
           "description": ".",
           "additions": "",
           "price": 10300,
@@ -548,7 +548,7 @@
         {
           "id": "bebidas-calientes-infusion-1583",
           "name": "Infusión 1583",
-          "nameEn": "Infusion 1583",
+          "nameEn": "Herbal infusion",
           "description": ".",
           "additions": "",
           "price": 7900,
@@ -558,7 +558,7 @@
         {
           "id": "bebidas-calientes-chocolate-9-onzas",
           "name": "Chocolate 9 onzas",
-          "nameEn": "Chocolate 9 oz",
+          "nameEn": "Hot chocolate 9 oz",
           "description": ".",
           "additions": "",
           "price": 8900,
@@ -568,7 +568,7 @@
         {
           "id": "bebidas-calientes-chocolate-artesanal-9-onzas",
           "name": "Chocolate artesanal 9 onzas",
-          "nameEn": "Artisanal Chocolate 9 oz",
+          "nameEn": "Artisanal hot chocolate 9 oz",
           "description": ".",
           "additions": "",
           "price": 11500,
@@ -578,7 +578,7 @@
         {
           "id": "bebidas-calientes-te-chai-caliente-12-onzas",
           "name": "Té chai caliente 12 onzas",
-          "nameEn": "Hot chai tea 12 ounces",
+          "nameEn": "Chai latte 12 oz",
           "description": ".",
           "additions": "",
           "price": 9900,
@@ -588,7 +588,7 @@
         {
           "id": "bebidas-calientes-te-chai-caliente-9-onzas",
           "name": "Té chai caliente 9 onzas",
-          "nameEn": "9-ounce hot chai tea",
+          "nameEn": "Chai latte 9 oz",
           "description": ".",
           "additions": "",
           "price": 7900,
@@ -634,7 +634,7 @@
         {
           "id": "bebidas-frias-cold-brew-latte",
           "name": "Cold brew latte",
-          "nameEn": "Cold brew milk",
+          "nameEn": "Cold brew latte",
           "description": ".",
           "additions": "",
           "price": 16600,
@@ -644,7 +644,7 @@
         {
           "id": "bebidas-frias-afogatto-de-vainilla-con-baileys",
           "name": "Afogatto de vainilla con baileys",
-          "nameEn": "Vanilla afogatto with baileys",
+          "nameEn": "Vanilla affogato with Baileys",
           "description": ".",
           "additions": "",
           "price": 25600,
@@ -654,7 +654,7 @@
         {
           "id": "bebidas-frias-malteada-vainilla-fresa-oreo",
           "name": "Malteada (vainilla, fresa, oreo)",
-          "nameEn": "Malted (vanilla, strawberry, oreous)",
+          "nameEn": "Milkshake (vanilla, strawberry, Oreo)",
           "description": ".",
           "additions": "",
           "price": 17800,
@@ -674,7 +674,7 @@
         {
           "id": "bebidas-frias-affogato-de-vainilla",
           "name": "Affogato de vainilla",
-          "nameEn": "Vanilla Affogato",
+          "nameEn": "Vanilla affogato",
           "description": ".",
           "additions": "",
           "price": 17700,
@@ -694,7 +694,7 @@
         {
           "id": "bebidas-frias-agua-con-gas-500-ml",
           "name": "Agua con gas 500 ml",
-          "nameEn": "Sparkling water 500ml",
+          "nameEn": "Sparkling water 500 ml",
           "description": ".",
           "additions": "",
           "price": 4500,
@@ -704,7 +704,7 @@
         {
           "id": "bebidas-frias-cafe-latte-frio-grande",
           "name": "Café latte frío grande",
-          "nameEn": "Large cold latte coffee",
+          "nameEn": "Iced latte 12 oz",
           "description": ".",
           "additions": "",
           "price": 11700,
@@ -714,7 +714,7 @@
         {
           "id": "bebidas-frias-cafe-latte-frio-mediano",
           "name": "Café latte frío mediano",
-          "nameEn": "Medium cold latte coffee",
+          "nameEn": "Iced latte 9 oz",
           "description": ".",
           "additions": "",
           "price": 9400,
@@ -724,7 +724,7 @@
         {
           "id": "bebidas-frias-coca-cola-original-400-ml",
           "name": "Coca cola original 400 ml",
-          "nameEn": "Original Coke 400ml",
+          "nameEn": "Original Coke 400 ml",
           "description": ".",
           "additions": "",
           "price": 4900,
@@ -734,7 +734,7 @@
         {
           "id": "bebidas-frias-coca-cola-zero-400-ml",
           "name": "Coca cola zero 400 ml",
-          "nameEn": "Coca Cola zero 400 ml",
+          "nameEn": "Coca-Cola Zero 400 ml",
           "description": ".",
           "additions": "",
           "price": 4900,
@@ -744,7 +744,7 @@
         {
           "id": "bebidas-frias-te-chai-frio-9-onzas",
           "name": "Té chai frío 9 onzas",
-          "nameEn": "9-ounce chai iced tea",
+          "nameEn": "Iced chai latte 9 oz",
           "description": ".",
           "additions": "",
           "price": 9900,
@@ -754,7 +754,7 @@
         {
           "id": "bebidas-frias-te-chai-frio-12-onzas",
           "name": "Té chai frío 12 onzas",
-          "nameEn": "12-ounce chai iced tea",
+          "nameEn": "Iced chai latte 12 oz",
           "description": ".",
           "additions": "",
           "price": 12800,
@@ -784,7 +784,7 @@
         {
           "id": "bebidas-frias-cafe-americano-frio",
           "name": "Café americano frío",
-          "nameEn": "Cold American Coffee",
+          "nameEn": "Iced Americano",
           "description": ".",
           "additions": "",
           "price": 11900,
@@ -794,7 +794,7 @@
         {
           "id": "bebidas-frias-soda-michelada",
           "name": "Soda michelada",
-          "nameEn": "Soda michelada",
+          "nameEn": "Michelada soda",
           "description": ".",
           "additions": "",
           "price": 7500,
@@ -804,7 +804,7 @@
         {
           "id": "bebidas-frias-te-hatsu",
           "name": "Té Hatsu",
-          "nameEn": "Hatsu Tea",
+          "nameEn": "Hatsu tea",
           "description": ".",
           "additions": "",
           "price": 12500,
@@ -854,7 +854,7 @@
         {
           "id": "bebidas-frias-jugo-natural-de-fresa-en-leche",
           "name": "Jugo natural de fresa en leche",
-          "nameEn": "Natural strawberry juice in milk",
+          "nameEn": "Strawberry juice with milk",
           "description": ".",
           "additions": "",
           "price": 13900,
@@ -864,7 +864,7 @@
         {
           "id": "bebidas-frias-milo-frio",
           "name": "Milo frío",
-          "nameEn": "Cold millet",
+          "nameEn": "Iced Milo",
           "description": ".",
           "additions": "",
           "price": 9500,
@@ -880,7 +880,7 @@
         {
           "id": "sodas-italianas-soda-italiana-de-frutos-rojos",
           "name": "Soda italiana de frutos rojos",
-          "nameEn": "Italian red fruit soda",
+          "nameEn": "Italian red berry soda",
           "description": ".",
           "additions": "",
           "price": 17800,
@@ -890,7 +890,7 @@
         {
           "id": "sodas-italianas-soda-italiana-de-frutos-amarillos",
           "name": "Soda italiana de frutos amarillos",
-          "nameEn": "Italian yellow fruit soda",
+          "nameEn": "Italian tropical fruit soda",
           "description": ".",
           "additions": "",
           "price": 17800,
@@ -900,7 +900,7 @@
         {
           "id": "sodas-italianas-soda-italiana-de-cereza",
           "name": "Soda italiana de cereza",
-          "nameEn": "Italian Cherry Soda",
+          "nameEn": "Italian cherry soda",
           "description": ".",
           "additions": "",
           "price": 17800,
@@ -916,7 +916,7 @@
         {
           "id": "vinos-tinto-de-verano-en-jarra",
           "name": "Tinto de verano en jarra",
-          "nameEn": "Summer Jug Dye",
+          "nameEn": "Tinto de verano (carafe)",
           "description": ".",
           "additions": "",
           "price": 84000,
@@ -926,7 +926,7 @@
         {
           "id": "vinos-tinto-de-verano-en-media-jarra",
           "name": "Tinto de verano en media jarra",
-          "nameEn": "Summer red in half a jar",
+          "nameEn": "Tinto de verano (half carafe)",
           "description": ".",
           "additions": "",
           "price": 53800,
@@ -936,7 +936,7 @@
         {
           "id": "vinos-sangria-en-jarra",
           "name": "Sangría en jarra",
-          "nameEn": "Jarred sangria",
+          "nameEn": "Sangria (carafe)",
           "description": ".",
           "additions": "",
           "price": 106500,
@@ -946,7 +946,7 @@
         {
           "id": "vinos-sangria-en-media-jarra",
           "name": "Sangría en media jarra",
-          "nameEn": "Sangria in half a jar",
+          "nameEn": "Sangria (half carafe)",
           "description": ".",
           "additions": "",
           "price": 72900,
@@ -956,7 +956,7 @@
         {
           "id": "vinos-vino-tinto-en-copa",
           "name": "Vino tinto en copa",
-          "nameEn": "Red wine by the glass",
+          "nameEn": "Red wine (glass)",
           "description": ".",
           "additions": "",
           "price": 29000,
@@ -966,7 +966,7 @@
         {
           "id": "vinos-vino-blanco-en-copa",
           "name": "Vino blanco en copa",
-          "nameEn": "White wine by the glass",
+          "nameEn": "White wine (glass)",
           "description": ".",
           "additions": "",
           "price": 29000,
@@ -982,7 +982,7 @@
         {
           "id": "tabla-de-quesos-tabla-de-quesos-pequena",
           "name": "Tabla de quesos pequeña",
-          "nameEn": "Small cheese board",
+          "nameEn": "Charcuterie board (small)",
           "description": ".",
           "additions": "",
           "price": 49000,
@@ -992,7 +992,7 @@
         {
           "id": "tabla-de-quesos-tabla-de-quesos-grande",
           "name": "Tabla de quesos grande",
-          "nameEn": "Large Cheese Board",
+          "nameEn": "Charcuterie board (large)",
           "description": ".",
           "additions": "",
           "price": 72000,
@@ -1008,7 +1008,7 @@
         {
           "id": "by-1583-mug",
           "name": "Mug",
-          "nameEn": "Mug",
+          "nameEn": "1583 mug",
           "description": ".",
           "additions": "",
           "price": 22000,
@@ -1028,7 +1028,7 @@
         {
           "id": "by-1583-bono-50-mil-1583",
           "name": "Bono 50 mil 1583",
-          "nameEn": "Bonus 50 thousand 1583",
+          "nameEn": "$50.000 COP gift card",
           "description": "",
           "additions": "",
           "price": 50000,
@@ -1044,7 +1044,7 @@
         {
           "id": "adiciones-adicion-de-amaretto-1-onza",
           "name": "Adición de amaretto 1 onza",
-          "nameEn": "Addition of amaretto 1 ounce",
+          "nameEn": "Amaretto 1 oz",
           "description": ".",
           "additions": "",
           "price": 16000,
@@ -1054,7 +1054,7 @@
         {
           "id": "adiciones-adicion-de-baileys-1-onza",
           "name": "Adición de baileys 1 onza",
-          "nameEn": "Addition of Baileys 1 oz",
+          "nameEn": "Baileys 1 oz",
           "description": ".",
           "additions": "",
           "price": 8500,
@@ -1064,7 +1064,7 @@
         {
           "id": "adiciones-adicion-de-brandy-1-onza",
           "name": "Adición de brandy 1 onza",
-          "nameEn": "Addition of brandy 1 ounce",
+          "nameEn": "Brandy 1 oz",
           "description": ".",
           "additions": "",
           "price": 6900,
@@ -1074,7 +1074,7 @@
         {
           "id": "adiciones-adicion-de-licor-de-cafe",
           "name": "Adición de licor de café",
-          "nameEn": "Addition of coffee liquor",
+          "nameEn": "Coffee liqueur 1 oz",
           "description": ".",
           "additions": "",
           "price": 6900,
@@ -1084,7 +1084,7 @@
         {
           "id": "adiciones-adicion-de-vainilla",
           "name": "Adición de vainilla",
-          "nameEn": "Addition of vanilla",
+          "nameEn": "Vanilla syrup",
           "description": ".",
           "additions": "",
           "price": 2900,
@@ -1094,7 +1094,7 @@
         {
           "id": "adiciones-adicion-de-whisky-1-onza",
           "name": "Adición de whisky 1 onza",
-          "nameEn": "Addition of whiskey 1 ounce",
+          "nameEn": "Whiskey 1 oz",
           "description": ".",
           "additions": "",
           "price": 8900,
@@ -1104,7 +1104,7 @@
         {
           "id": "adiciones-shot-de-whisky",
           "name": "Shot de whisky",
-          "nameEn": "Whiskey Shot",
+          "nameEn": "Whiskey shot",
           "description": ".",
           "additions": "",
           "price": 15000,
@@ -1114,7 +1114,7 @@
         {
           "id": "adiciones-adicion-de-caramelo",
           "name": "Adición de caramelo",
-          "nameEn": "Addition of caramel",
+          "nameEn": "Caramel syrup",
           "description": ".",
           "additions": "",
           "price": 4000,
@@ -1124,7 +1124,7 @@
         {
           "id": "adiciones-adicion-salsa-wafflebono",
           "name": "Adición salsa wafflebono",
-          "nameEn": "Addition of wafflebono sauce",
+          "nameEn": "Wafflebono sauce",
           "description": ".",
           "additions": "",
           "price": 1800,
@@ -1134,7 +1134,7 @@
         {
           "id": "adiciones-adicion-m-m",
           "name": "Adición M&M",
-          "nameEn": "M&M Addition",
+          "nameEn": "M&M topping",
           "description": ".",
           "additions": "",
           "price": 1800,
@@ -1144,7 +1144,7 @@
         {
           "id": "adiciones-adicion-salsa-de-ajo",
           "name": "Adición salsa de ajo",
-          "nameEn": "Added garlic sauce",
+          "nameEn": "Garlic sauce",
           "description": ".",
           "additions": "",
           "price": 1800,
@@ -1154,7 +1154,7 @@
         {
           "id": "adiciones-adicion-jugo-de-limon",
           "name": "Adición jugo de limón",
-          "nameEn": "Added lemon juice",
+          "nameEn": "Lemon juice 1 oz",
           "description": ".",
           "additions": "",
           "price": 1900,
@@ -1170,7 +1170,7 @@
         {
           "id": "combos-combo-1583-capuchino-con-wafflebonos-x-4",
           "name": "Combo 1583 capuchino con wafflebonos x 4",
-          "nameEn": "Combo 1583 cappuccino with wafflebonos x 4",
+          "nameEn": "1583 cappuccino combo with wafflebonos x 4",
           "description": ".",
           "additions": "",
           "price": 19900,
@@ -1190,7 +1190,7 @@
         {
           "id": "combos-combo-tabla-de-quesos-grande-y-dos-vinos",
           "name": "Combo tabla de quesos grande y dos vinos",
-          "nameEn": "Large cheese board and two wines combo",
+          "nameEn": "Large charcuterie board and two glasses of wine combo",
           "description": ".",
           "additions": "",
           "price": 107000,
@@ -1200,7 +1200,7 @@
         {
           "id": "combos-combo-tabla-de-quesos-pequena-y-dos-vinos",
           "name": "Combo tabla de quesos pequeña y dos vinos",
-          "nameEn": "Small cheese board and two wines combo",
+          "nameEn": "Small charcuterie board and two glasses of wine combo",
           "description": ".",
           "additions": "",
           "price": 85000,
@@ -1220,7 +1220,7 @@
         {
           "id": "combos-combo-hojaldre-de-arequipe-con-latte",
           "name": "Combo hojaldre de arequipe con latte",
-          "nameEn": "Arequipe puff pastry combo with milk",
+          "nameEn": "Arequipe puff pastry combo with latte",
           "description": ".",
           "additions": "",
           "price": 11900,
@@ -1230,7 +1230,7 @@
         {
           "id": "combos-combo-galleta-de-chocolate-con-helado",
           "name": "Combo galleta de chocolate con helado",
-          "nameEn": "Ice Cream Chocolate Biscuit Combo",
+          "nameEn": "Chocolate cookie and ice cream combo",
           "description": ".",
           "additions": "",
           "price": 18900,
@@ -1250,7 +1250,7 @@
         {
           "id": "combos-combo-capuchino-con-leche-de-almendras-y-wafflebonos-x-4",
           "name": "Combo capuchino con leche de almendras y wafflebonos x 4",
-          "nameEn": "Cappuccino combo with almond milk and wafflebones x 4",
+          "nameEn": "Cappuccino combo with almond milk and wafflebonos x 4",
           "description": ".",
           "additions": "",
           "price": 21900,
@@ -1266,7 +1266,7 @@
         {
           "id": "galleteria-torta-galleta-de-chocolate",
           "name": "Torta galleta de chocolate",
-          "nameEn": "Chocolate Cookie Cake",
+          "nameEn": "Chocolate cookie cake",
           "description": ".",
           "additions": "",
           "price": 17500,
@@ -1276,7 +1276,7 @@
         {
           "id": "galleteria-alfajor-unidad",
           "name": "Alfajor Unidad",
-          "nameEn": "Alfajor Unidad",
+          "nameEn": "Alfajor (single)",
           "description": ".",
           "additions": "",
           "price": 2000,

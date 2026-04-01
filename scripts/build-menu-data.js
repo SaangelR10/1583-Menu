@@ -151,7 +151,7 @@ async function buildData() {
         const description = (row['Descripcion'] || row['Descripción'] || row['Description'] || '').toString().trim();
         const additions   = (row['Adiciones']   || row['Extras']      || '').toString().trim();
         const imageUrl         = (row['Imagen'] || row['Imagenes'] || row['Imagen URL'] || row['Imagenes URL'] || '').toString().trim();
-        const nameEnManual     = (row['Nombre Inglés'] || row['Nombre Ingles'] || row['Name English'] || '').toString().trim();
+        const nameEnManual     = (row['Nombre Inglés'] || row['Nombre Ingles'] || row['Name English'] || row['EN'] || '').toString().trim();
         const categoryEnManual = (row['Categoría Inglés'] || row['Categoria Inglés'] || row['Category English'] || '').toString().trim();
         const priceNumber = parsePrice(row['Precio']);
 

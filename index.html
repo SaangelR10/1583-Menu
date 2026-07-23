@@ -11,7 +11,8 @@
     <link rel="icon" type="image/png" href="images/1583logo/logo.png">
     <link rel="shortcut icon" type="image/png" href="images/1583logo/logo.png">
     <link rel="apple-touch-icon" href="images/1583logo/logo.png">
-    <link rel="preload" as="image" href="images/1583.png" fetchpriority="high">
+    <link rel="preload" as="image" href="images/1583-bg.webp" type="image/webp" fetchpriority="high">
+    <link rel="preload" as="image" href="images/1583logo/logo.png" fetchpriority="high">
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -33,6 +34,8 @@
             --color-gold-bright: #FFD700;
             --color-white:       #FFFFFF;
             --color-overlay:     rgba(74, 44, 20, 0.85);
+            /* LQIP: miniatura borrosa del fondo (24px, ~0.2KB) — pinta instantáneo, sin request */
+            --bg-lqip: url('data:image/webp;base64,UklGRsAAAABXRUJQVlA4WAoAAAAQAAAAFwAACgAAQUxQSFIAAAAFuQpE9D8cjhpJcqRdbuZ4Hy5vW8cgU/mJmIAJOD+56yblR6/UxQZYMcwomVsQzv6YcRGOEriyxVjCq+wngdBugH5YBQhSQW/y0VAM4mNIAgICVlA4IEgAAADQAwCdASoYAAsAPu1iqk4ppaQiMAgBMB2JYgCdMoACanu40DQvdLgA/tzMt8GdWV/dPdDr95rxgwEZ8a96Ueiqh/PwCkGAAAA=');
             --font-display:      'Playfair Display', serif;
             --font-body:         'Montserrat', sans-serif;
             --transition-fast:   0.2s ease;
@@ -69,6 +72,7 @@
         body::-webkit-scrollbar {
             display: none;
         }
+        /* Capa 1: LQIP borroso — pinta en el primer frame, sin red */
         body::before {
             content: '';
             position: fixed;
@@ -77,16 +81,48 @@
             right: 0;
             bottom: 0;
             background-color: var(--color-bg);
-            background-image: linear-gradient(var(--color-overlay), var(--color-overlay)), url('images/1583.png');
+            background-image: linear-gradient(var(--color-overlay), var(--color-overlay)), var(--bg-lqip);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: scroll;
+            filter: blur(16px);
+            transform: scale(1.08); /* oculta el borde difuminado del blur */
+            z-index: -2;
+            pointer-events: none;
+            transition: opacity 0.6s ease;
+        }
+        /* Capa 2: fondo real, optimizado — se revela con fade cuando termina de cargar */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--color-bg);
+            background-image: linear-gradient(var(--color-overlay), var(--color-overlay)), url('images/1583-bg.jpg');
+            background-image:
+                linear-gradient(var(--color-overlay), var(--color-overlay)),
+                image-set(url('images/1583-bg.webp') type('image/webp'), url('images/1583-bg.jpg') type('image/jpeg'));
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: scroll;
             z-index: -1;
             pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+        body.bg-loaded::before {
+            opacity: 0;
+        }
+        body.bg-loaded::after {
+            opacity: 1;
         }
         @media (min-width: 768px) {
-            body::before {
+            body::before,
+            body::after {
                 background-attachment: fixed;
             }
         }
@@ -236,10 +272,11 @@
             color: rgba(255,255,255,0.85);
             font-size: 1.6rem;
             cursor: pointer;
+            touch-action: manipulation;
             align-items: center;
             justify-content: center;
             z-index: 5;
-            transition: color 0.18s ease, background 0.18s ease;
+            transition: color 0.18s ease, background 0.18s ease, transform 0.15s ease;
             padding: 0;
         }
         .modal-nav-btn.nav-prev {
@@ -265,6 +302,7 @@
         }
         .modal-nav-btn:active {
             color: var(--color-gold-bright);
+            transform: scale(0.92);
         }
         /* Mostrar flechas solo en desktop con hover */
         @media (hover: hover) and (min-width: 769px) {
@@ -289,6 +327,7 @@
             font-size: 0.7rem;
             font-family: var(--font-body);
             cursor: pointer;
+            touch-action: manipulation;
             transition: all var(--transition-med);
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -330,7 +369,7 @@
             }
         }
         .history-button:active {
-            transform: translateY(0);
+            transform: scale(0.95);
             background-color: rgba(212, 160, 23, 0.2);
         }
         .language-selector select {
@@ -378,6 +417,7 @@
             font-size: 1rem;
             font-weight: 500;
             padding: 10px 15px;
+            touch-action: manipulation;
             transition: color var(--transition-med), transform var(--transition-fast);
             position: relative;
         }
@@ -447,13 +487,30 @@
             }
         }
         .menu-item {
+            position: relative;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             /* min-height garantiza área táctil de 44px en móvil */
             min-height: var(--touch-target);
-            padding: 12px 8px;
+            padding: 12px 8px 12px 16px;
             cursor: pointer;
+            touch-action: manipulation;
             transition: background-color var(--transition-med);
             /* Evita salto de layout en hover: solo bg, no transform */
+        }
+        /* Acento dorado a la izquierda — retroalimentación sutil sin mover el layout */
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 12%;
+            bottom: 12%;
+            width: 3px;
+            border-radius: 2px;
+            background: var(--color-gold);
+            opacity: 0;
+            transform: scaleY(0.4);
+            transform-origin: center;
+            transition: opacity 0.22s ease, transform 0.22s ease;
         }
         @media (hover: hover) {
             /* Transform solo en dispositivos con mouse real */
@@ -461,9 +518,17 @@
                 background-color: rgba(255, 255, 255, 0.05);
                 transform: scale(1.02);
             }
+            .menu-item:hover::before {
+                opacity: 1;
+                transform: scaleY(1);
+            }
         }
         .menu-item:active {
             background-color: rgba(255, 255, 255, 0.07);
+        }
+        .menu-item:active::before {
+            opacity: 1;
+            transform: scaleY(1);
         }
         .menu-item-description {
             font-size: 0.875rem; /* 14px — no menor para legibilidad */
@@ -579,6 +644,7 @@
             border-radius: 50%;
             text-decoration: none;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            touch-action: manipulation;
             transition: transform var(--transition-med), background-color var(--transition-med);
         }
         .whatsapp-float a:active {
@@ -602,6 +668,505 @@
                 box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
             }
         }
+        /* ===== PEDIDO / CARRITO ===== */
+        /* Insignia flotante — se revela cuando hay al menos 1 producto agregado */
+        .order-badge {
+            position: fixed;
+            bottom: 84px;
+            right: 20px;
+            z-index: 999;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--color-gold);
+            color: #1c0f05;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            cursor: pointer;
+            touch-action: manipulation;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+            opacity: 0;
+            transform: scale(0.6);
+            pointer-events: none;
+            transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.15s ease;
+        }
+        .order-badge.visible {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+        .order-badge:active {
+            transform: scale(0.92);
+        }
+        .order-badge-count {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            min-width: 20px;
+            height: 20px;
+            padding: 0 4px;
+            border-radius: 10px;
+            background: #1c0f05;
+            color: var(--color-gold);
+            border: 2px solid var(--color-bg);
+            font-size: 0.68rem;
+            font-weight: 700;
+            font-family: var(--font-body);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        @media (max-width: 768px) {
+            .order-badge {
+                bottom: max(78px, calc(env(safe-area-inset-bottom) + 78px));
+                right: 16px;
+                width: var(--touch-target);
+                height: var(--touch-target);
+            }
+        }
+        /* Panel del pedido — .order-modal ya hereda overlay/backdrop de .modal */
+        .order-modal {
+            z-index: 2100;
+        }
+        .order-sheet {
+            background-color: #1c0f05;
+            border: 1px solid rgba(212, 160, 23, 0.35);
+            border-radius: 18px;
+            max-width: 420px;
+            width: 92%;
+            max-height: 85vh;
+            overflow-y: auto;
+            overscroll-behavior-y: contain;
+            padding: 30px 24px 24px;
+            position: relative;
+            transform: scale(0.9) translateY(20px);
+            opacity: 0;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.22s ease;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(212, 160, 23, 0.15);
+        }
+        .order-modal.active .order-sheet {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+        .order-sheet-title {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            color: var(--color-white);
+            text-align: center;
+            margin: 4px 0 18px;
+        }
+        .order-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        .order-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .order-item-info {
+            flex: 1;
+            min-width: 0;
+        }
+        .order-item-name {
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 0.92rem;
+            color: var(--color-white);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .order-item-price {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 2px;
+        }
+        .order-item-qty {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+        .order-item-qty button {
+            width: 26px;
+            height: 26px;
+            border-radius: 7px;
+            border: 1px solid rgba(212, 160, 23, 0.3);
+            background: transparent;
+            color: var(--color-gold);
+            font-size: 0.95rem;
+            cursor: pointer;
+            touch-action: manipulation;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .order-item-qty button:active {
+            background: rgba(212, 160, 23, 0.2);
+        }
+        .order-item-qty span {
+            min-width: 18px;
+            text-align: center;
+            font-size: 0.88rem;
+            color: var(--color-white);
+        }
+        .order-item-remove {
+            flex-shrink: 0;
+            width: 26px;
+            height: 26px;
+            border: none;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 1.05rem;
+            cursor: pointer;
+            touch-action: manipulation;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.15s ease;
+        }
+        .order-item-remove:active {
+            color: #e0554f;
+        }
+        .order-empty {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 0.9rem;
+            padding: 20px 0 8px;
+            display: none;
+        }
+        .order-modal.order-is-empty .order-empty {
+            display: block;
+        }
+        .order-modal.order-is-empty .order-list,
+        .order-modal.order-is-empty .order-total-row,
+        .order-modal.order-is-empty .order-whatsapp-btn {
+            display: none;
+        }
+        .order-total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-family: var(--font-display);
+            color: var(--color-gold);
+            font-size: 1.2rem;
+            font-weight: 700;
+            padding-top: 12px;
+            border-top: 1px solid rgba(212, 160, 23, 0.25);
+            margin-bottom: 16px;
+        }
+        .order-whatsapp-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+            border-radius: 12px;
+            padding: 13px;
+            background: #25D366;
+            color: #0b1a10;
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 0.92rem;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            touch-action: manipulation;
+            transition: transform 0.15s ease, background-color 0.15s ease;
+        }
+        .order-whatsapp-btn:active {
+            transform: scale(0.97);
+            background: #20b358;
+        }
+        @media (hover: hover) {
+            .order-whatsapp-btn:hover {
+                background: #20b358;
+            }
+        }
+        @media (max-width: 768px) {
+            .order-sheet {
+                width: 100%;
+                max-width: 100%;
+                max-height: 85vh;
+                max-height: 85dvh;
+                border-radius: 22px 22px 0 0;
+                border-left: none;
+                border-right: none;
+                border-bottom: none;
+                padding: 4px 20px max(20px, env(safe-area-inset-bottom));
+                transform: translateY(100%);
+                opacity: 1;
+                transition: transform 0.38s cubic-bezier(0.32, 0.72, 0, 1);
+            }
+            .order-modal.active .order-sheet {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* ===== CHECKOUT ===== */
+        .checkout-modal {
+            z-index: 2200;
+        }
+        .checkout-sheet {
+            background-color: #1c0f05;
+            border: 1px solid rgba(212, 160, 23, 0.35);
+            border-radius: 18px;
+            max-width: 440px;
+            width: 92%;
+            max-height: 88vh;
+            overflow-y: auto;
+            overscroll-behavior-y: contain;
+            padding: 30px 24px 24px;
+            position: relative;
+            transform: scale(0.9) translateY(20px);
+            opacity: 0;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.22s ease;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(212, 160, 23, 0.15);
+        }
+        .checkout-modal.active .checkout-sheet {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+        .checkout-title {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            color: var(--color-white);
+            text-align: center;
+            margin: 4px 0 20px;
+        }
+        /* Selector de modalidad — segmented control */
+        .checkout-mode-toggle {
+            display: flex;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(212, 160, 23, 0.25);
+            border-radius: 14px;
+            padding: 5px;
+            margin-bottom: 14px;
+        }
+        .checkout-mode-btn {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            padding: 10px 6px;
+            border: none;
+            border-radius: 10px;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.6);
+            font-family: var(--font-body);
+            font-size: 0.78rem;
+            font-weight: 500;
+            line-height: 1.2;
+            cursor: pointer;
+            touch-action: manipulation;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .checkout-mode-btn i {
+            font-size: 1.05rem;
+        }
+        .checkout-mode-btn.active {
+            background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-dark) 100%);
+            color: #1c0f05;
+        }
+        /* Textos informativos por modalidad */
+        .checkout-info {
+            font-size: 0.82rem;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.65);
+            font-style: italic;
+            margin: 0 0 16px;
+            padding-left: 10px;
+            border-left: 2px solid rgba(212, 160, 23, 0.4);
+        }
+        .checkout-info-warn {
+            color: rgba(255, 214, 165, 0.9);
+            border-left-color: #e0a34f;
+            font-style: normal;
+        }
+        /* Campos del formulario */
+        .checkout-field {
+            margin-bottom: 14px;
+        }
+        .checkout-field label {
+            display: block;
+            font-family: var(--font-body);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: var(--color-gold);
+            margin-bottom: 6px;
+        }
+        .checkout-field input,
+        .checkout-field select,
+        .checkout-field textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(212, 160, 23, 0.3);
+            border-radius: 10px;
+            padding: 11px 12px;
+            color: var(--color-white);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            transition: border-color 0.15s ease, background-color 0.15s ease;
+        }
+        .checkout-field textarea {
+            resize: vertical;
+            min-height: 44px;
+        }
+        .checkout-field input:focus,
+        .checkout-field select:focus,
+        .checkout-field textarea:focus {
+            outline: none;
+            border-color: var(--color-gold);
+            background: rgba(255, 255, 255, 0.09);
+        }
+        .checkout-field input.invalid,
+        .checkout-field select.invalid {
+            border-color: #e0554f;
+        }
+        .checkout-field-doc {
+            display: flex;
+            gap: 10px;
+        }
+        .checkout-doc-type {
+            flex: 0 0 92px;
+        }
+        .checkout-doc-number {
+            flex: 1;
+            min-width: 0;
+        }
+        /* Toggle de factura electrónica */
+        .checkout-invoice-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(212, 160, 23, 0.25);
+            border-radius: 12px;
+            margin-bottom: 18px;
+            cursor: pointer;
+            touch-action: manipulation;
+        }
+        .checkout-invoice-toggle span:first-child {
+            font-size: 0.88rem;
+            color: rgba(255, 255, 255, 0.85);
+        }
+        .checkout-switch {
+            position: relative;
+            flex-shrink: 0;
+            width: 42px;
+            height: 24px;
+        }
+        .checkout-switch input {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            cursor: pointer;
+            z-index: 1;
+        }
+        .checkout-switch-track {
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.18);
+            border-radius: 12px;
+            transition: background-color 0.2s ease;
+        }
+        .checkout-switch-track::before {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--color-white);
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .checkout-switch input:checked ~ .checkout-switch-track {
+            background: var(--color-gold);
+        }
+        .checkout-switch input:checked ~ .checkout-switch-track::before {
+            transform: translateX(18px);
+        }
+        /* Error de validación */
+        .checkout-error {
+            font-size: 0.85rem;
+            color: #ff8a80;
+            background: rgba(224, 85, 79, 0.12);
+            border: 1px solid rgba(224, 85, 79, 0.35);
+            border-radius: 10px;
+            padding: 10px 12px;
+            margin: 0 0 14px;
+        }
+        .checkout-submit-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+            border-radius: 12px;
+            padding: 14px;
+            background: #25D366;
+            color: #0b1a10;
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 0.92rem;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            touch-action: manipulation;
+            transition: transform 0.15s ease, background-color 0.15s ease;
+        }
+        .checkout-submit-btn:active {
+            transform: scale(0.97);
+            background: #20b358;
+        }
+        @media (hover: hover) {
+            .checkout-submit-btn:hover {
+                background: #20b358;
+            }
+        }
+        @media (max-width: 768px) {
+            .checkout-sheet {
+                width: 100%;
+                max-width: 100%;
+                max-height: 90vh;
+                max-height: 90dvh;
+                border-radius: 22px 22px 0 0;
+                border-left: none;
+                border-right: none;
+                border-bottom: none;
+                padding: 4px 20px max(20px, env(safe-area-inset-bottom));
+                transform: translateY(100%);
+                opacity: 1;
+                transition: transform 0.38s cubic-bezier(0.32, 0.72, 0, 1);
+            }
+            .checkout-modal.active .checkout-sheet {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        /* ===== FIN CHECKOUT ===== */
+
+        /* ===== FIN PEDIDO / CARRITO ===== */
+
         /* Modal Styles */
         .modal {
             display: none;
@@ -610,7 +1175,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
             z-index: 2000;
             justify-content: center;
             align-items: center;
@@ -624,12 +1191,13 @@
         .modal-content {
             background-color: #1c0f05;
             border: 1px solid rgba(212, 160, 23, 0.35);
-            border-radius: 16px;
-            max-width: 480px;
+            border-radius: 18px;
+            max-width: 460px;
             width: 92%;
             max-height: 90vh;
             overflow-y: auto;
             overflow-x: hidden;
+            overscroll-behavior-y: contain;
             padding: 0;
             position: relative;
             transform: scale(0.88) translateY(20px);
@@ -641,12 +1209,11 @@
             transform: scale(1) translateY(0);
             opacity: 1;
         }
-        /* Skeleton shimmer en la imagen */
+        /* Imagen a proporción fija — recorte consistente en vez de min/max-height por breakpoint */
         .modal-img-wrap {
             width: 100%;
-            min-height: 280px;
-            max-height: 380px;
-            border-radius: 16px 16px 0 0;
+            aspect-ratio: 4 / 3;
+            border-radius: 18px 18px 0 0;
             background: linear-gradient(90deg, #2a1608 25%, #3d2210 50%, #2a1608 75%);
             background-size: 200% 100%;
             animation: skeleton-shimmer 1.4s infinite;
@@ -660,14 +1227,21 @@
             0%   { background-position: 200% 0; }
             100% { background-position: -200% 0; }
         }
+        /* Degradado al pie de la foto — funde la imagen hacia la tarjeta en vez de un borde duro */
+        .modal-img-wrap::after {
+            content: '';
+            position: absolute;
+            inset: auto 0 0 0;
+            height: 46%;
+            background: linear-gradient(to bottom, transparent, rgba(28, 15, 5, 0.92));
+            pointer-events: none;
+            z-index: 2;
+        }
         .modal-content img {
             width: 100%;
-            height: auto;
-            min-height: 280px;
-            max-height: 380px;
+            height: 100%;
             object-fit: cover;
             object-position: center;
-            border-radius: 16px 16px 0 0;
             display: block;
             opacity: 0;
             transition: opacity 0.4s ease;
@@ -677,25 +1251,28 @@
         }
         /* Cuerpo del modal debajo de la imagen */
         .modal-body {
-            padding: 20px 24px 28px;
+            padding: 6px 26px 28px;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
         }
-        /* Línea decorativa dorada */
+        /* Ornamento dorado — reemplaza la línea plana por un detalle punto-línea-punto */
         .modal-divider {
-            width: 48px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
-            border: none;
-            margin: 0 auto 16px;
+            width: 64px;
+            height: 9px;
+            margin: -4px auto 14px;
             flex-shrink: 0;
+            border: none;
+            background:
+                radial-gradient(circle, var(--color-gold) 1.5px, transparent 1.6px) left center / 5px 5px no-repeat,
+                radial-gradient(circle, var(--color-gold) 1.5px, transparent 1.6px) right center / 5px 5px no-repeat,
+                linear-gradient(90deg, transparent 8px, rgba(212,160,23,0.55) 8px, rgba(212,160,23,0.55) calc(100% - 8px), transparent calc(100% - 8px)) center / 100% 1px no-repeat;
         }
         .modal-content h3 {
             font-family: var(--font-display);
-            font-size: 1.6rem;
-            margin: 0 0 8px;
+            font-size: 1.62rem;
+            margin: 0 0 10px;
             color: var(--color-white);
             line-height: 1.2;
             font-weight: 700;
@@ -710,25 +1287,107 @@
         .modal-content .ingredients {
             font-size: 0.88rem;
             color: rgba(212, 160, 23, 0.8);
-            margin: 0 0 14px;
+            margin: 0 0 16px;
             line-height: 1.5;
             font-style: italic;
         }
         .modal-content .price {
             font-family: var(--font-display);
-            font-size: 1.8rem;
+            font-size: 1.7rem;
             font-weight: 700;
             color: var(--color-gold);
-            margin: 6px 0 0;
+            margin: 4px 0 0;
             letter-spacing: 0.02em;
+            padding: 4px 18px;
+            border-top: 1px solid rgba(212, 160, 23, 0.25);
+        }
+        /* Cantidad + añadir al pedido */
+        .modal-actions {
+            display: flex;
+            align-items: stretch;
+            gap: 10px;
+            width: 100%;
+            margin-top: 18px;
+        }
+        .modal-qty {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(212, 160, 23, 0.3);
+            border-radius: 12px;
+            padding: 4px;
+            flex-shrink: 0;
+        }
+        .modal-qty-btn {
+            width: 34px;
+            height: 34px;
+            border: none;
+            border-radius: 9px;
+            background: transparent;
+            color: var(--color-gold);
+            font-size: 1.15rem;
+            line-height: 1;
+            cursor: pointer;
+            touch-action: manipulation;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.15s ease, transform 0.15s ease;
+        }
+        .modal-qty-btn:active {
+            background: rgba(212, 160, 23, 0.25);
+            transform: scale(0.9);
+        }
+        @media (hover: hover) {
+            .modal-qty-btn:hover {
+                background: rgba(212, 160, 23, 0.18);
+            }
+        }
+        .modal-qty-value {
+            min-width: 28px;
+            text-align: center;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--color-white);
+        }
+        .modal-add-btn {
+            flex: 1;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-dark) 100%);
+            color: #1c0f05;
+            font-family: var(--font-body);
+            font-weight: 700;
+            font-size: 0.92rem;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            cursor: pointer;
+            touch-action: manipulation;
+            box-shadow: 0 6px 18px rgba(212, 160, 23, 0.28);
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.3s ease;
+        }
+        .modal-add-btn:active {
+            transform: scale(0.97);
+            box-shadow: 0 3px 10px rgba(212, 160, 23, 0.22);
+        }
+        @media (hover: hover) {
+            .modal-add-btn:hover {
+                background: linear-gradient(135deg, var(--color-gold-bright) 0%, var(--color-gold) 100%);
+            }
+        }
+        /* Confirmación breve al agregar — feedback táctil sin bloquear la UI */
+        .modal-add-btn.added {
+            background: linear-gradient(135deg, #4CAF50 0%, #3d8b40 100%);
         }
         /* Botón de cierre — círculo en esquina superior derecha */
         .modal-close {
             position: absolute;
             top: 12px;
             right: 12px;
-            width: 32px;
-            height: 32px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             background: rgba(0, 0, 0, 0.55);
             backdrop-filter: blur(6px);
@@ -740,18 +1399,24 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all var(--transition-fast);
+            transition: background-color var(--transition-fast), border-color var(--transition-fast), transform 0.15s ease;
+            touch-action: manipulation;
             z-index: 10;
         }
         .modal-close:active {
             background: rgba(212, 160, 23, 0.4);
             border-color: var(--color-gold);
+            transform: scale(0.9);
         }
         @media (hover: hover) {
             .modal-close:hover {
                 background: rgba(212, 160, 23, 0.3);
                 border-color: var(--color-gold);
             }
+        }
+        /* Manija de arrastre — solo existe visualmente en el bottom-sheet móvil (ver media query) */
+        .modal-drag-handle {
+            display: none;
         }
         /* History Modal Styles */
         .history-modal {
@@ -1040,7 +1705,7 @@
                 font-size: 1.5rem;
             }
 
-            /* Modal de producto: bottom-sheet en móvil */
+            /* Modal de producto: bottom-sheet en móvil, altura fija 50/50 (imagen/info) — todo visible sin scroll */
             .modal {
                 align-items: flex-end;
                 padding: 0;
@@ -1048,8 +1713,15 @@
             .modal-content {
                 width: 100%;
                 max-width: 100%;
-                max-height: 92vh;
-                border-radius: 20px 20px 0 0;
+                /* dvh = viewport dinámico: evita que la barra de direcciones del navegador
+                   móvil tape parte del sheet (bug clásico de 100vh en iOS/Android) */
+                height: 82vh;
+                height: 82dvh;
+                max-height: 82vh;
+                max-height: 82dvh;
+                display: flex;
+                flex-direction: column;
+                border-radius: 22px 22px 0 0;
                 border-left: none;
                 border-right: none;
                 border-bottom: none;
@@ -1057,38 +1729,55 @@
                 transform: translateY(100%);
                 opacity: 1; /* en móvil usamos slide, no fade */
                 transition: transform 0.38s cubic-bezier(0.32, 0.72, 0, 1);
-                overflow-y: auto;
+                overflow: hidden; /* el scroll interno queda en .modal-body como red de seguridad */
             }
             .modal.active .modal-content {
                 transform: translateY(0);
                 opacity: 1;
             }
-            /* Pill indicador de sheet */
-            .modal-content::before {
+            /* Manija de arrastre real (no ::before) — target táctil para deslizar y cerrar */
+            .modal-drag-handle {
+                flex: 0 0 auto;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 26px;
+                cursor: grab;
+                touch-action: none;
+                position: relative;
+                z-index: 6;
+            }
+            .modal-drag-handle::before {
                 content: '';
-                display: block;
                 width: 40px;
                 height: 4px;
-                background: rgba(255, 255, 255, 0.25);
+                background: rgba(255, 255, 255, 0.3);
                 border-radius: 2px;
-                position: absolute;
-                top: 10px;
-                left: 50%;
-                transform: translateX(-50%);
-                z-index: 5;
+                transition: background-color 0.15s ease, width 0.15s ease;
             }
+            .modal-drag-handle:active::before {
+                background: var(--color-gold);
+                width: 52px;
+            }
+            /* Imagen: exactamente la mitad del alto del sheet — la proporción cede ante el reparto 50/50 */
             .modal-img-wrap {
-                min-height: 200px;
-                max-height: 280px;
-                border-radius: 20px 20px 0 0;
+                flex: 1 1 50%;
+                min-height: 0;
+                aspect-ratio: auto;
+                border-radius: 0;
             }
             .modal-content img {
-                min-height: 200px;
-                max-height: 280px;
-                border-radius: 20px 20px 0 0;
+                border-radius: 0;
             }
+            /* Info: la otra mitad — se centra si el contenido es corto, hace scroll interno solo si no cabe */
             .modal-body {
-                padding: 16px 20px max(28px, env(safe-area-inset-bottom));
+                flex: 1 1 50%;
+                min-height: 0;
+                justify-content: center;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior-y: contain;
+                padding: 4px 20px max(18px, env(safe-area-inset-bottom));
             }
             .modal-content h3 {
                 font-size: 1.35rem;
@@ -1098,7 +1787,7 @@
                 font-size: 1rem;
             }
             .modal-content .price {
-                font-size: 1.6rem;
+                font-size: 1.5rem;
             }
             /* Botón de cierre: área táctil mínima */
             .modal-close {
@@ -1147,17 +1836,10 @@
                 font-size: 0.875rem; /* nunca < 14px */
             }
 
-            /* Modal en pantallas pequeñas */
-            .modal-img-wrap {
-                min-height: 170px;
-                max-height: 230px;
-            }
-            .modal-content img {
-                min-height: 170px;
-                max-height: 230px;
-            }
+            /* Modal en pantallas pequeñas — el reparto 50/50 (definido en ≤768px) ya cubre el alto;
+               aquí solo ajustamos el padding horizontal para pantallas angostas */
             .modal-body {
-                padding: 14px 16px max(24px, env(safe-area-inset-bottom));
+                padding: 4px 16px max(16px, env(safe-area-inset-bottom));
             }
             .modal-content h3 {
                 font-size: 1.25rem;
@@ -1237,6 +1919,78 @@
             }
         }
 
+        /* ===== PAGE LOADER ===== */
+        /* Puente visual entre el primer paint y el menú/splash. Se retira solo. */
+        #page-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            background-color: var(--color-bg);
+            transition: opacity 0.4s ease;
+        }
+        #page-loader.loader-hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .loader-mark {
+            position: relative;
+            width: 92px;
+            height: 92px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .loader-ring {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+        .loader-ring-track {
+            fill: none;
+            stroke: rgba(212, 160, 23, 0.16);
+            stroke-width: 2.5;
+        }
+        .loader-ring-progress {
+            fill: none;
+            stroke: var(--color-gold);
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-dasharray: 327;
+            stroke-dashoffset: 327;
+            animation: loader-draw 1.7s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+        }
+        @keyframes loader-draw {
+            0%   { stroke-dashoffset: 327; }
+            50%  { stroke-dashoffset: 0; }
+            100% { stroke-dashoffset: -327; }
+        }
+        .loader-logo {
+            width: 52px;
+            height: 52px;
+            object-fit: contain;
+            animation: loader-breathe 1.9s ease-in-out infinite;
+        }
+        @keyframes loader-breathe {
+            0%, 100% { transform: scale(1);     opacity: 0.9; }
+            50%      { transform: scale(1.06);  opacity: 1;   }
+        }
+        .loader-label {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.5);
+            padding-left: 0.4em; /* compensa el letter-spacing para centrar visualmente */
+        }
+        /* ===== FIN PAGE LOADER ===== */
+
         /* ===== SPLASH COMBOS ===== */
 
         /* El menú principal arranca invisible; el splash lo activa */
@@ -1275,16 +2029,24 @@
             align-items: center;
             justify-content: space-between;
             padding: env(safe-area-inset-top, 0) 0 env(safe-area-inset-bottom, 0);
-            /* Reutiliza la misma imagen de fondo del menú */
+            /* Reutiliza la misma imagen de fondo del menú (LQIP hasta que cargue la versión completa) */
             background-color: var(--color-bg);
             background-image:
                 linear-gradient(rgba(15, 8, 0, 0.72), rgba(15, 8, 0, 0.72)),
-                url('images/1583.png');
+                var(--bg-lqip);
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             overflow: hidden;
             overscroll-behavior: none; /* iOS: evita rubber-band que muestra el menú de fondo */
+        }
+        body.bg-loaded .splash-container {
+            background-image:
+                linear-gradient(rgba(15, 8, 0, 0.72), rgba(15, 8, 0, 0.72)),
+                url('images/1583-bg.jpg');
+            background-image:
+                linear-gradient(rgba(15, 8, 0, 0.72), rgba(15, 8, 0, 0.72)),
+                image-set(url('images/1583-bg.webp') type('image/webp'), url('images/1583-bg.jpg') type('image/jpeg'));
         }
         /* Overlay para fade a negro al salir */
         .splash-container::after {
@@ -1643,6 +2405,59 @@
     </style>
 </head>
 <body class="text-white">
+    <script>
+        // Revela el fondo en alta resolución con fade cuando termine de cargar.
+        // Reutiliza el fetch ya iniciado por <link rel="preload"> (misma URL, sin descarga duplicada).
+        (function () {
+            var bgImg = new Image();
+            bgImg.onload = bgImg.onerror = function () { document.body.classList.add('bg-loaded'); };
+            bgImg.src = 'images/1583-bg.webp';
+        })();
+    </script>
+
+    <!-- ===== PAGE LOADER ===== -->
+    <div id="page-loader" role="status" aria-live="polite" aria-label="Cargando menú">
+        <div class="loader-mark">
+            <svg class="loader-ring" viewBox="0 0 120 120" aria-hidden="true">
+                <circle class="loader-ring-track" cx="60" cy="60" r="52"></circle>
+                <circle class="loader-ring-progress" cx="60" cy="60" r="52"></circle>
+            </svg>
+            <img src="images/1583logo/logo.png" alt="" class="loader-logo">
+        </div>
+    </div>
+    <script>
+        // Puente visual: se retira cuando los datos del menú y las tipografías
+        // están listos (o tras un timeout de seguridad), con un mínimo de
+        // exhibición para evitar parpadeo en conexiones muy rápidas.
+        (function () {
+            var loader = document.getElementById('page-loader');
+            if (!loader) return;
+
+            var MIN_DISPLAY_MS = 450;
+            var start = Date.now();
+
+            var dataReady = fetch('data/menu-data.json', { cache: 'force-cache' }).catch(function () {});
+            var fontsReady = (document.fonts && document.fonts.ready)
+                ? Promise.race([document.fonts.ready, new Promise(function (r) { setTimeout(r, 1500); })])
+                : Promise.resolve();
+
+            Promise.all([dataReady, fontsReady]).then(function () {
+                var wait = Math.max(0, MIN_DISPLAY_MS - (Date.now() - start));
+                setTimeout(function () {
+                    loader.classList.add('loader-hidden');
+                    var removed = false;
+                    var remove = function () {
+                        if (removed) return;
+                        removed = true;
+                        loader.remove();
+                    };
+                    loader.addEventListener('transitionend', remove);
+                    setTimeout(remove, 600); // red de seguridad si transitionend no dispara
+                }, wait);
+            });
+        })();
+    </script>
+    <!-- ===== FIN PAGE LOADER ===== -->
 
     <!-- ===== SPLASH COMBOS ===== -->
     <div class="splash-container" id="splash-container" role="region" aria-label="Combos destacados">
@@ -1729,7 +2544,7 @@
     <footer>
         <div class="footer-bottom">
         <div class="developer-signature">
-            Developed by <a href="https://instagram.com/sergioangel.00" target="_blank" rel="noopener noreferrer">@sergioangel.00</a>
+            desarrollado por <a href="https://instagram.com/onetap.latam" target="_blank" rel="noopener noreferrer">@OneTap.Latam</a>
         </div>
         <div class="social-links">
                 <a href="https://www.instagram.com/cafe_1583/" target="_blank" rel="noopener noreferrer" aria-label="Instagram de 1583 Café"><i class="fab fa-instagram"></i></a>
@@ -1754,10 +2569,20 @@
         </div>
     </footer>
 
+    </div><!-- /menu-main-wrapper -->
+
+    <!-- Modal y History Modal: DELIBERADAMENTE fuera de #menu-main-wrapper.
+         #menu-main-wrapper usa "transform" para su animación de entrada, y un
+         transform en un ancestro crea un containing block nuevo para los hijos
+         position:fixed — esto rompía el modal (aparecía anclado al fondo de TODA
+         la página en vez del viewport, "cortado" y fuera de vista sin scrollear
+         la página). Mismo motivo por el que .whatsapp-float ya vivía aquí afuera. -->
     <!-- Modal -->
     <div id="product-modal" class="modal">
         <div class="modal-content">
             <button class="modal-close" id="modal-close-btn" aria-label="Cerrar">×</button>
+            <!-- Manija de arrastre (móvil): desliza hacia abajo para cerrar -->
+            <div class="modal-drag-handle" id="modal-drag-handle" aria-hidden="true"></div>
             <div class="modal-img-wrap" id="modal-img-wrap">
                 <img id="modal-image" src="" alt="Producto" decoding="async">
                 <div class="modal-swipe-hint" id="modal-swipe-hint">Desliza</div>
@@ -1771,6 +2596,16 @@
             <p id="modal-description"></p>
             <p class="ingredients" id="modal-ingredients"></p>
             <p class="price" id="modal-price"></p>
+            <div class="modal-actions" id="modal-actions">
+                <div class="modal-qty" role="group" aria-label="Cantidad">
+                    <button type="button" class="modal-qty-btn" id="modal-qty-minus" aria-label="Restar cantidad">&#8722;</button>
+                    <span class="modal-qty-value" id="modal-qty-value">1</span>
+                    <button type="button" class="modal-qty-btn" id="modal-qty-plus" aria-label="Sumar cantidad">+</button>
+                </div>
+                <button type="button" class="modal-add-btn" id="modal-add-btn">
+                    <span data-i18n="add-to-order">Añadir al pedido</span>
+                </button>
+            </div>
             </div>
         </div>
     </div>
@@ -1884,13 +2719,121 @@
         </div>
     </div>
 
-    </div><!-- /menu-main-wrapper -->
-
     <!-- WhatsApp Floating Button — fuera del wrapper para que position:fixed funcione con el transform -->
     <div class="whatsapp-float">
         <a href="https://wa.me/+573181454142?text=Hola%20quisiera%20preguntar%20sobre.." target="_blank" rel="noopener noreferrer" aria-label="Contactar por WhatsApp">
             <i class="fab fa-whatsapp"></i>
         </a>
+    </div>
+
+    <!-- Insignia flotante de pedido — oculta hasta que haya al menos 1 producto agregado -->
+    <button type="button" class="order-badge" id="order-badge-btn" aria-label="Ver pedido">
+        <i class="fas fa-receipt" aria-hidden="true"></i>
+        <span class="order-badge-count" id="order-badge-count">0</span>
+    </button>
+
+    <!-- Panel de resumen de pedido -->
+    <div class="modal order-modal" id="order-modal">
+        <div class="order-sheet">
+            <button class="modal-close" id="order-close-btn" aria-label="Cerrar">×</button>
+            <div class="modal-drag-handle" id="order-drag-handle" aria-hidden="true"></div>
+            <h2 class="order-sheet-title" data-i18n="order-title">Tu pedido</h2>
+            <div class="order-list" id="order-list"></div>
+            <p class="order-empty" id="order-empty" data-i18n="order-empty">Aún no has agregado productos.</p>
+            <div class="order-total-row" id="order-total-row">
+                <span data-i18n="order-total-label">Total</span>
+                <span id="order-total-value">$ 0</span>
+            </div>
+            <button type="button" class="order-whatsapp-btn" id="order-whatsapp-btn">
+                <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                <span data-i18n="order-send-whatsapp">Enviar pedido por WhatsApp</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Checkout: modalidad de entrega + datos del cliente, antes de enviar a WhatsApp -->
+    <div class="modal checkout-modal" id="checkout-modal">
+        <div class="checkout-sheet">
+            <button class="modal-close" id="checkout-close-btn" aria-label="Cerrar">×</button>
+            <div class="modal-drag-handle" id="checkout-drag-handle" aria-hidden="true"></div>
+            <h2 class="checkout-title" data-i18n="checkout-title">Finalizar pedido</h2>
+
+            <form id="checkout-form" novalidate>
+                <!-- Modalidad de entrega -->
+                <div class="checkout-mode-toggle" role="radiogroup" aria-label="Modalidad de entrega">
+                    <button type="button" class="checkout-mode-btn active" id="mode-pickup-btn" data-mode="pickup" aria-pressed="true">
+                        <i class="fas fa-store" aria-hidden="true"></i>
+                        <span data-i18n="checkout-mode-pickup">Recoger en el local</span>
+                    </button>
+                    <button type="button" class="checkout-mode-btn" id="mode-office-btn" data-mode="office" aria-pressed="false">
+                        <i class="fas fa-building" aria-hidden="true"></i>
+                        <span data-i18n="checkout-mode-office">Enviar a la oficina</span>
+                    </button>
+                </div>
+
+                <p class="checkout-info" id="checkout-info-pickup" data-i18n="checkout-info-pickup">
+                    Tu pedido se prepara para retiro directo en barra.
+                </p>
+                <p class="checkout-info checkout-info-warn" id="checkout-info-office" data-i18n="checkout-info-office" hidden>
+                    Servicio de domicilio exclusivo para oficinas ubicadas dentro del Centro Comercial Holguines Trade Center.
+                </p>
+
+                <div class="checkout-field">
+                    <label for="checkout-name" data-i18n="checkout-label-name">Nombre completo</label>
+                    <input type="text" id="checkout-name" name="name" required autocomplete="name">
+                </div>
+
+                <div class="checkout-field">
+                    <label for="checkout-phone" data-i18n="checkout-label-phone">Teléfono de contacto</label>
+                    <input type="tel" id="checkout-phone" name="phone" required autocomplete="tel" inputmode="tel">
+                </div>
+
+                <div class="checkout-field checkout-field-doc">
+                    <div class="checkout-doc-type">
+                        <label for="checkout-doc-type" data-i18n="checkout-label-doc-type">Documento</label>
+                        <select id="checkout-doc-type" name="docType" required>
+                            <option value="CC">CC</option>
+                            <option value="TI">TI</option>
+                            <option value="NIT">NIT</option>
+                        </select>
+                    </div>
+                    <div class="checkout-doc-number">
+                        <label for="checkout-doc-number" data-i18n="checkout-label-doc-number">Número de documento</label>
+                        <input type="text" id="checkout-doc-number" name="docNumber" required inputmode="numeric" autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="checkout-field">
+                    <label for="checkout-email" data-i18n="checkout-label-email">Correo electrónico</label>
+                    <input type="email" id="checkout-email" name="email" required autocomplete="email">
+                </div>
+
+                <div class="checkout-field" id="checkout-office-field" hidden>
+                    <label for="checkout-office" data-i18n="checkout-label-office">Número / Torre de oficina</label>
+                    <input type="text" id="checkout-office" name="office" autocomplete="off">
+                </div>
+
+                <div class="checkout-field">
+                    <label for="checkout-notes" data-i18n="checkout-label-notes">Notas del pedido (opcional)</label>
+                    <textarea id="checkout-notes" name="notes" rows="2"></textarea>
+                </div>
+
+                <label class="checkout-invoice-toggle" for="checkout-invoice">
+                    <span data-i18n="checkout-label-invoice">¿Requiere factura electrónica?</span>
+                    <span class="checkout-switch">
+                        <input type="checkbox" id="checkout-invoice" name="invoice">
+                        <span class="checkout-switch-track" aria-hidden="true"></span>
+                    </span>
+                </label>
+
+                <p class="checkout-error" id="checkout-error" role="alert" hidden></p>
+
+                <button type="submit" class="checkout-submit-btn" id="checkout-submit-btn">
+                    <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                    <span data-i18n="checkout-submit">Confirmar y enviar por WhatsApp</span>
+                </button>
+            </form>
+        </div>
     </div>
 
     <script>
@@ -2168,6 +3111,9 @@
             }
             modalPrice.textContent = `${t['price-label']}: ${item.priceLabel || formatCOP(item.price)}`;
             modalImage.alt = displayName;
+
+            // Notificar al módulo de pedidos (cantidad, botón añadir) que cambió el producto visible
+            if (typeof onModalItemChanged === 'function') onModalItemChanged(item);
         }
 
         // ── Cargar imagen en el modal (con crossfade opcional) ────
@@ -2352,7 +3298,29 @@
                 'load-error': 'No pudimos cargar el menú. Intenta nuevamente.',
                 'history-button': '¿Sabes por qué somos 1583?',
                 'splash-combo-eyebrow': 'Descubre',
-                'splash-combo-title': 'Nuestros Combos'
+                'splash-combo-title': 'Nuestros Combos',
+                'add-to-order': 'Añadir al pedido',
+                'added-to-order': 'Añadido ✓',
+                'order-title': 'Tu pedido',
+                'order-empty': 'Aún no has agregado productos.',
+                'order-total-label': 'Total',
+                'order-send-whatsapp': 'Enviar pedido por WhatsApp',
+                'checkout-title': 'Finalizar pedido',
+                'checkout-mode-pickup': 'Recoger en el local',
+                'checkout-mode-office': 'Enviar a la oficina',
+                'checkout-info-pickup': 'Tu pedido se prepara para retiro directo en barra.',
+                'checkout-info-office': 'Servicio de domicilio exclusivo para oficinas ubicadas dentro del Centro Comercial Holguines Trade Center.',
+                'checkout-label-name': 'Nombre completo',
+                'checkout-label-phone': 'Teléfono de contacto',
+                'checkout-label-doc-type': 'Documento',
+                'checkout-label-doc-number': 'Número de documento',
+                'checkout-label-email': 'Correo electrónico',
+                'checkout-label-office': 'Número / Torre de oficina',
+                'checkout-label-notes': 'Notas del pedido (opcional)',
+                'checkout-label-invoice': '¿Requiere factura electrónica?',
+                'checkout-submit': 'Confirmar y enviar por WhatsApp',
+                'checkout-error-required': 'Por favor completa todos los campos obligatorios.',
+                'checkout-error-email': 'Ingresa un correo electrónico válido.'
             },
             en: {
                 'menu-title': 'Our Menu',
@@ -2363,7 +3331,29 @@
                 'load-error': 'We could not load the menu. Please try again later.',
                 'history-button': 'Do you know why we are 1583?',
                 'splash-combo-eyebrow': 'Discover',
-                'splash-combo-title': 'Our Combos'
+                'splash-combo-title': 'Our Combos',
+                'add-to-order': 'Add to order',
+                'added-to-order': 'Added ✓',
+                'order-title': 'Your order',
+                'order-empty': 'You haven\'t added any products yet.',
+                'order-total-label': 'Total',
+                'order-send-whatsapp': 'Send order via WhatsApp',
+                'checkout-title': 'Complete your order',
+                'checkout-mode-pickup': 'Pick up in-store',
+                'checkout-mode-office': 'Deliver to office',
+                'checkout-info-pickup': 'Your order will be prepared for pickup at the counter.',
+                'checkout-info-office': 'Delivery service exclusive to offices located within Holguines Trade Center.',
+                'checkout-label-name': 'Full name',
+                'checkout-label-phone': 'Contact phone',
+                'checkout-label-doc-type': 'ID type',
+                'checkout-label-doc-number': 'ID number',
+                'checkout-label-email': 'Email address',
+                'checkout-label-office': 'Office number / Tower',
+                'checkout-label-notes': 'Order notes (optional)',
+                'checkout-label-invoice': 'Need an electronic invoice?',
+                'checkout-submit': 'Confirm and send via WhatsApp',
+                'checkout-error-required': 'Please fill in all required fields.',
+                'checkout-error-email': 'Enter a valid email address.'
             }
         };
 
@@ -2547,6 +3537,9 @@
                 renderMenu();
                 buildModalItemList();
             }
+
+            // Refrescar el carrito y el checkout (nombres traducidos; precios/cantidades intactos)
+            if (typeof onLanguageChanged === 'function') onLanguageChanged();
         }
 
         // Manejo global de errores para evitar pantalla en blanco
@@ -2889,6 +3882,416 @@
     })();
     </script>
     <!-- ===== FIN SPLASH COMBOS ===== -->
+
+    <!-- ===== PEDIDO / CARRITO ===== -->
+    <script>
+    (function () {
+        'use strict';
+
+        const WHATSAPP_NUMBER = '+573181454142';
+        const STORAGE_KEY = 'menu-order';
+
+        // ── Elementos ────────────────────────────────────────────────────
+        const modalContentEl = document.querySelector('#product-modal .modal-content');
+        const dragHandle      = document.getElementById('modal-drag-handle');
+        const qtyMinusBtn     = document.getElementById('modal-qty-minus');
+        const qtyPlusBtn      = document.getElementById('modal-qty-plus');
+        const qtyValueEl      = document.getElementById('modal-qty-value');
+        const addBtn          = document.getElementById('modal-add-btn');
+        const orderBadgeBtn   = document.getElementById('order-badge-btn');
+        const orderBadgeCount = document.getElementById('order-badge-count');
+        const orderModal      = document.getElementById('order-modal');
+        const orderSheet      = orderModal ? orderModal.querySelector('.order-sheet') : null;
+        const orderCloseBtn   = document.getElementById('order-close-btn');
+        const orderDragHandle = document.getElementById('order-drag-handle');
+        const orderListEl     = document.getElementById('order-list');
+        const orderTotalValue = document.getElementById('order-total-value');
+        const orderWhatsappBtn = document.getElementById('order-whatsapp-btn');
+
+        // Checkout
+        const checkoutModal      = document.getElementById('checkout-modal');
+        const checkoutSheet      = checkoutModal ? checkoutModal.querySelector('.checkout-sheet') : null;
+        const checkoutCloseBtn   = document.getElementById('checkout-close-btn');
+        const checkoutDragHandle = document.getElementById('checkout-drag-handle');
+        const checkoutForm       = document.getElementById('checkout-form');
+        const modePickupBtn      = document.getElementById('mode-pickup-btn');
+        const modeOfficeBtn      = document.getElementById('mode-office-btn');
+        const infoPickupEl       = document.getElementById('checkout-info-pickup');
+        const infoOfficeEl       = document.getElementById('checkout-info-office');
+        const officeFieldWrap    = document.getElementById('checkout-office-field');
+        const officeInput        = document.getElementById('checkout-office');
+        const nameInput          = document.getElementById('checkout-name');
+        const phoneInput         = document.getElementById('checkout-phone');
+        const docTypeSelect      = document.getElementById('checkout-doc-type');
+        const docNumberInput     = document.getElementById('checkout-doc-number');
+        const emailInput         = document.getElementById('checkout-email');
+        const notesInput         = document.getElementById('checkout-notes');
+        const invoiceCheckbox    = document.getElementById('checkout-invoice');
+        const checkoutErrorEl    = document.getElementById('checkout-error');
+        const checkoutSubmitBtn  = document.getElementById('checkout-submit-btn');
+
+        if (!modalContentEl || !addBtn || !orderModal) return; // markup no disponible, no romper nada
+
+        // ── Estado del pedido (persistido en localStorage) ─────────────────
+        // { [itemId]: { id, price, qty } } — SOLO id + precio + cantidad.
+        // El nombre NUNCA se guarda como texto congelado: se resuelve en cada
+        // render con getItemDisplayName(menuState.itemsById[id]) para que el
+        // carrito hable siempre en el idioma activo, sin importar en qué
+        // idioma se agregó el producto.
+        let order = {};
+        try {
+            const saved = window.localStorage.getItem(STORAGE_KEY);
+            if (saved) order = JSON.parse(saved) || {};
+        } catch (e) { order = {}; }
+
+        // Item "vivo" del catálogo para un id del carrito (fuente de verdad del nombre/precio actual)
+        function getCatalogItem(id) {
+            return menuState.itemsById ? menuState.itemsById[id] : null;
+        }
+        // Nombre a mostrar en el idioma activo; si el producto ya no existe en el catálogo, usa el id como último recurso
+        function getOrderItemDisplayName(id) {
+            const catalogItem = getCatalogItem(id);
+            return catalogItem ? getItemDisplayName(catalogItem) : id;
+        }
+
+        function saveOrder() {
+            try { window.localStorage.setItem(STORAGE_KEY, JSON.stringify(order)); } catch (e) { /* no crítico */ }
+        }
+
+        function orderCount() {
+            return Object.values(order).reduce((sum, i) => sum + i.qty, 0);
+        }
+        function orderTotal() {
+            return Object.values(order).reduce((sum, i) => sum + (i.price || 0) * i.qty, 0);
+        }
+
+        function refreshBadge() {
+            const count = orderCount();
+            orderBadgeCount.textContent = String(count);
+            orderBadgeBtn.classList.toggle('visible', count > 0);
+        }
+
+        // ── Cantidad dentro del modal de producto (se resetea por producto) ─
+        let modalQty = 1;
+        let currentModalItem = null;
+        const MAX_QTY = 99;
+
+        function renderModalQty() {
+            qtyValueEl.textContent = String(modalQty);
+        }
+
+        // Hook llamado desde fillModal() cada vez que cambia el producto visible
+        window.onModalItemChanged = function (item) {
+            currentModalItem = item;
+            modalQty = 1;
+            renderModalQty();
+            addBtn.classList.remove('added');
+            const label = addBtn.querySelector('span');
+            if (label) label.textContent = translations[currentLang]['add-to-order'];
+        };
+
+        qtyMinusBtn.addEventListener('click', function () {
+            modalQty = Math.max(1, modalQty - 1);
+            renderModalQty();
+        });
+        qtyPlusBtn.addEventListener('click', function () {
+            modalQty = Math.min(MAX_QTY, modalQty + 1);
+            renderModalQty();
+        });
+
+        addBtn.addEventListener('click', function () {
+            if (!currentModalItem) return;
+            const id = currentModalItem.id;
+            const price = currentModalItem.price || 0;
+
+            if (order[id]) {
+                order[id].qty += modalQty;
+            } else {
+                order[id] = { id, price, qty: modalQty };
+            }
+            saveOrder();
+            refreshBadge();
+
+            // Feedback breve — no bloquea, no requiere abrir el carrito
+            const label = addBtn.querySelector('span');
+            addBtn.classList.add('added');
+            if (label) label.textContent = translations[currentLang]['added-to-order'];
+            setTimeout(function () {
+                addBtn.classList.remove('added');
+                if (label && currentModalItem) label.textContent = translations[currentLang]['add-to-order'];
+            }, 1100);
+
+            modalQty = 1;
+            renderModalQty();
+        });
+
+        // ── Renderizar panel del pedido ──────────────────────────────────
+        function renderOrderPanel() {
+            const items = Object.values(order);
+            orderModal.classList.toggle('order-is-empty', items.length === 0);
+            orderListEl.innerHTML = '';
+
+            items.forEach(function (item) {
+                const row = document.createElement('div');
+                row.className = 'order-item';
+
+                const info = document.createElement('div');
+                info.className = 'order-item-info';
+                const nameEl = document.createElement('div');
+                nameEl.className = 'order-item-name';
+                nameEl.textContent = getOrderItemDisplayName(item.id);
+                const priceEl = document.createElement('div');
+                priceEl.className = 'order-item-price';
+                priceEl.textContent = formatCOP(item.price);
+                info.appendChild(nameEl);
+                info.appendChild(priceEl);
+
+                const qtyWrap = document.createElement('div');
+                qtyWrap.className = 'order-item-qty';
+                const minus = document.createElement('button');
+                minus.type = 'button';
+                minus.textContent = '−';
+                minus.setAttribute('aria-label', 'Restar');
+                minus.addEventListener('click', function () {
+                    item.qty -= 1;
+                    if (item.qty <= 0) delete order[item.id];
+                    saveOrder();
+                    refreshBadge();
+                    renderOrderPanel();
+                });
+                const qtySpan = document.createElement('span');
+                qtySpan.textContent = String(item.qty);
+                const plus = document.createElement('button');
+                plus.type = 'button';
+                plus.textContent = '+';
+                plus.setAttribute('aria-label', 'Sumar');
+                plus.addEventListener('click', function () {
+                    item.qty = Math.min(MAX_QTY, item.qty + 1);
+                    saveOrder();
+                    refreshBadge();
+                    renderOrderPanel();
+                });
+                qtyWrap.appendChild(minus);
+                qtyWrap.appendChild(qtySpan);
+                qtyWrap.appendChild(plus);
+
+                const removeBtn = document.createElement('button');
+                removeBtn.type = 'button';
+                removeBtn.className = 'order-item-remove';
+                removeBtn.innerHTML = '&times;';
+                removeBtn.setAttribute('aria-label', 'Quitar producto');
+                removeBtn.addEventListener('click', function () {
+                    delete order[item.id];
+                    saveOrder();
+                    refreshBadge();
+                    renderOrderPanel();
+                });
+
+                row.appendChild(info);
+                row.appendChild(qtyWrap);
+                row.appendChild(removeBtn);
+                orderListEl.appendChild(row);
+            });
+
+            orderTotalValue.textContent = formatCOP(orderTotal());
+        }
+
+        function openOrderPanel() {
+            renderOrderPanel();
+            orderModal.classList.add('active');
+        }
+        function closeOrderPanel() {
+            orderModal.classList.remove('active');
+        }
+
+        // Hook llamado desde changeLanguage() — refresca SOLO lo que no cubre [data-i18n]
+        // (nombres de producto resueltos dinámicamente). Precios y cantidades no se tocan.
+        window.onLanguageChanged = function () {
+            if (orderModal.classList.contains('active')) renderOrderPanel();
+            if (productModal.classList.contains('active') && !addBtn.classList.contains('added')) {
+                const label = addBtn.querySelector('span');
+                if (label) label.textContent = translations[currentLang]['add-to-order'];
+            }
+            if (typeof refreshCheckoutOnLanguageChange === 'function') refreshCheckoutOnLanguageChange();
+        };
+
+        orderBadgeBtn.addEventListener('click', openOrderPanel);
+        orderCloseBtn.addEventListener('click', closeOrderPanel);
+        orderModal.addEventListener('click', function (e) {
+            if (e.target === orderModal) closeOrderPanel();
+        });
+
+        // El botón del carrito ya no envía directo — abre el checkout (modalidad + datos)
+        orderWhatsappBtn.addEventListener('click', function () {
+            if (Object.keys(order).length === 0) return;
+            openCheckout();
+        });
+
+        // ══════════════════════════════════════════════════════════════════
+        //  CHECKOUT — modalidad de entrega, datos del cliente, factura
+        // ══════════════════════════════════════════════════════════════════
+        let deliveryMode = 'pickup'; // 'pickup' | 'office'
+        const REQUIRED_FIELDS = [nameInput, phoneInput, docTypeSelect, docNumberInput, emailInput];
+        const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        function setDeliveryMode(mode) {
+            deliveryMode = mode;
+            const isOffice = mode === 'office';
+            modePickupBtn.classList.toggle('active', !isOffice);
+            modePickupBtn.setAttribute('aria-pressed', String(!isOffice));
+            modeOfficeBtn.classList.toggle('active', isOffice);
+            modeOfficeBtn.setAttribute('aria-pressed', String(isOffice));
+            infoPickupEl.hidden = isOffice;
+            infoOfficeEl.hidden = !isOffice;
+            officeFieldWrap.hidden = !isOffice;
+            officeInput.required = isOffice;
+            clearCheckoutError();
+        }
+        modePickupBtn.addEventListener('click', function () { setDeliveryMode('pickup'); });
+        modeOfficeBtn.addEventListener('click', function () { setDeliveryMode('office'); });
+
+        function clearCheckoutError() {
+            checkoutErrorEl.hidden = true;
+            checkoutErrorEl.textContent = '';
+            REQUIRED_FIELDS.concat([officeInput]).forEach(function (el) { el.classList.remove('invalid'); });
+        }
+        function showCheckoutError(msg) {
+            checkoutErrorEl.textContent = msg;
+            checkoutErrorEl.hidden = false;
+        }
+
+        function validateCheckoutForm() {
+            clearCheckoutError();
+            const required = REQUIRED_FIELDS.concat(deliveryMode === 'office' ? [officeInput] : []);
+            let firstInvalid = null;
+            required.forEach(function (field) {
+                if (!field.value.trim()) {
+                    field.classList.add('invalid');
+                    if (!firstInvalid) firstInvalid = field;
+                }
+            });
+            if (firstInvalid) {
+                showCheckoutError(translations[currentLang]['checkout-error-required']);
+                firstInvalid.focus();
+                return false;
+            }
+            if (!EMAIL_RE.test(emailInput.value.trim())) {
+                emailInput.classList.add('invalid');
+                showCheckoutError(translations[currentLang]['checkout-error-email']);
+                emailInput.focus();
+                return false;
+            }
+            // Factura electrónica: tipo de documento y correo ya son obligatorios arriba;
+            // esta es una segunda verificación explícita antes de emitir.
+            if (invoiceCheckbox.checked && (!docTypeSelect.value || !emailInput.value.trim())) {
+                showCheckoutError(translations[currentLang]['checkout-error-required']);
+                return false;
+            }
+            return true;
+        }
+
+        function openCheckout() {
+            closeOrderPanel();
+            checkoutModal.classList.add('active');
+        }
+        function closeCheckout() {
+            checkoutModal.classList.remove('active');
+        }
+        checkoutCloseBtn.addEventListener('click', closeCheckout);
+        checkoutModal.addEventListener('click', function (e) {
+            if (e.target === checkoutModal) closeCheckout();
+        });
+
+        // El checkout no depende del idioma para SUS propios textos dinámicos
+        // (el mensaje de WhatsApp usa etiquetas fijas en español, ver más abajo);
+        // solo se re-vincula aquí por si el carrito estuviera abierto detrás.
+        function refreshCheckoutOnLanguageChange() { /* no-op: no hay texto dinámico propio que refrescar */ }
+
+        // ── Construir y enviar el mensaje de WhatsApp ───────────────────────
+        checkoutForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (!validateCheckoutForm()) return;
+
+            const items = Object.values(order);
+            if (items.length === 0) { closeCheckout(); return; }
+
+            const typeLabel = deliveryMode === 'office'
+                ? 'Envío a Oficina - Holguines'
+                : 'Recoger en Local';
+            const officeValue = deliveryMode === 'office' ? officeInput.value.trim() : 'N/A';
+            const notesValue = notesInput.value.trim() || 'Sin notas';
+            const invoiceLabel = invoiceCheckbox.checked ? 'SÍ' : 'NO';
+
+            const productLines = items.map(function (i) {
+                return `• ${i.qty}x ${getOrderItemDisplayName(i.id)} - ${formatCOP(i.price)}`;
+            });
+
+            const messageLines = [
+                '☕ *NUEVO PEDIDO - 1583 CAFÉ*',
+                '----------------------------------',
+                `📌 *Tipo de Pedido:* ${typeLabel}`,
+                '',
+                '👤 *Datos del Cliente:*',
+                `• Nombre: ${nameInput.value.trim()}`,
+                `• Teléfono: ${phoneInput.value.trim()}`,
+                `• Documento: ${docTypeSelect.value} - ${docNumberInput.value.trim()}`,
+                `• Correo: ${emailInput.value.trim()}`,
+                `• Oficina / Ubicación: ${officeValue}`,
+                `• Factura Electrónica: ${invoiceLabel}`,
+                '',
+                '📝 *Notas adicionales:*',
+                notesValue,
+                '',
+                '🛒 *Detalle del Pedido:*'
+            ].concat(productLines, [
+                '',
+                `💰 *TOTAL A PAGAR:* ${formatCOP(orderTotal())}`
+            ]);
+
+            const message = encodeURIComponent(messageLines.join('\n'));
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${message}`, '_blank', 'noopener,noreferrer');
+            closeCheckout();
+        });
+
+        // ── Deslizar hacia abajo para cerrar (manija real, no ::before) ────
+        function enableDragToClose(handleEl, sheetEl, closeFn) {
+            if (!handleEl || !sheetEl) return;
+            let startY = 0, dy = 0, dragging = false;
+            const CLOSE_THRESHOLD = 90;
+
+            handleEl.addEventListener('touchstart', function (e) {
+                startY = e.touches[0].clientY;
+                dragging = true;
+                sheetEl.style.transition = 'none';
+            }, { passive: true });
+
+            handleEl.addEventListener('touchmove', function (e) {
+                if (!dragging) return;
+                dy = Math.max(0, e.touches[0].clientY - startY);
+                sheetEl.style.transform = `translateY(${dy}px)`;
+            }, { passive: true });
+
+            function endDrag() {
+                if (!dragging) return;
+                dragging = false;
+                sheetEl.style.transition = '';
+                sheetEl.style.transform = '';
+                if (dy > CLOSE_THRESHOLD) closeFn();
+                dy = 0;
+            }
+            handleEl.addEventListener('touchend', endDrag);
+            handleEl.addEventListener('touchcancel', endDrag);
+        }
+
+        enableDragToClose(dragHandle, modalContentEl, closeModal);
+        enableDragToClose(orderDragHandle, orderSheet, closeOrderPanel);
+        enableDragToClose(checkoutDragHandle, checkoutSheet, closeCheckout);
+
+        // ── Inicialización ─────────────────────────────────────────────────
+        refreshBadge();
+    })();
+    </script>
+    <!-- ===== FIN PEDIDO / CARRITO ===== -->
 
 </body>
 </html>

@@ -8,6 +8,7 @@
     "sync:excel-en": "node scripts/sync-name-en-to-excel.js",
     "organize:images": "node scripts/organize-images.js",
     "check:images": "node scripts/check-image-formats.js",
+    "optimize:images": "node scripts/optimize-images.js",
     "cleanup:large": "node scripts/cleanup-large-files.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

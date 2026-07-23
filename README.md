@@ -50,8 +50,51 @@ Interactive digital menu for **Café 1583** (Cali, Colombia). Customers scan a Q
 npm run build:data        # Convert Menu Web.xlsx → data/menu-data.json
 npm run organize:images   # Sort product images into category folders
 npm run check:images      # Validate image formats and file sizes
+npm run optimize:images   # Resize/compress background + product photos (sharp)
 npm run cleanup:large     # Remove oversized image files
 ```
+
+---
+
+## 🍽️ Guía rápida: editar el menú
+
+Todo el contenido (productos, precios, categorías, imágenes) sale de un único
+Excel. No hace falta tocar código para actualizarlo.
+
+### 1. Cambiar precios o nombres de platos
+
+1. Abre `Cargue productos/Menu Web.xlsx`.
+2. Edita la fila del producto: columna **Producto** (nombre) o **Precio** (número, ej. `8500`).
+3. Guarda el archivo.
+4. En la terminal, en la raíz del proyecto:
+   ```bash
+   npm run build:data
+   ```
+   Esto regenera `data/menu-data.json`, que es lo que lee la página.
+5. Sube los cambios (`git add`, `git commit`, `git push`) para publicarlos.
+
+### 2. Agregar o reemplazar una foto de producto
+
+- **Ruta obligatoria:** `images/productos/1583 menu/`
+- **Formato recomendado:** `.jpg` (también soporta `.png` y `.webp`)
+- **Nomenclatura:** cualquier nombre descriptivo sin caracteres raros, ej. `Croissant Almendras.jpg`
+- **Pasos:**
+  1. Copia la foto nueva dentro de `images/productos/1583 menu/`.
+  2. En la columna **Imagen** del Excel, escribe la ruta completa:
+     `images/productos/1583 menu/NombreDelArchivo.jpg`
+  3. Corre `npm run optimize:images` — redimensiona (máx. 1600px) y comprime la
+     foto automáticamente para que la web siga cargando rápido (no subas fotos
+     de cámara sin comprimir: pueden pesar 10-15MB cada una).
+  4. Corre `npm run build:data` y sube los cambios.
+- Si la celda **Imagen** queda vacía, el producto se muestra sin foto (esto es válido).
+
+### 3. Añadir productos o categorías nuevas
+
+- **Producto nuevo:** agrega una fila al Excel con las columnas `Categoría`,
+  `Producto`, `Descripcion`, `Adiciones`, `Precio` e `Imagen`.
+- **Categoría nueva:** simplemente escribe un nombre de categoría que no exista
+  todavía en la columna **Categoría** — la sección de navegación se crea sola
+  al correr `npm run build:data`, no requiere tocar el HTML.
 
 ---
 

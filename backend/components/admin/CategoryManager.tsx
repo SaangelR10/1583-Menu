@@ -42,38 +42,40 @@ function SortableRow({
     <div
       ref={setNodeRef}
       style={{ transform: CSS.Transform.toString(transform), transition }}
-      className={`flex items-center gap-3 rounded-lg border border-border bg-surface px-4 py-3 ${
+      className={`flex flex-wrap items-center gap-3 rounded-lg border border-border bg-surface px-3 py-3 sm:px-4 ${
         isDragging ? "opacity-60" : ""
       }`}
     >
       <button
         {...attributes}
         {...listeners}
-        className="cursor-grab text-ink-muted active:cursor-grabbing"
+        className="shrink-0 cursor-grab touch-none px-1 text-ink-muted active:cursor-grabbing"
         aria-label="Reordenar"
       >
         ⠿
       </button>
-      <div className="flex-1">
-        <p className="font-medium text-ink">{category.name}</p>
-        <p className="text-xs text-ink-muted">{category.nameEn || "sin traduccion"}</p>
+      <div className="min-w-0 flex-1 basis-full sm:basis-auto">
+        <p className="truncate font-medium text-ink">{category.name}</p>
+        <p className="truncate text-xs text-ink-muted">{category.nameEn || "sin traduccion"}</p>
       </div>
-      <Badge>{category._count.products} productos</Badge>
-      <div title="Inactiva = se oculta del menú público, junto con todos sus productos">
-        <Switch checked={category.isActive} onChange={(v) => onToggleActive(category.id, v)} label="Activa" />
+      <div className="flex flex-wrap items-center gap-2 pl-7 sm:pl-0">
+        <Badge>{category._count.products} productos</Badge>
+        <div title="Inactiva = se oculta del menú público, junto con todos sus productos">
+          <Switch checked={category.isActive} onChange={(v) => onToggleActive(category.id, v)} label="Activa" />
+        </div>
+        <Button variant="secondary" size="sm" onClick={() => onEdit(category)}>
+          Editar
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          disabled={category._count.products > 0}
+          title={category._count.products > 0 ? "Mueve o elimina sus productos primero" : "Eliminar"}
+          onClick={() => onDelete(category.id)}
+        >
+          Eliminar
+        </Button>
       </div>
-      <Button variant="secondary" size="sm" onClick={() => onEdit(category)}>
-        Editar
-      </Button>
-      <Button
-        variant="ghost"
-        size="sm"
-        disabled={category._count.products > 0}
-        title={category._count.products > 0 ? "Mueve o elimina sus productos primero" : "Eliminar"}
-        onClick={() => onDelete(category.id)}
-      >
-        Eliminar
-      </Button>
     </div>
   );
 }

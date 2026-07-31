@@ -78,9 +78,13 @@ export default function ProductsPage() {
           placeholder="Buscar por nombre..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="max-w-xs"
+          className="w-full sm:max-w-xs"
         />
-        <Select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)} className="max-w-xs">
+        <Select
+          value={categoryFilter}
+          onChange={(e) => setCategoryFilter(e.target.value)}
+          className="w-full sm:max-w-xs"
+        >
           <option value="">Todas las categorias</option>
           {categories.map((c) => (
             <option key={c.id} value={c.id}>
@@ -99,57 +103,101 @@ export default function ProductsPage() {
       ) : filtered.length === 0 ? (
         <EmptyState title="Sin productos" description="Ajusta los filtros o crea un nuevo producto." />
       ) : (
-        <div className="overflow-hidden rounded-xl border border-border">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-surface-muted text-xs uppercase text-ink-muted">
-              <tr>
-                <th className="px-4 py-3">Producto</th>
-                <th className="px-4 py-3">Categoria</th>
-                <th className="px-4 py-3">Precio</th>
-                <th className="px-4 py-3">Stock</th>
-                <th className="px-4 py-3" />
-              </tr>
-            </thead>
-            <tbody>
-              {filtered.map((product) => (
-                <tr key={product.id} className="border-t border-border bg-surface">
-                  <td className="flex items-center gap-3 px-4 py-3">
-                    {product.imageUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={product.imageUrl} alt="" className="h-10 w-10 rounded-md object-cover" />
-                    ) : (
-                      <div className="h-10 w-10 rounded-md bg-surface-muted" />
-                    )}
-                    <span className="font-medium text-ink">{product.name}</span>
-                  </td>
-                  <td className="px-4 py-3 text-ink-muted">{product.category.name}</td>
-                  <td className="px-4 py-3 text-ink-muted">
-                    {product.price != null ? `$ ${product.price.toLocaleString("es-CO")}` : "—"}
-                  </td>
-                  <td className="px-4 py-3">
-                    <div
-                      className="flex items-center gap-2"
-                      title="Agotado = se oculta del menú público"
-                    >
-                      <Switch checked={product.inStock} onChange={(v) => toggleStock(product.id, v)} />
-                      {!product.inStock && <Badge tone="warning">Agotado (oculto)</Badge>}
-                    </div>
-                  </td>
-                  <td className="px-4 py-3 text-right">
-                    <div className="flex justify-end gap-2">
-                      <Link href={`/admin/productos/${product.id}/editar`}>
-                        <Button variant="secondary" size="sm">Editar</Button>
-                      </Link>
-                      <Button variant="ghost" size="sm" onClick={() => handleDelete(product.id)}>
-                        Eliminar
-                      </Button>
-                    </div>
-                  </td>
+        <>
+          {/* Mobile: lista de tarjetas */}
+          <div className="space-y-3 sm:hidden">
+            {filtered.map((product) => (
+              <div key={product.id} className="rounded-xl border border-border bg-surface p-3">
+                <div className="flex items-start gap-3">
+                  {product.imageUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={product.imageUrl}
+                      alt=""
+                      className="h-14 w-14 shrink-0 rounded-md object-cover"
+                    />
+                  ) : (
+                    <div className="h-14 w-14 shrink-0 rounded-md bg-surface-muted" />
+                  )}
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate font-medium text-ink">{product.name}</p>
+                    <p className="truncate text-xs text-ink-muted">{product.category.name}</p>
+                    <p className="mt-0.5 text-sm text-ink-muted">
+                      {product.price != null ? `$ ${product.price.toLocaleString("es-CO")}` : "—"}
+                    </p>
+                  </div>
+                </div>
+                <div className="mt-3 flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2" title="Agotado = se oculta del menú público">
+                    <Switch checked={product.inStock} onChange={(v) => toggleStock(product.id, v)} />
+                    {!product.inStock && <Badge tone="warning">Agotado</Badge>}
+                  </div>
+                  <div className="flex gap-2">
+                    <Link href={`/admin/productos/${product.id}/editar`}>
+                      <Button variant="secondary" size="sm">Editar</Button>
+                    </Link>
+                    <Button variant="ghost" size="sm" onClick={() => handleDelete(product.id)}>
+                      Eliminar
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Escritorio: tabla */}
+          <div className="hidden overflow-hidden rounded-xl border border-border sm:block">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-surface-muted text-xs uppercase text-ink-muted">
+                <tr>
+                  <th className="px-4 py-3">Producto</th>
+                  <th className="px-4 py-3">Categoria</th>
+                  <th className="px-4 py-3">Precio</th>
+                  <th className="px-4 py-3">Stock</th>
+                  <th className="px-4 py-3" />
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {filtered.map((product) => (
+                  <tr key={product.id} className="border-t border-border bg-surface">
+                    <td className="flex items-center gap-3 px-4 py-3">
+                      {product.imageUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={product.imageUrl} alt="" className="h-10 w-10 rounded-md object-cover" />
+                      ) : (
+                        <div className="h-10 w-10 rounded-md bg-surface-muted" />
+                      )}
+                      <span className="font-medium text-ink">{product.name}</span>
+                    </td>
+                    <td className="px-4 py-3 text-ink-muted">{product.category.name}</td>
+                    <td className="px-4 py-3 text-ink-muted">
+                      {product.price != null ? `$ ${product.price.toLocaleString("es-CO")}` : "—"}
+                    </td>
+                    <td className="px-4 py-3">
+                      <div
+                        className="flex items-center gap-2"
+                        title="Agotado = se oculta del menú público"
+                      >
+                        <Switch checked={product.inStock} onChange={(v) => toggleStock(product.id, v)} />
+                        {!product.inStock && <Badge tone="warning">Agotado (oculto)</Badge>}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3 text-right">
+                      <div className="flex justify-end gap-2">
+                        <Link href={`/admin/productos/${product.id}/editar`}>
+                          <Button variant="secondary" size="sm">Editar</Button>
+                        </Link>
+                        <Button variant="ghost" size="sm" onClick={() => handleDelete(product.id)}>
+                          Eliminar
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </>
       )}
     </div>
   );

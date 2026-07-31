@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { apiFetch, ApiError } from "@/lib/client/apiClient";
 import { Button, Badge, Switch, Input, Select, EmptyState, Spinner, PageHeader } from "@/components/admin/ui/Primitives";
+import { Fab, FabGroup } from "@/components/admin/ui/Fab";
 
 type Product = {
   id: string;
@@ -21,6 +22,7 @@ export default function ProductsPage() {
   const [categoryFilter, setCategoryFilter] = useState("");
   const [search, setSearch] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
 
   async function load() {
     const [{ products }, { categories }] = await Promise.all([
@@ -29,6 +31,18 @@ export default function ProductsPage() {
     ]);
     setProducts(products);
     setCategories(categories);
+  }
+
+  async function handleRefresh() {
+    setRefreshing(true);
+    setError(null);
+    try {
+      await load();
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "No se pudo actualizar.");
+    } finally {
+      setRefreshing(false);
+    }
   }
 
   useEffect(() => {
@@ -70,8 +84,26 @@ export default function ProductsPage() {
       <PageHeader
         title="Productos"
         description="Gestiona el catalogo completo."
-        actions={<Link href="/admin/productos/nuevo"><Button>+ Nuevo producto</Button></Link>}
+        actions={
+          <div className="hidden gap-2 sm:flex">
+            <Button variant="secondary" onClick={handleRefresh} disabled={refreshing}>
+              {refreshing ? <Spinner className="h-4 w-4" /> : "🔄 Refrescar"}
+            </Button>
+            <Link href="/admin/productos/nuevo">
+              <Button>+ Nuevo producto</Button>
+            </Link>
+          </div>
+        }
       />
+
+      <FabGroup>
+        <Fab label="Refrescar" variant="secondary" onClick={handleRefresh} loading={refreshing}>
+          🔄
+        </Fab>
+        <Fab label="Nuevo producto" href="/admin/productos/nuevo">
+          +
+        </Fab>
+      </FabGroup>
 
       <div className="mb-4 flex flex-wrap gap-3">
         <Input

@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { apiFetch } from "@/lib/client/apiClient";
+import { apiFetch, ApiError } from "@/lib/client/apiClient";
 import { PageHeader, Spinner, EmptyState, Badge } from "@/components/admin/ui/Primitives";
+import { Fab, FabGroup } from "@/components/admin/ui/Fab";
 
 type AuditLog = {
   id: string;
@@ -16,14 +17,42 @@ type AuditLog = {
 
 export default function AuditLogsPage() {
   const [logs, setLogs] = useState<AuditLog[] | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function load() {
+    const { logs } = await apiFetch<{ logs: AuditLog[] }>("/api/v1/admin/audit-logs");
+    setLogs(logs);
+  }
 
   useEffect(() => {
-    apiFetch<{ logs: AuditLog[] }>("/api/v1/admin/audit-logs").then(({ logs }) => setLogs(logs));
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- carga inicial async estandar
+    load();
   }, []);
+
+  async function handleRefresh() {
+    setRefreshing(true);
+    setError(null);
+    try {
+      await load();
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "No se pudo actualizar.");
+    } finally {
+      setRefreshing(false);
+    }
+  }
 
   return (
     <div>
       <PageHeader title="Actividad" description="Registro de auditoria de todas las acciones del panel." />
+
+      <FabGroup onlyMobile={false}>
+        <Fab label="Refrescar" variant="secondary" onClick={handleRefresh} loading={refreshing}>
+          🔄
+        </Fab>
+      </FabGroup>
+
+      {error && <p className="mb-4 rounded-lg bg-danger/10 px-3 py-2 text-sm text-danger">{error}</p>}
 
       {!logs ? (
         <div className="flex justify-center py-20">

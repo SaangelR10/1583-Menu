@@ -13,6 +13,7 @@ import { SortableContext, useSortable, verticalListSortingStrategy, arrayMove } 
 import { CSS } from "@dnd-kit/utilities";
 import { apiFetch, ApiError } from "@/lib/client/apiClient";
 import { Button, Card, Input, Switch, Badge, FormField, EmptyState, Spinner } from "@/components/admin/ui/Primitives";
+import { Fab, FabGroup } from "@/components/admin/ui/Fab";
 
 type Category = {
   id: string;
@@ -91,11 +92,24 @@ export function CategoryManager() {
   const [creating, setCreating] = useState(false);
   const [formName, setFormName] = useState("");
   const [formNameEn, setFormNameEn] = useState("");
+  const [refreshing, setRefreshing] = useState(false);
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }));
 
   async function load() {
     const { categories } = await apiFetch<{ categories: Category[] }>("/api/v1/admin/categories");
     setCategories(categories);
+  }
+
+  async function handleRefresh() {
+    setRefreshing(true);
+    setError(null);
+    try {
+      await load();
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "No se pudo actualizar.");
+    } finally {
+      setRefreshing(false);
+    }
   }
 
   useEffect(() => {
@@ -191,9 +205,21 @@ export function CategoryManager() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-end">
+      <div className="hidden justify-end gap-2 sm:flex">
+        <Button variant="secondary" onClick={handleRefresh} disabled={refreshing}>
+          {refreshing ? <Spinner className="h-4 w-4" /> : "🔄 Refrescar"}
+        </Button>
         <Button onClick={openCreate}>+ Nueva categoria</Button>
       </div>
+
+      <FabGroup>
+        <Fab label="Refrescar" variant="secondary" onClick={handleRefresh} loading={refreshing}>
+          🔄
+        </Fab>
+        <Fab label="Nueva categoria" onClick={openCreate}>
+          +
+        </Fab>
+      </FabGroup>
 
       {error && <p className="rounded-lg bg-danger/10 px-3 py-2 text-sm text-danger">{error}</p>}
 

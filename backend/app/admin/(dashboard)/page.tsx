@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { apiFetch } from "@/lib/client/apiClient";
+import { apiFetch, ApiError } from "@/lib/client/apiClient";
 import { Card, PageHeader, Spinner } from "@/components/admin/ui/Primitives";
+import { Fab, FabGroup } from "@/components/admin/ui/Fab";
 
 type Category = { id: string; name: string; isActive: boolean; _count: { products: number } };
 type Product = { id: string; inStock: boolean };
@@ -11,17 +12,34 @@ type Product = { id: string; inStock: boolean };
 export default function OverviewPage() {
   const [categories, setCategories] = useState<Category[] | null>(null);
   const [products, setProducts] = useState<Product[] | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function load() {
+    const [{ categories }, { products }] = await Promise.all([
+      apiFetch<{ categories: Category[] }>("/api/v1/admin/categories"),
+      apiFetch<{ products: Product[] }>("/api/v1/admin/products"),
+    ]);
+    setCategories(categories);
+    setProducts(products);
+  }
 
   useEffect(() => {
-    (async () => {
-      const [{ categories }, { products }] = await Promise.all([
-        apiFetch<{ categories: Category[] }>("/api/v1/admin/categories"),
-        apiFetch<{ products: Product[] }>("/api/v1/admin/products"),
-      ]);
-      setCategories(categories);
-      setProducts(products);
-    })();
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- carga inicial async estandar
+    load();
   }, []);
+
+  async function handleRefresh() {
+    setRefreshing(true);
+    setError(null);
+    try {
+      await load();
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "No se pudo actualizar.");
+    } finally {
+      setRefreshing(false);
+    }
+  }
 
   if (!categories || !products) {
     return (
@@ -43,6 +61,14 @@ export default function OverviewPage() {
   return (
     <div>
       <PageHeader title="Resumen" description="Estado general del menú de Café 1583." />
+
+      <FabGroup onlyMobile={false}>
+        <Fab label="Refrescar" variant="secondary" onClick={handleRefresh} loading={refreshing}>
+          🔄
+        </Fab>
+      </FabGroup>
+
+      {error && <p className="mb-4 rounded-lg bg-danger/10 px-3 py-2 text-sm text-danger">{error}</p>}
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         {stats.map((stat) => (

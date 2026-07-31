@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Admin {
+  id               String    @id @default(cuid())
+  email            String    @unique
+  passwordHash     String
+  twoFactorSecret  String?
+  twoFactorEnabled Boolean   @default(false)
+  failedAttempts   Int       @default(0)
+  lockedUntil      DateTime?
+  refreshTokens    RefreshToken[]
+  auditLogs        AuditLog[]
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+}
+
+model RefreshToken {
+  id                String    @id @default(cuid())
+  tokenHash         String    @unique
+  adminId           String
+  admin             Admin     @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  expiresAt         DateTime
+  revokedAt         DateTime?
+  replacedByTokenId String?
+  createdByIp       String?
+  userAgent         String?
+  createdAt         DateTime  @default(now())
+
+  @@index([adminId])
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  name      String
+  nameEn    String    @default("")
+  sortOrder Int       @default(0)
+  isActive  Boolean   @default(true)
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([sortOrder])
+}
+
+model Product {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  categoryId    String
+  category      Category @relation(fields: [categoryId], references: [id])
+  name          String
+  nameEn        String   @default("")
+  description   String   @default("")
+  additions     String   @default("")
+  price         Int?
+  imageUrl      String   @default("")
+  imagePublicId String?
+  inStock       Boolean  @default(true)
+  sortOrder     Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([categoryId])
+  @@index([sortOrder])
+}
+
+model StoreConfig {
+  id             String   @id @default(cuid())
+  whatsappNumber String   @default("")
+  instagramUrl   String   @default("")
+  hours          Json?
+  address        String   @default("")
+  dailyMessage   String   @default("")
+  aboutText      String   @default("")
+  banners        Json?
+  updatedAt      DateTime @updatedAt
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  adminId    String
+  admin      Admin    @relation(fields: [adminId], references: [id])
+  action     String
+  entityType String
+  entityId   String?
+  before     Json?
+  after      Json?
+  ip         String?
+  userAgent  String?
+  createdAt  DateTime @default(now())
+
+  @@index([adminId])
+  @@index([createdAt])
+}

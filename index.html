@@ -2426,6 +2426,22 @@
         </div>
     </div>
     <script>
+        // Fuente de datos del menú: backend real (Vercel) con caída automática al
+        // JSON local si la API no responde (offline, backend caído, etc.). Actualiza
+        // MENU_API_URL con la URL real tras desplegar backend/ (ver backend/README.md).
+        window.MENU_API_URL = 'data/menu-data.json'; // TODO: reemplazar por 'https://<tu-proyecto>.vercel.app/api/v1/menu'
+        window.MENU_LOCAL_FALLBACK_URL = 'data/menu-data.json';
+        window.fetchMenuData = function (options) {
+            return fetch(window.MENU_API_URL, options).then(function (res) {
+                if (!res.ok) throw new Error('API menu fetch failed: ' + res.status);
+                return res;
+            }).catch(function (err) {
+                if (window.MENU_API_URL === window.MENU_LOCAL_FALLBACK_URL) throw err;
+                return fetch(window.MENU_LOCAL_FALLBACK_URL, options);
+            });
+        };
+    </script>
+    <script>
         // Puente visual: se retira cuando los datos del menú y las tipografías
         // están listos (o tras un timeout de seguridad), con un mínimo de
         // exhibición para evitar parpadeo en conexiones muy rápidas.
@@ -2436,7 +2452,7 @@
             var MIN_DISPLAY_MS = 450;
             var start = Date.now();
 
-            var dataReady = fetch('data/menu-data.json', { cache: 'force-cache' }).catch(function () {});
+            var dataReady = window.fetchMenuData({ cache: 'force-cache' }).catch(function () {});
             var fontsReady = (document.fonts && document.fonts.ready)
                 ? Promise.race([document.fonts.ready, new Promise(function (r) { setTimeout(r, 1500); })])
                 : Promise.resolve();
@@ -2912,7 +2928,7 @@
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 segundos timeout
                 
-                const response = await fetch('data/menu-data.json', {
+                const response = await window.fetchMenuData({
                     cache: 'no-cache',
                     signal: controller.signal
                 });
@@ -3649,7 +3665,7 @@
         async function loadSplashCombos() {
             let combos = [];
             try {
-                const res = await fetch('data/menu-data.json', { cache: 'no-cache' });
+                const res = await window.fetchMenuData({ cache: 'no-cache' });
                 if (!res.ok) throw new Error('fetch failed');
                 const data = await res.json();
 

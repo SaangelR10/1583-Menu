@@ -2429,7 +2429,7 @@
         // Fuente de datos del menú: backend real (Vercel) con caída automática al
         // JSON local si la API no responde (offline, backend caído, etc.). Actualiza
         // MENU_API_URL con la URL real tras desplegar backend/ (ver backend/README.md).
-        window.MENU_API_URL = 'data/menu-data.json'; // TODO: reemplazar por 'https://<tu-proyecto>.vercel.app/api/v1/menu'
+        window.MENU_API_URL = 'https://1583-menu-qcus.vercel.app/api/v1/menu';
         window.MENU_LOCAL_FALLBACK_URL = 'data/menu-data.json';
         window.fetchMenuData = function (options) {
             return fetch(window.MENU_API_URL, options).then(function (res) {

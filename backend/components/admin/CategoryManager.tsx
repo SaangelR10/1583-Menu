@@ -60,8 +60,12 @@ function SortableRow({
       </div>
       <div className="flex flex-wrap items-center gap-2 pl-7 sm:pl-0">
         <Badge>{category._count.products} productos</Badge>
-        <div title="Inactiva = se oculta del menú público, junto con todos sus productos">
+        <div
+          className="flex items-center gap-2"
+          title="Inactiva = se oculta del menú público, junto con todos sus productos"
+        >
           <Switch checked={category.isActive} onChange={(v) => onToggleActive(category.id, v)} label="Activa" />
+          <span className="text-sm text-ink-muted">{category.isActive ? "Activa" : "Inactiva"}</span>
         </div>
         <Button variant="secondary" size="sm" onClick={() => onEdit(category)}>
           Editar

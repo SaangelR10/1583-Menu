@@ -130,7 +130,11 @@ export default function ProductsPage() {
                 <div className="mt-3 flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2" title="Agotado = se oculta del menú público">
                     <Switch checked={product.inStock} onChange={(v) => toggleStock(product.id, v)} />
-                    {!product.inStock && <Badge tone="warning">Agotado</Badge>}
+                    {product.inStock ? (
+                      <span className="text-sm text-ink-muted">En stock</span>
+                    ) : (
+                      <Badge tone="warning">Agotado</Badge>
+                    )}
                   </div>
                   <div className="flex gap-2">
                     <Link href={`/admin/productos/${product.id}/editar`}>
@@ -179,7 +183,11 @@ export default function ProductsPage() {
                         title="Agotado = se oculta del menú público"
                       >
                         <Switch checked={product.inStock} onChange={(v) => toggleStock(product.id, v)} />
-                        {!product.inStock && <Badge tone="warning">Agotado (oculto)</Badge>}
+                        {product.inStock ? (
+                          <span className="text-sm text-ink-muted">En stock</span>
+                        ) : (
+                          <Badge tone="warning">Agotado (oculto)</Badge>
+                        )}
                       </div>
                     </td>
                     <td className="px-4 py-3 text-right">
